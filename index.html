@@ -73,13 +73,21 @@ body {
 
 /* Ajustes para telas menores */
 @media (max-width: 768px) {
-  #logo-header-mobile {
+  body{
+    width: 100%;
+  }
+  #a-logo-header-mobile{
     display: flex;
-    visibility: visible;
-    justify-self: center;
+    width: max-content;
     justify-content: center;
-    align-items: center;
-    padding-top:20px;
+    padding-top: 20px;
+    width: 100%;
+  }
+  #logo-header-mobile {
+    display: block;
+    width: 100px;
+    height: auto;
+    margin: 0 auto;
   }
   #menu-toggle {
     display: block;
@@ -172,8 +180,8 @@ body {
 </style>
 
 <body>
-  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"  id="logo-header-mobile">
-    <img src="imagens/Print&Go.png" alt="" style="width: 100px;">
+  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none" id="a-logo-header-mobile">
+    <img src="imagens/Print&Go.png" alt="" id="logo-header-mobile">
   </a>
   <button id="menu-toggle">☰</button>
     <div id="menu-mobile">
