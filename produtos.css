@@ -33,11 +33,11 @@ body{
   }
 .containerPrincipal {
     display: flex;
-    gap: 20px;
     width: 100%;
     margin-top: 20px;
     align-items: flex-start;
     flex-wrap: nowrap;
+    justify-content: center;
 }
 
 .filtros {
@@ -171,26 +171,22 @@ body{
 
 .containerOrdenar {
     display: flex;
-    justify-content: space-between;
-    /* Distribui o espaço entre os elementos */
-    align-items: center;
-    padding: 0 20px;
 }
 
-.produtos {
+#produtos {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    width: 75%;
-    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    align-self: center;
+    width: 80%;
 }
 
 .containerProdutos {
     margin-top: 0;
     display: flex;
-    flex-wrap: wrap;
-    gap: 5%;
-    width: 100%;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .boxItem {
@@ -217,7 +213,8 @@ body{
     text-decoration: none;
     color: black;
     transition: transform 1s;
-    margin-bottom: 20px;
+    width: max-content;
+    justify-content: center;
 }
 
 .boxItemLink:hover {
@@ -483,4 +480,81 @@ input[type="range"]::-webkit-slider-thumb {
     .left a {
         width: auto;
     }
+
+    .produtos {
+        justify-content:space-around;
+    }
+
 }
+
+/* Filtros Mobile */
+#filters-toggle {
+    display: none;
+    position: relative;
+    background: none;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+  }
+  
+  #filters-sidebar {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 280px;
+    height: 100%;
+    background: white;
+    z-index: 1001;
+    transition: right 0.3s ease;
+    overflow: hidden; 
+    padding: 20px;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+  }
+  
+  #filters-sidebar.open {
+    right: 0;
+  }
+  
+  #close-filters {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+  }
+  
+  #filters-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+  }
+  
+  #filters-overlay.active {
+    display: block;
+  }
+  
+  /* Esconde os filtros desktop em mobile */
+  @media (max-width: 768px) {
+    .filtros {
+      display: none;
+    }
+    #filters-toggle {
+      display: block;
+    }
+    .container-filtros{
+        display: flex;
+        width:100%;
+        justify-content: space-around;
+        jmargin:0 auto;
+    }
+    .containerOrdenar{
+        justify-content: space-around;
+    }
+    
+  }
