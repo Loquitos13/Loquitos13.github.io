@@ -1,3 +1,4 @@
+
 body{
     margin: 0;
     padding: 0;
@@ -35,21 +36,24 @@ body{
     display: flex;
     width: 100%;
     margin-top: 20px;
-    align-items: flex-start;
-    flex-wrap: nowrap;
-    justify-content: center;
 }
 
 .filtros {
+    display: flex;
+    flex-direction: column;
+    justify-self: flex-start;
     width: 25%;
+    height: max-content;
     background-color: #f8f9fa;
     padding: 15px;
     border-radius: 8px;
     box-sizing: border-box;
     justify-content: flex-start;
+    align-content: center;
     position: sticky;
     top: 20px;
     transition: all 0.3s;
+    margin-left: 5vh;
 }
 
 .custom-range {
@@ -171,21 +175,23 @@ body{
 
 .containerOrdenar {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #produtos {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    align-self: center;
-    width: 80%;
+    width: 100%;
+    justify-content: center;
 }
 
 .containerProdutos {
     margin-top: 0;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: center;
+    row-gap: 20px;
     gap: 20px;
 }
 
@@ -213,8 +219,7 @@ body{
     text-decoration: none;
     color: black;
     transition: transform 1s;
-    width: max-content;
-    justify-content: center;
+    margin-bottom: 20px;
 }
 
 .boxItemLink:hover {
@@ -485,12 +490,16 @@ input[type="range"]::-webkit-slider-thumb {
         justify-content:space-around;
     }
 
+    .containerOrdenar {
+        display: flex;
+        flex-direction: column;
+
+    }
 }
 
 /* Filtros Mobile */
 #filters-toggle {
     display: none;
-    position: relative;
     background: none;
     color: black;
     border: none;
@@ -506,7 +515,7 @@ input[type="range"]::-webkit-slider-thumb {
     background: white;
     z-index: 1001;
     transition: right 0.3s ease;
-    overflow: hidden; 
+    overflow: hidden;
     padding: 20px;
     box-shadow: -2px 0 10px rgba(0,0,0,0.1);
   }
@@ -517,8 +526,9 @@ input[type="range"]::-webkit-slider-thumb {
   
   #close-filters {
     position: absolute;
+    z-index: 1002;
     top: 10px;
-    right: 10px;
+    right: 30px;
     background: none;
     border: none;
     font-size: 1.5rem;
@@ -549,12 +559,16 @@ input[type="range"]::-webkit-slider-thumb {
     }
     .container-filtros{
         display: flex;
-        width:100%;
+        align-items: center;
         justify-content: space-around;
-        jmargin:0 auto;
+    }
+    .containerProdutos{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 9vh;
     }
     .containerOrdenar{
-        justify-content: space-around;
+        width: max-content;
     }
-    
-  }
+  } 
