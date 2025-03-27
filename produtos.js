@@ -96,3 +96,42 @@ let currentIndex = 0;
 document.addEventListener("DOMContentLoaded", () => {
     checkResponsiveness();
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const filtersToggle = document.getElementById('filters-toggle');
+    const filtersSidebar = document.getElementById('filters-sidebar');
+    const closeFilters = document.getElementById('close-filters');
+    const filtersOverlay = document.getElementById('filters-overlay');
+    const applyFilters = document.getElementById('apply-filters');
+  
+    // Abrir filtros
+    if (filtersToggle) {
+      filtersToggle.addEventListener('click', function() {
+        filtersSidebar.classList.add('open');
+        filtersOverlay.classList.add('active');
+      });
+    }
+  
+    // Fechar filtros
+    function closeFiltersSidebar() {
+      filtersSidebar.classList.remove('open');
+      filtersOverlay.classList.remove('active');
+    }
+  
+    if (closeFilters) {
+      closeFilters.addEventListener('click', closeFiltersSidebar);
+    }
+  
+    if (filtersOverlay) {
+      filtersOverlay.addEventListener('click', closeFiltersSidebar);
+    }
+  
+    // Aplicar filtros
+    if (applyFilters) {
+      applyFilters.addEventListener('click', function() {
+        // Sua lógica de filtragem aqui
+        console.log('Filtros aplicados!');
+        closeFiltersSidebar();
+      });
+    }
+  });
