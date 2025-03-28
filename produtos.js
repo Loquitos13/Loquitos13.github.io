@@ -1,43 +1,44 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Obter elementos
-    const rangeMin = document.getElementById('range-min');
-    const rangeMax = document.getElementById('range-max');
-    const thumbMin = document.getElementById('thumb-min');
-    const thumbMax = document.getElementById('thumb-max');
-    const trackHighlight = document.getElementById('track-highlight');
-    const valueMin = document.getElementById('value-min');
-    const valueMax = document.getElementById('value-max');
+    // Função para configurar um slider com base nos IDs fornecidos
+    function setupSlider(rangeMinId, rangeMaxId, thumbMinId, thumbMaxId, trackHighlightId, valueMinId, valueMaxId) {
+        const rangeMin = document.getElementById(rangeMinId);
+        const rangeMax = document.getElementById(rangeMaxId);
+        const thumbMin = document.getElementById(thumbMinId);
+        const thumbMax = document.getElementById(thumbMaxId);
+        const trackHighlight = document.getElementById(trackHighlightId);
+        const valueMin = document.getElementById(valueMinId);
+        const valueMax = document.getElementById(valueMaxId);
 
-    // Função para atualizar o slider
-    function updateSlider() {
-        // Garantir que o valor mínimo não seja maior que o valor máximo
-        if (parseInt(rangeMin.value) > parseInt(rangeMax.value)) {
-            rangeMin.value = rangeMax.value;
+        function updateSlider() {
+            // Garantir que o valor mínimo não exceda o máximo
+            if (parseInt(rangeMin.value) > parseInt(rangeMax.value)) {
+                rangeMin.value = rangeMax.value;
+            }
+
+            const minPercent = (rangeMin.value / rangeMin.max) * 100;
+            const maxPercent = (rangeMax.value / rangeMax.max) * 100;
+
+            thumbMin.style.left = minPercent + '%';
+            thumbMax.style.left = maxPercent + '%';
+            trackHighlight.style.left = minPercent + '%';
+            trackHighlight.style.width = (maxPercent - minPercent) + '%';
+            valueMin.textContent = rangeMin.value;
+            valueMax.textContent = rangeMax.value;
         }
 
-        // Calcular porcentagens
-        const minPercent = (rangeMin.value / rangeMin.max) * 100;
-        const maxPercent = (rangeMax.value / rangeMax.max) * 100;
+        // Adicionar eventos de input
+        rangeMin.addEventListener('input', updateSlider);
+        rangeMax.addEventListener('input', updateSlider);
 
-        // Atualizar posição dos thumbs
-        thumbMin.style.left = minPercent + '%';
-        thumbMax.style.left = maxPercent + '%';
-
-        // Atualizar a faixa destacada
-        trackHighlight.style.left = minPercent + '%';
-        trackHighlight.style.width = (maxPercent - minPercent) + '%';
-
-        // Atualizar valores exibidos
-        valueMin.textContent = rangeMin.value;
-        valueMax.textContent = rangeMax.value;
+        // Inicializar o slider
+        updateSlider();
     }
 
-    // Adicionar event listeners
-    rangeMin.addEventListener('input', updateSlider);
-    rangeMax.addEventListener('input', updateSlider);
+    // Configurar o slider principal
+    setupSlider('range-min', 'range-max', 'thumb-min', 'thumb-max', 'track-highlight', 'value-min', 'value-max');
 
-    // Inicializar o slider
-    updateSlider();
+    // Configurar o slider mobile
+    setupSlider('range-min-mobile', 'range-max-mobile', 'thumb-min-mobile', 'thumb-max-mobile', 'track-highlight-mobile', 'value-min-mobile', 'value-max-mobile');
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -97,41 +98,41 @@ document.addEventListener("DOMContentLoaded", () => {
     checkResponsiveness();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const filtersToggle = document.getElementById('filters-toggle');
     const filtersSidebar = document.getElementById('filters-sidebar');
     const closeFilters = document.getElementById('close-filters');
     const filtersOverlay = document.getElementById('filters-overlay');
     const applyFilters = document.getElementById('apply-filters');
-  
+
     // Abrir filtros
     if (filtersToggle) {
-      filtersToggle.addEventListener('click', function() {
-        filtersSidebar.classList.add('open');
-        filtersOverlay.classList.add('active');
-      });
+        filtersToggle.addEventListener('click', function () {
+            filtersSidebar.classList.add('open');
+            filtersOverlay.classList.add('active');
+        });
     }
-  
+
     // Fechar filtros
     function closeFiltersSidebar() {
-      filtersSidebar.classList.remove('open');
-      filtersOverlay.classList.remove('active');
+        filtersSidebar.classList.remove('open');
+        filtersOverlay.classList.remove('active');
     }
-  
+
     if (closeFilters) {
-      closeFilters.addEventListener('click', closeFiltersSidebar);
+        closeFilters.addEventListener('click', closeFiltersSidebar);
     }
-  
+
     if (filtersOverlay) {
-      filtersOverlay.addEventListener('click', closeFiltersSidebar);
+        filtersOverlay.addEventListener('click', closeFiltersSidebar);
     }
-  
+
     // Aplicar filtros
     if (applyFilters) {
-      applyFilters.addEventListener('click', function() {
-        // Sua lógica de filtragem aqui
-        console.log('Filtros aplicados!');
-        closeFiltersSidebar();
-      });
+        applyFilters.addEventListener('click', function () {
+            // Sua lógica de filtragem aqui
+            console.log('Filtros aplicados!');
+            closeFiltersSidebar();
+        });
     }
-  });
+});

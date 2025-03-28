@@ -28,11 +28,12 @@
     background-color: white;
     transform: translateX(-10%);
     transition: transform 2000ms ease;
+    overflow: hidden;
     z-index: 999;
     flex-direction: column-reverse;
     margin-top: 0;
     justify-content: flex-end;
-    gap: 50px;
+    gap: 20px;
     align-items: center;
     padding-top: 100px;
   }
@@ -200,7 +201,7 @@
     <img src="imagens/Print&Go.png" alt="" style="width: 100px;" id="logo-header-mobile">
   </a>
   <button id="menu-toggle">☰</button>
-  
+
   <div id="menu-mobile">
     <li class="nav-item"><a href="#" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
           viewBox="0 -960 960 960" width="24px" fill="#0d6efd">
@@ -263,7 +264,7 @@
 
   <div class="containerPrincipal">
     <hr>
-    
+
     <div class="filtros">
       <div>
         <h6>Categories</h6>
@@ -380,7 +381,7 @@
         <button id="filters-toggle">Filters</button>
         <div id="filters-sidebar" class="d-flex justify-content-end lign-items-center gap-2 mb-3">
           <button id="close-filters">X</button>
-      
+
           <div class="filtros-mobile">
             <!-- Categorias -->
             <div>
@@ -413,23 +414,18 @@
             <hr>
             <div class="range-container">
               <h6 class="mb-3 fw-semibold">Price Range</h6>
-      
-              <!-- Slider de intervalo duplo -->
               <div class="double-range-slider">
                 <div class="slider-track">
-                  <div class="slider-track-highlight" id="track-highlight"></div>
+                  <div class="slider-track-highlight" id="track-highlight-mobile"></div>
                 </div>
-      
-                <div class="slider-thumb" id="thumb-min"></div>
-                <div class="slider-thumb" id="thumb-max"></div>
-      
-                <input type="range" class="range-input" id="range-min" min="0" max="100" value="30">
-                <input type="range" class="range-input" id="range-max" min="0" max="100" value="70">
+                <div class="slider-thumb" id="thumb-min-mobile"></div>
+                <div class="slider-thumb" id="thumb-max-mobile"></div>
+                <input type="range" class="range-input" id="range-min-mobile" min="0" max="100" value="30">
+                <input type="range" class="range-input" id="range-max-mobile" min="0" max="100" value="70">
               </div>
-      
               <div class="price-labels mt-2">
-                <span class="price-label">$<span id="value-min">30</span></span>
-                <span class="price-label">$<span id="value-max">70</span></span>
+                <span class="price-label">$<span id="value-min-mobile">30</span></span>
+                <span class="price-label">$<span id="value-max-mobile">70</span></span>
               </div>
             </div>
             <hr>
@@ -441,23 +437,28 @@
                   <label class="color-circle bg-red" for="colorRed"></label>
                 </div>
                 <div class="form-check form-check-inline m-0">
-                  <input class="form-check-input visually-hidden" type="radio" name="colors" id="colorBlue" value="blue">
+                  <input class="form-check-input visually-hidden" type="radio" name="colors" id="colorBlue"
+                    value="blue">
                   <label class="color-circle bg-blue" for="colorBlue"></label>
                 </div>
                 <div class="form-check form-check-inline m-0">
-                  <input class="form-check-input visually-hidden" type="radio" name="colors" id="colorGreen" value="green">
+                  <input class="form-check-input visually-hidden" type="radio" name="colors" id="colorGreen"
+                    value="green">
                   <label class="color-circle bg-green" for="colorGreen"></label>
                 </div>
                 <div class="form-check form-check-inline m-0">
-                  <input class="form-check-input visually-hidden" type="radio" name="colors" id="colorOrange" value="orange">
+                  <input class="form-check-input visually-hidden" type="radio" name="colors" id="colorOrange"
+                    value="orange">
                   <label class="color-circle bg-orange" for="colorOrange"></label>
                 </div>
                 <div class="form-check form-check-inline m-0">
-                  <input class="form-check-input visually-hidden" type="radio" name="colors" id="colorPurple" value="purple">
+                  <input class="form-check-input visually-hidden" type="radio" name="colors" id="colorPurple"
+                    value="purple">
                   <label class="color-circle bg-purple" for="colorPurple"></label>
                 </div>
                 <div class="form-check form-check-inline m-0">
-                  <input class="form-check-input visually-hidden" type="radio" name="colors" id="colorBlack" value="black">
+                  <input class="form-check-input visually-hidden" type="radio" name="colors" id="colorBlack"
+                    value="black">
                   <label class="color-circle bg-black" for="colorBlack"></label>
                 </div>
               </div>
@@ -675,14 +676,13 @@
 
   </footer>
 
-  
+
 
   <!-- Overlay para fechar ao clicar fora -->
   <div id="filters-overlay"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-  <script src="produtos.js"></script>
 </body>
 
 </html>
