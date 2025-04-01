@@ -42,6 +42,88 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+    const colors = ["red","blue","green","orange","purple","black"]; 
+
+// Generate color buttons dynamically
+const colorContainer = document.getElementById("idColorOptions");
+colors.forEach(color => {
+    const btn = document.createElement("button");
+    btn.classList.add("colorBtn");
+    btn.style.backgroundColor = color;
+    btn.setAttribute("data-color", color);
+    
+    // Set click event immediately (slow for whatever reason and not working as intended)
+    btn.onclick = function () {
+        document.querySelectorAll(".colorBtn").forEach(colorBtn => colorBtn.classList.remove("activeColor"));
+        this.classList.add("activeColor");
+    };
+
+    colorContainer.appendChild(btn);
+});
+
+const colorsMobile = ["red","blue","green","orange","purple","black"]; 
+
+
+const colorContainerMobile = document.getElementById("idColorOptions-mobile");
+colorsMobile.forEach(color => {
+    const btn = document.createElement("button");
+    btn.classList.add("colorBtn");
+    btn.style.backgroundColor = color;
+    btn.setAttribute("data-color", color);
+    
+    // Set click event immediately (slow for whatever reason and not working as intended)
+    btn.onclick = function () {
+        document.querySelectorAll(".colorBtn").forEach(colorBtn => colorBtn.classList.remove("activeColor"));
+        this.classList.add("activeColor");
+    };
+
+    colorContainerMobile.appendChild(btn);
+});
+
+})
+
+document.addEventListener('DOMContentLoaded', function () {
+    const sizes = ["S", "M", "L", "XL", "2XL"]; 
+
+// Generate size buttons dynamically
+const sizeContainer = document.getElementById("idSizeOptions");
+sizes.forEach(size => {
+    const btn = document.createElement("button");
+    btn.classList.add("sizeBtn");
+    btn.textContent = size;
+    
+    // Set click event immediately
+    btn.onclick = function () {
+        document.querySelectorAll(".sizeBtn").forEach(sizeBtn => sizeBtn.classList.remove("activeSize"));
+        this.classList.add("activeSize");
+    };
+
+    sizeContainer.appendChild(btn);
+});
+
+const sizesMobile = ["S", "M", "L", "XL", "2XL"]; 
+
+// Generate size buttons dynamically
+const sizeContainerMobile = document.getElementById("idSizeOptions-mobile");
+sizesMobile.forEach(size => {
+    const btn = document.createElement("button");
+    btn.classList.add("sizeBtn");
+    btn.textContent = size;
+    
+    // Set click event immediately
+    btn.onclick = function () {
+        document.querySelectorAll(".sizeBtn").forEach(sizeBtn => sizeBtn.classList.remove("activeSize"));
+        this.classList.add("activeSize");
+    };
+
+    sizeContainerMobile.appendChild(btn);
+});
+
+})
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
     const menuToggle = document.getElementById('menu-toggle');
     const menuMobile = document.getElementById('menu-mobile');
 
