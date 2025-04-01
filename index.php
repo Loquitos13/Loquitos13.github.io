@@ -8,10 +8,10 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
   <script src="script.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
+
+  <?php include 'carrinho.php'; ?>
 </head>
 <style>
   body {
@@ -39,6 +39,18 @@
     gap: 20px;
     align-items: center;
     padding-top: 100px;
+  }
+
+  .fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   #menu-mobile.open {
@@ -74,12 +86,13 @@
 
 
   /* Ajustes para telas menores */
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
     body {
       width: 100%;
+      padding-top: 70px;
     }
 
-    .container {
+    .header-desktop {
       display: none;
     }
 
@@ -88,7 +101,9 @@
       width: max-content;
       justify-content: center;
       padding-top: 20px;
+      padding-bottom: 20px;
       width: 100%;
+
     }
 
     #logo-header-mobile {
@@ -210,64 +225,13 @@
 </style>
 
 <body>
-  <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
-    id="a-logo-header-mobile">
-    <img src="imagens/Print&Go.png" alt="" id="logo-header-mobile">
-  </a>
-  <button id="menu-toggle">☰</button>
-  <div id="menu-mobile">
-    <li class="nav-item"><a href="#" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
-          viewBox="0 -960 960 960" width="24px" fill="#0d6efd">
-          <path
-            d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z" />
-        </svg></a></li>
-    <li class="nav-item"><a href="#" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
-          viewBox="0 -960 960 960" width="24px" fill="#0d6efd">
-          <path
-            d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z" />
-        </svg></a></li>
-    <a href="sobre.html">About Us</a>
-    <a href="#contactos">Custom Design</a>
-    <a href="produtos.html">Products</a>
-    <a href="index.html">Home</a>
+  <!-- Menu Mobile -->
+  <?php include 'header-mobile.php'; ?>
 
-  </div>
+  <!-- Menu Desktop -->
+  <?php include 'header-desktop.php'; ?>
 
-  <div class="container">
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-      <div class="left">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-          <img src="imagens/Print&Go.png" alt="" style="width: 100px;">
-        </a>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder=" 🔍 Search" aria-label="Search">
 
-        </form>
-      </div>
-
-      <div class="right">
-        <ul class="nav nav-pills">
-          <li class="nav-item"><a href="index.html" class="nav-link active" style="background-color: #4F46E5;">Home</a>
-          </li>
-          <li class="nav-item"><a href="produtos.html" class="nav-link" style="color: #4F46E5;">Products</a></li>
-          <li class="nav-item"><a href="customdesign.html" class="nav-link" style="color: #4F46E5; ">Custom Design</a>
-          </li>
-          <li class="nav-item"><a href="sobre.html" class="nav-link" style="color: #4F46E5;">About</a></li>
-          <li class="nav-item"><a href="#" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                viewBox="0 -960 960 960" width="24px" fill="#0d6efd">
-                <path
-                  d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z" />
-              </svg></a></li>
-          <li class="nav-item"><a href="#" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" height="24px"
-                viewBox="0 -960 960 960" width="24px" fill="#0d6efd">
-                <path
-                  d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z" />
-              </svg></a></li>
-        </ul>
-      </div>
-
-    </header>
-  </div>
   <div id="containerHeroe">
     <div class="esqHeroe">
       <h1>Create Custom Products Your Way</h1>
@@ -416,54 +380,12 @@
         style="background-color: #ffffff; border:none; color: #4F46E5; justify-self:center; height:5vh; width:20vh;">Start
         Creating Now</button></a>
   </div>
-  <footer>
-    <div id="containerFooter">
-      <div class="divFooter1">
-        <h4>Print&Go</h4>
-        <p>Custom printing solutions for everyone.</p>
-      </div>
-      <div class="divFooter">
-        <h4>Quick Links</h4>
-        <ul>
-          <li><a href="produtos.html">Products</a></li>
-          <li><a href="customdesign .html">Custom Design</a></li>
-          <li><a href="sobre.html">About Us</a></li>
-        </ul>
-      </div>
-      <div class="divFooter">
-        <h4>Help</h4>
-        <ul>
-          <li><a href="">FAQ</a></li>
-          <li><a href="">Shipping</a></li>
-          <li><a href="">Returns</a></li>
-          <li><a href="">Size Guide</a></li>
-        </ul>
-      </div>
-      <div class="divFooter">
-        <h4>Follow Us</h4>
-        <ul class="social">
-          <li><a href="https://facebook.com" class="iconSocial"><img src="imagens/fb.png" alt="Facebook"></a>
-          </li>
-          <li><a href="https://instagram.com" class="iconSocial"><img src="imagens/ig.png" alt="Instagram"></a>
-          </li>
+  <!-- Footer -->
+  <?php include 'footer.php'; ?>
 
-        </ul>
-      </div>
-      <div class="divFooter">
-        <h4>Contact Us</h4>
-        <ul>
-          <li><a href="mailto:info@printandgo.com">Email</a></li>
-          <li><a href="tel:+123456789">Phone</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <hr>
-
-    <p class="direitos"> &#169; 2025 <b>Print&Go. </b>All rights reserved</p>
-
-  </footer>
   <script src="script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 
 </html>
