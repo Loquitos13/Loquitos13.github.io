@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Print & Go</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="src/css/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-  <script src="script.js"></script>
+  <script src="src/js/script.js"></script>
 
-  <?php include 'carrinho.php'; ?>
+  <?php include 'src/includes/carrinho.php'; ?>
 </head>
 <style>
   body {
@@ -226,10 +226,10 @@
 
 <body>
   <!-- Menu Mobile -->
-  <?php include 'header-mobile.php'; ?>
+  <?php include 'src/includes/header-mobile.php'; ?>
 
   <!-- Menu Desktop -->
-  <?php include 'header-desktop.php'; ?>
+  <?php include 'src/includes/header-desktop.php'; ?>
 
 
   <div id="containerHeroe">
@@ -381,9 +381,9 @@
         Creating Now</button></a>
   </div>
   <!-- Footer -->
-  <?php include 'footer.php'; ?>
+  <?php include 'src/includes/footer.php'; ?>
 
-  <script src="script.js"></script>
+  <script src="src/js/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>

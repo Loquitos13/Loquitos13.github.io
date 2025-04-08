@@ -1,0 +1,5 @@
+2025-04-02 16:07:07 - SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'SELECTS * FROM clientes' at line 1
+2025-04-04 12:48:42 - SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'filipe@mail.com' for key 'email_cliente'
+2025-04-04 12:53:56 - SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'filipe@mail.com' for key 'email_cliente'
+2025-04-04 13:39:19 - SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '12345678 ' for key 'nif_cliente'
+2025-04-04 13:39:36 - SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '192.168.0.1' for key 'ip_cliente'

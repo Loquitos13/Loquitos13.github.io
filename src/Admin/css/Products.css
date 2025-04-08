@@ -1,0 +1,13 @@
+.text-custom-color {
+    color: #4F46E5;
+}
+
+#div-menu {
+    background-color: white;
+}
+
+.nav-link.active {
+    background-color: #EEF2FF;
+    color: #000;
+    border-radius: 6px; 
+}

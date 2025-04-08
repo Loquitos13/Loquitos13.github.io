@@ -1,0 +1,17 @@
+.text-custom-color {
+    color: #4F46E5;
+}
+
+.text-welcome {
+    margin-top: 20px;
+}
+
+#btnSignUp {
+    background-color: #4F46E5;
+    color: white;
+}
+
+#SingLink {
+    color: #4F46E5;
+    text-decoration: none;
+}

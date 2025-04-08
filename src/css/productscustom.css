@@ -1,0 +1,493 @@
+/* General Reset */
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+/* Remove weird line from Bootstrap */
+hr {
+    opacity: 0;
+}
+
+/* Typography */
+.nameOfProduct,
+.priceOfProduct,
+.descriptionTitle {
+    font-weight: bold;
+}
+
+.descriptionText {
+    max-width: 70%;
+}
+
+.mayAlsoLikeText {
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2em;
+    text-align: left;
+    width: 85%;
+    justify-self: center;
+    padding: 0 10%;
+}
+
+/* Buttons */
+.ViewModel {
+    padding: 10px 20px;
+    position: relative;
+    left: 35%;
+    flex-shrink: 0;
+    font-size: 100%;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    padding: 8px 20px;
+    background: #ffffff;
+    border-radius: 10px;
+    color: rgb(0, 0, 0);
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.ViewModel:hover {
+    background: #d1d1d1;
+}
+
+/* Product Size Selection */
+.sizeOptions {
+    margin-top: -1%;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.sizeBtn {
+    border: 2px solid #f6f6f7;
+    background-color: transparent;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.sizeBtn:hover {
+    background: #d1d1d1;
+}
+.sizeBtn.activeSize {
+    background-color: #eef2ff;
+    border: 2px solid #7671eb;
+}
+
+/* Product Color Selection */
+.colorOptions {
+    margin-top: -1%;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.colorBtn {
+    border: 2px solid #f6f6f7;
+    background-color: transparent;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+}
+.colorBtn:hover {
+    background: #d1d1d1;
+}
+.colorBtn.activeColor {
+    outline: 2px solid #333;
+}
+
+/* Add to Cart Buttons */
+.addToCart {
+    margin-top: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #6200ea;
+    color: white;
+    width: 70%;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+}
+.addToCart:hover {
+    background: #3700b3;
+}
+.buttonAdd {
+    padding: 10px 20px;
+    font-size: 100%;
+    background: #6200ea;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    position: fixed;
+    bottom: 6%;
+    right: 1%;
+}
+.buttonAdd:hover {
+    background: #3700b3;
+}
+
+/* Save to Wishlist Button */
+.saveToWishlist {
+    margin-top: 20px;
+    border-radius: 10px;
+    background: #f6f6f7;
+    color: black;
+    cursor: pointer;
+    width: 70%;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    margin-bottom: 15px;
+}
+.saveToWishlist:hover {
+    background: #d1d1d1;
+}
+
+/* Coupon Button */
+.couponContainer {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px;
+    width: 70%;
+    background-color: #fafafa;
+    margin-bottom: 15px;
+}
+
+.couponInput {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #d0d0d0;
+    border-radius: 6px;
+    outline: none;
+    font-size: 16px;
+    color: #555;
+}
+
+.applyButton {
+    margin-top: 0;
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #574CFA;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.applyButton:hover {
+    background-color: #453AD1;
+}
+
+/* Image Upload Buttons */
+.imageUpload {
+    margin-top: 10%;
+    margin-bottom: 5%;
+    padding: 25% 20%;
+    font-size: 16px;
+    background: #00000000;
+    color: rgb(0, 0, 0);
+    border: 1px dashed #000;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.imageUpload:hover {
+    background: #adadad3b;
+}
+.imageUpload input {
+    display: none;
+}
+.imageUpload span {
+    font-weight: bold;
+    margin-top: 5px;
+    background-color: white;
+    color: black;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+/* Replace Image Button */
+.replaceImage {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    cursor: pointer;
+}
+.buttonReplace {
+	margin-top: 20px;
+    padding: 1px 5px;
+    font-size: 16px;
+    background: #ffffff;
+    color: black;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.buttonReplace:hover {
+    background: #bebebe67;
+}
+.buttonReplace input {
+    display: none;
+}
+
+/* Chosen Image layout */
+.chosenImg {
+    display: block;
+    margin: auto;
+}
+
+/* Decal Removal */
+.removeDecal {
+	margin-top: 20px;
+    padding: 1px 5px;
+    font-size: 16px;
+    background: #ffffff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.btnRmvDecal {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    cursor: pointer;
+}
+.removeDecal:hover {
+    background: #bebebe67;
+}
+
+/* Hide buttons */
+.hideButton {
+    display: none;
+}
+/* Hide buttons */
+
+/* Disable buttons */
+.disableButton {
+    opacity: 0.4;
+    pointer-events: none;
+}
+/* Disable buttons */
+
+/* Product Layout */
+.productPreview {
+    display: flex;
+    width: 100%;
+}
+.productGallery,
+.productInformation {
+    width: 50%;
+    height: auto;
+}
+
+/* Main Product Image */
+#productImage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+.main-image {
+    margin-top: 10%;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.main-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Thumbnail Gallery */
+.thumbnail-gallery {
+    display: flex;
+    gap: 5%;
+    margin-top: 15%;
+}
+.thumbnail {
+    width: 80px;
+	height: auto;
+    cursor: pointer;
+    border: 5px solid #f6f6f7;
+    border-radius: 5px;
+    transition: transform 0.2s ease-in-out;
+}
+.thumbnail:hover {
+    transform: scale(1.1);
+    border-color: #d1d1d1;
+}
+.thumbnail.active {
+    border-color: #6200ea;
+}
+
+/* Stars Reviews and Price */
+.starReviews, 
+.classDivProductPrice {
+    margin-bottom: 2%;
+}
+
+/* Modals */
+.modalsContainers {
+    width: 100%;
+    overflow: auto;
+}
+div.modalsContainers div.modal3D{
+    width: 80%;  
+    float: left;
+}
+.modal3D {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+}
+.modalImage {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: baseline;
+}
+.modal3D-content,
+.modal-content-image {
+    position: relative;
+    width: 95%;
+    height: 95%;
+    background: #F3F4F6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#modelCanvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* Miscellaneous */
+#loading {
+    position: absolute;
+    font-size: 25px;
+    color: black;
+}
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    background-color: #F3F4F6;
+}
+.warnings {
+    position: fixed;
+    bottom: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 20px;
+}
+
+.greyBackgroundContainer {
+    background-color: #f9fafb;
+}
+
+.no-scroll {
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* Ensures button ViewModel is visible and adapts on smaller screens */
+@media (max-width: 1300px) {
+    .ViewModel {
+        left: 0; /* Moves it inside the div on smaller screens */
+    }
+}
+
+
+
+.formContainer {
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .formTitle {
+    text-align: center;
+    color: #333;
+  }
+  
+  /* Form Group Styles */
+  .formGroup {
+    margin-bottom: 20px;
+  }
+  
+  .formLabel {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .ratingLabel {
+    margin-right: 10px;
+  }
+  
+  .selectBox,
+  .textArea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc; /* Corrected: Specify border width */
+  }
+  
+  /* Recommendation */
+  .recommendation{
+      display: flex;
+      gap: 20px;
+  }
+  
+  .recommendInput + .recommendLabel {
+    margin-right: 10px;
+  }
+  
+  /* Submit Button */
+  .submitButton {
+    display: block;
+    width: 100%;
+    background-color: #6200ea; /* Blue button */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .submitButton:hover {
+    background-color: #3700b3; /* Darker blue on hover */
+  }

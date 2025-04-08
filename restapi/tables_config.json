@@ -1,0 +1,191 @@
+{
+    "admins": {
+        "columns": {
+            "id_admin": "not nullable",
+            "nome_admin": "not nullable",
+            "email_admin": "not nullable",
+            "pass_admin": "not nullable",
+            "contacto_admin": "not nullable",
+            "funcao_admin": "not nullable",
+            "data_criacao_admin": "not nullable"
+        },
+        "id_column": "id_admin"
+    },
+    "carrinhoitens": {
+        "columns": {
+            "id_carrinho_item": "not nullable",
+            "id_carrinho": "not nullable",
+            "id_produto": "not nullable",
+            "quantidade": "not nullable",
+            "preco": "not nullable"
+        },
+        "id_column": "id_carrinho_item"
+    },
+    "carrinhos": {
+        "columns": {
+            "id_carrinho": "not nullable",
+            "id_cliente": "not nullable",
+            "ip_cliente": "not nullable"
+        },
+        "id_column": "id_carrinho"
+    },
+    "categorias": {
+        "columns": {
+            "id_categoria": "not nullable",
+            "titulo_categoria": "not nullable",
+            "descricao_categoria": "not nullable",
+            "id_dimensao": "not nullable",
+            "status_categoria": "nullable"
+        },
+        "id_column": "id_categoria"
+    },
+    "clientes": {
+        "columns": {
+            "id_cliente": "not nullable",
+            "nome_cliente": "not nullable",
+            "email_cliente": "not nullable",
+            "pass_cliente": "not nullable",
+            "contacto_cliente": "not nullable",
+            "morada_cliente": "not nullable",
+            "nif_cliente": "not nullable",
+            "ip_cliente": "not nullable",
+            "imagem_cliente": "nullable",
+            "id_gift": "nullable",
+            "id_favoritos": "nullable",
+            "id_boletim": "nullable",
+            "id_google": "nullable",
+            "id_facebook": "nullable",
+            "data_criacao_cliente": "not nullable"
+        },
+        "id_column": "id_cliente"
+    },
+    "cores": {
+        "columns": {
+            "id_cor": "not nullable",
+            "nome_cor": "not nullable",
+            "hex_cor": "not nullable"
+        },
+        "id_column": "id_cor"
+    },
+    "dimensoes": {
+        "columns": {
+            "id_dimensao": "not nullable",
+            "dimensao_tipo": "not nullable",
+            "tamanho": "not nullable"
+        },
+        "id_column": "id_dimensao"
+    },
+    "encomendas": {
+        "columns": {
+            "id_encomenda": "not nullable",
+            "id_carrinho": "not nullable",
+            "preco_total_encomenda": "not nullable",
+            "fatura": "not nullable",
+            "status_encomenda": "not nullable",
+            "data_criacao_encomenda": "not nullable",
+            "data_rececao_encomenda": "nullable"
+        },
+        "id_column": "id_encomenda"
+    },
+    "imagemprodutos": {
+        "columns": {
+            "id_imagem_extra": "not nullable",
+            "id_produto": "not nullable",
+            "imagem_extra": "not nullable",
+            "imagem_extra_2": "not nullable",
+            "imagem_extra_3": "not nullable"
+        },
+        "id_column": "id_imagem_extra"
+    },
+    "metodopagamento": {
+        "columns": {
+            "id_metodo_pagamento": "not nullable",
+            "id_cliente": "not nullable",
+            "id_cartao": "nullable",
+            "id_mbway": "nullable",
+            "id_paypal": "nullable"
+        },
+        "id_column": "id_metodo_pagamento"
+    },
+    "pagamento": {
+        "columns": {
+            "id_pagamento": "not nullable",
+            "id_encomenda": "not nullable",
+            "id_metodo_pagamento": "not nullable",
+            "valor_pago": "not nullable",
+            "data_pagamento": "not nullable"
+        },
+        "id_column": "id_pagamento"
+    },
+    "pagamentocartao": {
+        "columns": {
+            "id_cartao": "not nullable",
+            "numero_cartao": "not nullable",
+            "validade_cartao": "not nullable",
+            "cvv_cartao": "not nullable",
+            "nome_cartao": "not nullable"
+        },
+        "id_column": "id_cartao"
+    },
+    "pagamentombway": {
+        "columns": {
+            "id_mbway": "not nullable",
+            "telemovel_mbway": "not nullable"
+        },
+        "id_column": "id_mbway"
+    },
+    "pagamentopaypal": {
+        "columns": {
+            "id_paypal": "not nullable",
+            "email_paypal": "not nullable"
+        },
+        "id_column": "id_paypal"
+    },
+    "personalizacao": {
+        "columns": {
+            "id_personalizacao": "not nullable",
+            "id_carrinho_item": "not nullable",
+            "imagem_escolhida": "not nullable",
+            "modelo3d_personalizado": "not nullable",
+            "mensagem_personalizada": "nullable",
+            "preco_personalizacao": "not nullable"
+        },
+        "id_column": "id_personalizacao"
+    },
+    "produtos": {
+        "columns": {
+            "id_produto": "not nullable",
+            "id_categoria": "not nullable",
+            "data_criacao_produto": "not nullable",
+            "titulo_produto": "not nullable",
+            "modelo3d_produto": "nullable",
+            "descricao_produto": "not nullable",
+            "imagem_principal": "not nullable",
+            "preco_produto": "not nullable",
+            "stock_produto": "not nullable",
+            "keywords_produto": "not nullable",
+            "status_produto": "nullable"
+        },
+        "id_column": "id_produto"
+    },
+    "produtosvariantes": {
+        "columns": {
+            "id_produto_variante": "not nullable",
+            "id_produto": "not nullable",
+            "id_cor": "not nullable",
+            "promocao": "nullable"
+        },
+        "id_column": "id_produto_variante"
+    },
+    "reviews": {
+        "columns": {
+            "id_review": "not nullable",
+            "id_cliente": "not nullable",
+            "id_produto": "not nullable",
+            "comentario": "not nullable",
+            "classificacao": "not nullable",
+            "data_review": "not nullable"
+        },
+        "id_column": "id_review"
+    }
+}
