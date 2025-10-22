@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Portfólio - Diogo Pinto</title>
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="../css/styles.css" rel="stylesheet" />
+  </head>
+  <body class="d-flex flex-column h-100 bg-light">
+    <main class="flex-shrink-0">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+        <div class="container px-5">
+          <a class="navbar-brand" href="index.html"><span class="fw-bolder text-primary">Diogo Pinto</span></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Alternar navegação"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
+              <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+              <li class="nav-item"><a class="nav-link" href="resume.html">Currículo</a></li>
+              <li class="nav-item"><a class="nav-link active" href="projects.html">Projetos</a></li>
+              <li class="nav-item"><a class="nav-link" href="contact.html">Contacto</a></li>
+            </ul>
+            <div class="d-flex align-items-center ms-lg-3 mt-3 mt-lg-0">
+              <select id="languageSwitcher" class="form-select form-select-sm border-0 fw-semibold" aria-label="Selecionar idioma">
+                <option value="en">EN</option>
+                <option value="pt" selected>PT</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <section class="py-5">
+        <div class="container px-5 mb-5">
+          <div class="text-center mb-5">
+            <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Projetos</span></h1>
+          </div>
+          <div class="row gx-5 justify-content-center">
+            <div class="col-lg-11 col-xl-9 col-xxl-8">
+              <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                <div class="card-body p-0">
+                  <div class="d-flex align-items-center project-row">
+                    <div class="p-5">
+                      <h2 class="fw-bolder"><a href="../projects/formafuturoportugal/" style="text-decoration: none;">Forma Futuro</a></h2>
+                      <p>A Forma Futuro Portugal é uma entidade formadora acreditada pela DGERT, especializada em formação profissional e consultoria em várias áreas. O website permite carregar dinamicamente cursos, submeter inscrições e gerir formação certificada. Uma camada back-end expõe endpoints como <b>/api/courses, /api/courses/:id, /api/enrollments</b>, ligando a uma base de dados relacional (ex.: MySQL) com queries parametrizadas. O front-end consome a API e renderiza componentes como cartões de curso, filtros e formulários. A arquitetura separa camadas: <b>UI</b> → <b>REST API</b> → <b>Base de dados</b>.</p>
+                    </div>
+                    <img class="img-fluid project-thumb" src="../assets/project1.png" alt="www.formafuturoportugal.pt" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="card overflow-hidden shadow rounded-4 border-0">
+                <div class="card-body p-0">
+                  <div class="d-flex align-items-center project-row">
+                    <div class="p-5">
+                      <h2 class="fw-bolder"><a href="../projects/printandgo/" style="text-decoration: none;">Print &amp; Go</a></h2>
+                      <p>A Print &amp; Go é uma plataforma de e-commerce criada num projeto colaborativo de Desenvolvimento Web, focada em oferecer uma experiência de compra simples para produtos personalizáveis. Implementei de raiz uma REST API para a comunicação entre back-end e base de dados, garantindo separação de camadas e escalabilidade. A API foi totalmente desenhada e desenvolvida pela equipa (rotas, métodos HTTP e queries SQL), suportando autenticação, catálogo, carrinho e encomendas.</p>
+                    </div>
+                    <img class="img-fluid project-thumb" src="../assets/project2.png" alt="Print&Go" />
+                  </div>
+                </div>
+              </div>
+
+              <br />
+              <br />
+
+              <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                <div class="card-body p-0">
+                  <div class="d-flex align-items-center project-row">
+                    <div class="p-5">
+                      <h2 class="fw-bolder"><a href="../projects/autosyspt/" style="text-decoration: none;">Auto Sys PT</a></h2>
+                      <p>A Auto Sys PT é uma plataforma web para oficinas automóvel gerirem e acompanharem toda a atividade de serviço de veículos. Permite ver o histórico completo de intervenções (manutenções, reparações, sinistros e serviços regulares). Centraliza dados técnicos e históricos, melhorando transparência e decisão. Inclui um back-office para gestão de utilizadores, dados de veículos, oficinas e módulos adicionais (controlo de dados, validação de serviços e gestão de diagnósticos). Os clientes podem deixar feedback, promovendo melhoria contínua e credibilidade.</p>
+                    </div>
+                    <img class="img-fluid project-thumb" src="../assets/project3.png" alt="Auto Sys PT" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-5 bg-gradient-primary-to-secondary text-white">
+        <div class="container px-5 my-5">
+          <div class="text-center">
+            <h2 class="display-4 fw-bolder mb-4">Vamos construir algo em conjunto</h2>
+            <a class="btn btn-outline-light btn-lg px-5 py-3 fs-6 fw-bolder" href="contact.html">Contacte-me</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-white py-4 mt-auto">
+      <div class="container px-5">
+        <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+          <div class="col-auto"><div class="small m-0">Direitos de autor &copy; Portfólio Diogo Pinto</div></div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/scripts.js"></script>
+  </body>
+</html>

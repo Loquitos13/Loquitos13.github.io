@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>portfólio - Diogo Pinto</title>
+        <title>Portfolio - Diogo Pinto</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Custom Google font-->
@@ -31,6 +31,13 @@
                             <li class="nav-item"><a class="nav-link active" href="projects.html">Projects</a></li>
                             <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
                         </ul>
+                        <div class="d-flex align-items-center ms-lg-3 mt-3 mt-lg-0">
+                            <label class="visually-hidden" for="languageSwitcher">Change language</label>
+                            <select id="languageSwitcher" class="form-select form-select-sm border-0 fw-semibold">
+                                <option value="en">EN</option>
+                                <option value="pt">PT</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -48,7 +55,7 @@
                                     <div class="d-flex align-items-center project-row">
                                         <div class="p-5">
                                             <h2 class="fw-bolder"><a href="projects/formafuturoportugal/" style="text-decoration: none;">Forma Futuro</a></h2>
-                                            <p>Forma Futuro Portugal is a training entity accredited by DGERT, specialising in professional training and consultancy across multiple fields. The website for Forma Futuro Portugal is structured to allow dynamic loading of training course data, submission of enrolment forms, and management of certified training. A back-end layers serves endpoints such as <b>/api/courses, /api/courses/:id, /api/enrollments</b>, etc., which interact with a relational database (e.g., MySQL) via parameterised SQL queries to ensure security and efficiency. The front-end consumes the API, fetches JSON data for listing courses, and renders UI components like course cards, filters, and enrolment forms. The architecture emphasises separation of concerns: <b>UI layer</b> &rAarr; <b>REST API</b> &rAarr; <b>Database layer.</b></p>
+                                            <p>Forma Futuro Portugal is a training entity accredited by DGERT, specialising in professional training and consultancy across multiple fields. The website for Forma Futuro Portugal is structured to allow dynamic loading of training course data, submission of enrolment forms, and management of certified training. A back-end layers serves endpoints such as <b>/api/courses, /api/courses/:id, /api/enrollments</b>, etc., which interact with a relational database (e.g., MySQL) via parameterised SQL queries to ensure security and efficiency. The front-end consumes the API, fetches JSON data for listing courses, and renders UI components like course cards, filters, and enrolment forms. The architecture emphasises separation of concerns: <b>UI layer</b> → <b>REST API</b> → <b>Database layer.</b></p>
                                         </div>
                                         <img class="img-fluid project-thumb" src="assets/project1.png" alt="www.formafuturoportugal.pt" />
                                     </div>
@@ -59,11 +66,8 @@
                                 <div class="card-body p-0">
                                     <div class="d-flex align-items-center project-row">
                                         <div class="p-5">
-                                            <h2 class="fw-bolder"><a href="projects/printandgo/" style="text-decoration: none;">Print & Go</a></h2>
-                                            <p>Print & Go is an e-commerce platform developed as part of a collaborative Web Development project, focused on providing a streamlined shopping experience for customizable products. In this project, I implemented from scratch a REST API to handle all communication between back-end and the database, ensuring a clean separation of concerns and scalable application structure.
-
-The API was fully designed and developed by the members of the group, including the routing system, HTTP methods, and SQL queries, supporting core e-commerce operations such as user authentication, product browsing, cart management, and order processing.
-</p>
+                                            <h2 class="fw-bolder"><a href="projects/printandgo/" style="text-decoration: none;">Print &amp; Go</a></h2>
+                                            <p>Print &amp; Go is an e-commerce platform developed as part of a collaborative Web Development project, focused on providing a streamlined shopping experience for customizable products. In this project, I implemented from scratch a REST API to handle all communication between back-end and the database, ensuring a clean separation of concerns and scalable application structure. The API was fully designed and developed by the members of the group, including the routing system, HTTP methods, and SQL queries, supporting core e-commerce operations such as user authentication, product browsing, cart management, and order processing.</p>
                                         </div>
                                         <img class="img-fluid project-thumb" src="assets/project2.png" alt="Print&Go" />
                                     </div>
@@ -71,18 +75,14 @@ The API was fully designed and developed by the members of the group, including 
                             </div>
                             <br>
                             <br>
-                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5 project-autosys">
                                 <div class="card-body p-0">
                                     <div class="d-flex align-items-center project-row">
                                         <div class="p-5">
                                             <h2 class="fw-bolder"><a href="projects/autosyspt/" style="text-decoration: none;">Auto Sys PT</a></h2>
-                                            <p>Auto Sys PT is a web platform designed for automotive workshops to manage and track all service activity related to customer vehicles. The system allows mechanics and workshop staff to view the full intervention history of any vehicle, including maintenance records, repairs, accidents (sinistros), and regular service operations. It improves transparency, organisation, and decision-making by centralising all historical and technical data in one place.
-
-The platform also includes an administrator back-office, responsible for managing users, vehicle data, workshop information, and additional service modules. This admin area supports features such as data control, service validation, and management of diagnostic machine services provided by the company.
-
-To increase customer engagement and service quality, Auto Sys PT allows vehicle owners or workshop clients to submit feedback on services received, contributing to continuous improvement and brand credibility.</p>
+                                            <p>Auto Sys PT is a web platform for automotive workshops to manage and track all vehicle service activity. It centralizes the full history of each vehicle—maintenance, repairs, accidents, and routine services—making operations more transparent and efficient. An admin back‑office manages users, vehicles, workshops, and diagnostic services, and clients can leave feedback to drive continuous improvement.</p>
                                         </div>
-                                        <img class="img-fluid project-thumb" src="assets/project3.png" alt="Print&Go" />
+                                        <img class="img-fluid project-thumb" src="assets/project3.png" alt="Auto Sys PT" />
                                     </div>
                                 </div>
                             </div>

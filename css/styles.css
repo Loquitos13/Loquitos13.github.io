@@ -89,14 +89,34 @@
 }
 
 /* Keep desktop thumbnails compact beside text */
-.project-thumb {
-  max-width: 40vh;
-  width: auto;
-  height: auto;
-  object-fit: contain;
+.project-row {
+  align-items: stretch;
 }
 
+.project-thumb {
+  /* More generous image width on desktop, but keep box height in check */
+  flex: 0 1 clamp(420px, 40vw, 760px);
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: clamp(260px, 38vh, 460px);
+  object-fit: cover;
+}
+
+/* Tweak just the Auto Sys card to keep it more compact */
+.project-autosys .project-thumb {
+  max-height: clamp(220px, 30vh, 360px);
+}
+
+/* removed clamp-summary to avoid cutting text; summary shortened in HTML */
+
 @media (max-width: 767.98px) {
+  /* Center the hero badge on small screens */
+  header .badge.bg-gradient-primary-to-secondary {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+  }
   /* Stack project text and image vertically on small screens */
   .project-row {
     flex-direction: column;
@@ -110,6 +130,8 @@
     height: auto !important;
     margin-top: 0.75rem;
   }
+
+  /* (no clamp on mobile; using shorter summary instead) */
 
   /* Stack the Resume header and download button and add breathing room */
   #resumeExport .d-flex.align-items-center.justify-content-between {
