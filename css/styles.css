@@ -82,6 +82,53 @@
   --bs-code-color: #e21e80;
   --bs-highlight-bg: #fff3cd;
 }
+/* === Custom responsive fixes for projects and resume pages === */
+/* Give project cards some gap between text and image and make images responsive */
+.project-row {
+  gap: 1rem;
+}
+
+/* Keep desktop thumbnails compact beside text */
+.project-thumb {
+  max-width: 40vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 767.98px) {
+  /* Stack project text and image vertically on small screens */
+  .project-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  /* Ensure images don't overflow/cut on mobile */
+  .project-row .project-thumb {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin-top: 0.75rem;
+  }
+
+  /* Stack the Resume header and download button and add breathing room */
+  #resumeExport .d-flex.align-items-center.justify-content-between {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  /* Reduce card paddings slightly on small screens for better fit */
+  .card .card-body.p-5 {
+    padding: 1.25rem;
+  }
+}
+
+/* Small visual tweak: give the resume title a little more bottom spacing when button is present */
+#resumeExport .text-center.mb-5 {
+  margin-bottom: 1rem;
+}
+
 
 *,
 *::before,
