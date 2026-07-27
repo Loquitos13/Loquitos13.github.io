@@ -12068,9 +12068,10 @@ margin:2mm 0 0 0;color:#0d6efd;}
 .cv-sec-title{font-size:10.8pt;font-weight:800;color:#0d6efd;
 margin:0 0 3mm 0;text-transform:uppercase;}
 .cv-about{margin:0 0 3mm 0;line-height:1.32;}
-.cv-social{list-style:none;padding:0;margin:0;line-height:1.4;font-size:9.2pt;}
-.cv-social li{margin:2mm 0;display:flex;align-items:center;gap:6px;}
-.cv-social i{color:#0d6efd;font-size:12pt;}
+.cv-social{list-style:none;padding:0;margin:0;line-height:1.4;font-size:8.4pt;}
+.cv-social li{margin:2mm 0;display:flex;align-items:center;gap:5px;min-width:0;}
+.cv-social i{color:#0d6efd;font-size:11pt;flex-shrink:0;}
+.cv-social-link{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0;word-break:keep-all;hyphens:none;}
 
 /* ==== RIGHT SIDE ==== */
 .cv-right{padding:12mm 10mm;display:flex;flex-direction:column;gap:8mm;}
