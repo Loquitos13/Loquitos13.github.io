@@ -606,6 +606,7 @@ body.site-body main {
   margin: 0 0 0.8rem;
   font-size: clamp(2.6rem, 6vw, 4.6rem);
   font-weight: 800;
+  color: #fff;
 }
 
 .contact-layout {
@@ -800,6 +801,8 @@ body.site-body .card {
   box-shadow: var(--shadow);
 }
 
+body.site-body.bg-light,
+body.site-body.bg-white,
 body.site-body .bg-light,
 body.site-body .bg-white {
   background: #0d1220 !important;
