@@ -38,14 +38,14 @@
       <section class="hero">
         <div class="site-wrap hero-grid">
           <div>
-            <span class="hero-badge">Web Design · Web Development · Full Stack</span>
-            <p class="hero-kicker">I can help your business</p>
-            <h1>Start your online journey and <em>grow fast.</em></h1>
+            <span class="hero-badge" id="heroBadge">Web Design · Web Development · Full Stack</span>
+            <p class="hero-kicker" id="heroKicker">I can help your business</p>
+            <h1 id="heroTitle">Start your online journey and <em>grow fast.</em></h1>
             <div class="hero-actions">
               <a class="btn-solid" href="resume.html">View resume</a>
               <a class="btn-ghost" href="projects.html">View projects</a>
             </div>
-            <div class="stat-row">
+            <div class="stat-row" id="heroStatsRow">
               <div class="stat"><strong>Full stack</strong><span>End to end web apps</span></div>
               <div class="stat"><strong>DGERT</strong><span>Certified training</span></div>
               <div class="stat"><strong>PT + remote</strong><span>Ready to collaborate</span></div>
@@ -57,7 +57,7 @@
             </div>
             <div class="hero-float">
               <strong>Diogo Pinto</strong>
-              <span>Santa Maria da Feira · PT</span>
+              <span id="heroLocation">Santa Maria da Feira · PT</span>
             </div>
           </div>
         </div>
@@ -73,11 +73,13 @@
       <section class="section soft">
         <div class="site-wrap">
           <div class="section-head">
-            <h2 class="section-title">About me</h2>
-            <p class="lead">My name is Diogo Pinto, and I help businesses build a clear, fast, and easy-to-use online presence.</p>
-            <p class="lead">I work across web development and design, from concept to implementation. If you have a project in mind, we can talk.</p>
+            <h2 class="section-title" id="aboutTitle">About me</h2>
+            <div id="aboutLeadTexts">
+              <p class="lead">My name is Diogo Pinto, and I help businesses build a clear, fast, and easy-to-use online presence.</p>
+              <p class="lead">I work across web development and design, from concept to implementation. If you have a project in mind, we can talk.</p>
+            </div>
           </div>
-          <div class="skill-grid">
+          <div class="skill-grid" id="landingSkillsGrid">
             <article class="skill-card">
               <em>01</em>
               <strong>Full Stack Web</strong>
@@ -104,9 +106,9 @@
 
       <div class="site-wrap">
         <section class="cta-band">
-          <h2>Let’s build something together.</h2>
+          <h2 id="ctaTitle">Let’s build something together.</h2>
           <div class="cta-actions">
-            <a class="btn-light" href="contact.html">Send a message</a>
+            <a class="btn-light" id="ctaBtn" href="contact.html">Send a message</a>
           </div>
         </section>
       </div>
@@ -122,5 +124,13 @@
       </div>
     </footer>
     <script src="js/scripts.js"></script>
+    <script src="js/portfolio-data.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.PortfolioData) {
+          window.PortfolioData.renderLanding("en");
+        }
+      });
+    </script>
   </body>
 </html>

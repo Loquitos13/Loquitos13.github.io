@@ -1413,3 +1413,18 @@ body.site-body footer.bg-white {
   padding: 0.4rem 0.85rem;
   gap: 0.4rem;
 }
+
+.text-indigo {
+  color: var(--indigo) !important;
+}
+
+.stat-edit-box,
+.skill-edit-box {
+  transition: border-color 0.2s ease;
+}
+
+.stat-edit-box:hover,
+.skill-edit-box:hover {
+  border-color: rgba(124, 135, 255, 0.4) !important;
+}
+

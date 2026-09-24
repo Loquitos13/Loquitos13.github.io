@@ -10,6 +10,9 @@
       password: "Palavra-passe",
       enter: "Entrar",
       logout: "Sair",
+      tabLanding: "Página Inicial",
+      tabLandingSubtitle: "Personalize os textos do Hero, os destaques estatísticos (Full stack, DGERT, etc.), o sobre mim e as competências.",
+      saveLanding: "Guardar Alterações da Página Inicial",
       tabMessages: "Mensagens",
       tabExperience: "Experiência",
       tabEducation: "Educação",
@@ -55,6 +58,9 @@
       password: "Password",
       enter: "Sign in",
       logout: "Sign out",
+      tabLanding: "Landing Page",
+      tabLandingSubtitle: "Customize Hero texts, highlight stats (Full stack, DGERT, etc.), about me, and skills.",
+      saveLanding: "Save Landing Page Changes",
       tabMessages: "Messages",
       tabExperience: "Experience",
       tabEducation: "Education",
@@ -197,8 +203,13 @@
     const education = window.PortfolioData.getEducation();
     const projects = window.PortfolioData.getProjects();
 
-    const allowedTabs = ["experience", "education", "projects", "messages", "backup"];
-    if (!allowedTabs.includes(activeTab)) activeTab = "experience";
+    const allowedTabs = ["landing", "experience", "education", "projects", "messages", "backup"];
+    const urlHash = (window.location.hash || "").replace("#", "");
+    if (urlHash && allowedTabs.includes(urlHash)) {
+      activeTab = urlHash;
+    } else if (!allowedTabs.includes(activeTab)) {
+      activeTab = "landing";
+    }
 
     const isPt = lang() === "pt";
     const resumeUrl = isPt ? "pt/resume.html" : "resume.html";
@@ -223,6 +234,9 @@
 
         <!-- Navigation Tabs -->
         <nav class="admin-tabs" role="tablist">
+          <button class="admin-tab ${activeTab === 'landing' ? 'is-active' : ''}" data-tab="landing" type="button">
+            <i class="bi bi-house-door"></i> ${text.tabLanding}
+          </button>
           <button class="admin-tab ${activeTab === 'experience' ? 'is-active' : ''}" data-tab="experience" type="button">
             <i class="bi bi-briefcase"></i> ${text.tabExperience} <span class="tab-count">${experiences.length}</span>
           </button>
@@ -273,6 +287,252 @@
     if (!panel) return;
     const text = t();
     const l = lang();
+
+    if (activeTab === "landing") {
+      const data = window.PortfolioData.getLanding();
+      const hero = data.hero || {};
+      const stats = data.stats || [];
+      const about = data.about || {};
+      const skills = data.skills || [];
+      const cta = data.cta || {};
+
+      panel.innerHTML = `
+        <div class="admin-section-header">
+          <div>
+            <h2><i class="bi bi-house-door"></i> ${text.tabLanding}</h2>
+            <p class="text-muted">${text.tabLandingSubtitle}</p>
+          </div>
+          <button class="btn-solid" id="btnSaveLandingTop" form="landingForm" type="submit">
+            <i class="bi bi-check-lg"></i> ${text.saveLanding}
+          </button>
+        </div>
+
+        <form id="landingForm" class="landing-edit-form">
+          <!-- 1. Hero Section -->
+          <div class="admin-card-inner mb-4">
+            <h3 class="mb-3 text-indigo"><i class="bi bi-stars"></i> Hero & Apresentação Principal</h3>
+            
+            <div class="form-row">
+              <label class="form-col">
+                Badge Superior (Português)
+                <input type="text" name="hero_badge_pt" value="${escapeHtml(hero.badge?.pt)}" placeholder="Web Design · Desenvolvimento Web · Full Stack">
+              </label>
+              <label class="form-col">
+                Badge Superior (Inglês)
+                <input type="text" name="hero_badge_en" value="${escapeHtml(hero.badge?.en)}" placeholder="Web Design · Web Development · Full Stack">
+              </label>
+            </div>
+
+            <div class="form-row">
+              <label class="form-col">
+                Kicker / Introdução curta (Português)
+                <input type="text" name="hero_kicker_pt" value="${escapeHtml(hero.kicker?.pt)}" placeholder="Posso ajudar o seu negócio">
+              </label>
+              <label class="form-col">
+                Kicker / Introdução curta (Inglês)
+                <input type="text" name="hero_kicker_en" value="${escapeHtml(hero.kicker?.en)}" placeholder="I can help your business">
+              </label>
+            </div>
+
+            <div class="form-row">
+              <label class="form-col">
+                Título Principal H1 (Português) <small class="text-muted">(Pode usar &lt;em&gt; para destaque em gradiente)</small>
+                <input type="text" name="hero_title_pt" value="${escapeHtml(hero.title?.pt)}" placeholder="Inicie a sua jornada online e &lt;em&gt;cresça rapidamente.&lt;/em&gt;">
+              </label>
+              <label class="form-col">
+                Título Principal H1 (Inglês) <small class="text-muted">(Pode usar &lt;em&gt; para destaque em gradiente)</small>
+                <input type="text" name="hero_title_en" value="${escapeHtml(hero.title?.en)}" placeholder="Start your online journey and &lt;em&gt;grow fast.&lt;/em&gt;">
+              </label>
+            </div>
+
+            <div class="form-row">
+              <label class="form-col">
+                Localização no cartão do perfil (Português)
+                <input type="text" name="hero_loc_pt" value="${escapeHtml(hero.location?.pt)}" placeholder="Santa Maria da Feira · PT">
+              </label>
+              <label class="form-col">
+                Localização no cartão do perfil (Inglês)
+                <input type="text" name="hero_loc_en" value="${escapeHtml(hero.location?.en)}" placeholder="Santa Maria da Feira · PT">
+              </label>
+            </div>
+          </div>
+
+          <!-- 2. Hero Highlights / Stats under Hero -->
+          <div class="admin-card-inner mb-4">
+            <h3 class="mb-3 text-indigo"><i class="bi bi-bar-chart-steps"></i> Destaques por baixo do Hero ("Full Stack", "DGERT", etc.)</h3>
+            <p class="text-muted small">Os 3 blocos de destaque imediatamente abaixo dos botões do Hero na página inicial.</p>
+
+            ${[0, 1, 2].map((idx) => {
+              const st = stats[idx] || { title: { pt: "", en: "" }, subtitle: { pt: "", en: "" } };
+              return `
+                <div class="stat-edit-box p-3 mb-3" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;">
+                  <strong class="d-block mb-2 text-indigo">Destaque ${idx + 1}</strong>
+                  <div class="form-row">
+                    <label class="form-col">
+                      Título (PT)
+                      <input type="text" name="stat_title_pt_${idx}" value="${escapeHtml(st.title?.pt)}" placeholder="Ex: Full stack">
+                    </label>
+                    <label class="form-col">
+                      Título (EN)
+                      <input type="text" name="stat_title_en_${idx}" value="${escapeHtml(st.title?.en)}" placeholder="Ex: Full stack">
+                    </label>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-col">
+                      Subtítulo / Descrição curta (PT)
+                      <input type="text" name="stat_sub_pt_${idx}" value="${escapeHtml(st.subtitle?.pt)}" placeholder="Ex: Web apps de ponta a ponta">
+                    </label>
+                    <label class="form-col">
+                      Subtítulo / Descrição curta (EN)
+                      <input type="text" name="stat_sub_en_${idx}" value="${escapeHtml(st.subtitle?.en)}" placeholder="Ex: End to end web apps">
+                    </label>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+
+          <!-- 3. About Section -->
+          <div class="admin-card-inner mb-4">
+            <h3 class="mb-3 text-indigo"><i class="bi bi-person-lines-fill"></i> Secção "Sobre mim"</h3>
+            <div class="form-row">
+              <label class="form-col">
+                Título da Secção (PT)
+                <input type="text" name="about_title_pt" value="${escapeHtml(about.title?.pt)}" placeholder="Sobre mim">
+              </label>
+              <label class="form-col">
+                Título da Secção (EN)
+                <input type="text" name="about_title_en" value="${escapeHtml(about.title?.en)}" placeholder="About me">
+              </label>
+            </div>
+            <div class="form-row">
+              <label class="form-col">
+                1.º Parágrafo (PT)
+                <textarea name="about_p1_pt" rows="3">${escapeHtml(about.p1?.pt)}</textarea>
+              </label>
+              <label class="form-col">
+                1.º Parágrafo (EN)
+                <textarea name="about_p1_en" rows="3">${escapeHtml(about.p1?.en)}</textarea>
+              </label>
+            </div>
+            <div class="form-row">
+              <label class="form-col">
+                2.º Parágrafo (PT)
+                <textarea name="about_p2_pt" rows="3">${escapeHtml(about.p2?.pt)}</textarea>
+              </label>
+              <label class="form-col">
+                2.º Parágrafo (EN)
+                <textarea name="about_p2_en" rows="3">${escapeHtml(about.p2?.en)}</textarea>
+              </label>
+            </div>
+          </div>
+
+          <!-- 4. Skills Cards -->
+          <div class="admin-card-inner mb-4">
+            <h3 class="mb-3 text-indigo"><i class="bi bi-grid-3x3-gap"></i> Cartões de Competências (01, 02, 03)</h3>
+            ${[0, 1, 2].map((idx) => {
+              const sk = skills[idx] || { num: `0${idx + 1}`, title: { pt: "", en: "" }, desc: { pt: "", en: "" } };
+              return `
+                <div class="skill-edit-box p-3 mb-3" style="background:rgba(255,255,255,0.03);border:1px solid var(--line);border-radius:12px;">
+                  <div class="form-row">
+                    <label style="max-width:120px;">
+                      Número
+                      <input type="text" name="skill_num_${idx}" value="${escapeHtml(sk.num || `0${idx + 1}`)}">
+                    </label>
+                    <label class="form-col">
+                      Título (PT)
+                      <input type="text" name="skill_title_pt_${idx}" value="${escapeHtml(sk.title?.pt)}">
+                    </label>
+                    <label class="form-col">
+                      Título (EN)
+                      <input type="text" name="skill_title_en_${idx}" value="${escapeHtml(sk.title?.en)}">
+                    </label>
+                  </div>
+                  <div class="form-row">
+                    <label class="form-col">
+                      Descrição (PT)
+                      <textarea name="skill_desc_pt_${idx}" rows="2">${escapeHtml(sk.desc?.pt)}</textarea>
+                    </label>
+                    <label class="form-col">
+                      Descrição (EN)
+                      <textarea name="skill_desc_en_${idx}" rows="2">${escapeHtml(sk.desc?.en)}</textarea>
+                    </label>
+                  </div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+
+          <!-- 5. CTA Band -->
+          <div class="admin-card-inner mb-4">
+            <h3 class="mb-3 text-indigo"><i class="bi bi-chat-left-dots"></i> Chamada de Ação Final (CTA)</h3>
+            <div class="form-row">
+              <label class="form-col">
+                Título CTA (PT)
+                <input type="text" name="cta_title_pt" value="${escapeHtml(cta.title?.pt)}" placeholder="Vamos construir algo em conjunto.">
+              </label>
+              <label class="form-col">
+                Título CTA (EN)
+                <input type="text" name="cta_title_en" value="${escapeHtml(cta.title?.en)}" placeholder="Let’s build something together.">
+              </label>
+            </div>
+            <div class="form-row">
+              <label class="form-col">
+                Texto do Botão (PT)
+                <input type="text" name="cta_btn_pt" value="${escapeHtml(cta.button?.pt)}" placeholder="Enviar mensagem">
+              </label>
+              <label class="form-col">
+                Texto do Botão (EN)
+                <input type="text" name="cta_btn_en" value="${escapeHtml(cta.button?.en)}" placeholder="Send a message">
+              </label>
+            </div>
+          </div>
+
+          <div class="hero-actions mt-4">
+            <button class="btn-solid" type="submit">
+              <i class="bi bi-check-lg"></i> ${text.saveLanding}
+            </button>
+          </div>
+        </form>
+      `;
+
+      document.getElementById("landingForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const f = e.target;
+        const updated = {
+          hero: {
+            badge: { pt: f.hero_badge_pt.value.trim(), en: f.hero_badge_en.value.trim() },
+            kicker: { pt: f.hero_kicker_pt.value.trim(), en: f.hero_kicker_en.value.trim() },
+            title: { pt: f.hero_title_pt.value.trim(), en: f.hero_title_en.value.trim() },
+            location: { pt: f.hero_loc_pt.value.trim(), en: f.hero_loc_en.value.trim() }
+          },
+          stats: [0, 1, 2].map((idx) => ({
+            id: `stat-${idx + 1}`,
+            title: { pt: f[`stat_title_pt_${idx}`].value.trim(), en: f[`stat_title_en_${idx}`].value.trim() },
+            subtitle: { pt: f[`stat_sub_pt_${idx}`].value.trim(), en: f[`stat_sub_en_${idx}`].value.trim() }
+          })),
+          about: {
+            title: { pt: f.about_title_pt.value.trim(), en: f.about_title_en.value.trim() },
+            p1: { pt: f.about_p1_pt.value.trim(), en: f.about_p1_en.value.trim() },
+            p2: { pt: f.about_p2_pt.value.trim(), en: f.about_p2_en.value.trim() }
+          },
+          skills: [0, 1, 2].map((idx) => ({
+            num: f[`skill_num_${idx}`].value.trim() || `0${idx + 1}`,
+            title: { pt: f[`skill_title_pt_${idx}`].value.trim(), en: f[`skill_title_en_${idx}`].value.trim() },
+            desc: { pt: f[`skill_desc_pt_${idx}`].value.trim(), en: f[`skill_desc_en_${idx}`].value.trim() }
+          })),
+          cta: {
+            title: { pt: f.cta_title_pt.value.trim(), en: f.cta_title_en.value.trim() },
+            button: { pt: f.cta_btn_pt.value.trim(), en: f.cta_btn_en.value.trim() }
+          }
+        };
+
+        window.PortfolioData.saveLanding(updated);
+        showToast(text.savedSuccess);
+        renderCurrentTab();
+      });
+      return;
+    }
 
     if (activeTab === "experience") {
       const items = window.PortfolioData.getExperiences();

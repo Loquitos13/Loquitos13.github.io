@@ -7,7 +7,8 @@
   const STORAGE_KEYS = {
     EXPERIENCES: "portfolio.experiences.v2",
     EDUCATION: "portfolio.education.v2",
-    PROJECTS: "portfolio.projects.v2"
+    PROJECTS: "portfolio.projects.v2",
+    LANDING: "portfolio.landing.v2"
   };
 
   const DEFAULT_EXPERIENCES = [
@@ -348,6 +349,85 @@
     }
   ];
 
+  const DEFAULT_LANDING = {
+    hero: {
+      badge: {
+        pt: "Web Design · Desenvolvimento Web · Full Stack",
+        en: "Web Design · Web Development · Full Stack"
+      },
+      kicker: {
+        pt: "Posso ajudar o seu negócio",
+        en: "I can help your business"
+      },
+      title: {
+        pt: "Inicie a sua jornada online e <em>cresça rapidamente.</em>",
+        en: "Start your online journey and <em>grow fast.</em>"
+      },
+      location: {
+        pt: "Santa Maria da Feira · PT",
+        en: "Santa Maria da Feira · PT"
+      }
+    },
+    stats: [
+      {
+        id: "stat-1",
+        title: { pt: "Full stack", en: "Full stack" },
+        subtitle: { pt: "Web apps de ponta a ponta", en: "End to end web apps" }
+      },
+      {
+        id: "stat-2",
+        title: { pt: "DGERT", en: "DGERT" },
+        subtitle: { pt: "Formação certificada", en: "Certified training" }
+      },
+      {
+        id: "stat-3",
+        title: { pt: "PT + remoto", en: "PT + remote" },
+        subtitle: { pt: "Pronto a colaborar", en: "Ready to collaborate" }
+      }
+    ],
+    about: {
+      title: {
+        pt: "Sobre mim",
+        en: "About me"
+      },
+      p1: {
+        pt: "O meu nome é Diogo Pinto e ajudo empresas a criar uma presença online clara, rápida e fácil de usar.",
+        en: "My name is Diogo Pinto, and I help businesses build a clear, fast, and easy-to-use online presence."
+      },
+      p2: {
+        pt: "Trabalho em desenvolvimento e design web, do conceito à implementação. Se tem um projeto em mente, podemos falar.",
+        en: "I work across web development and design, from concept to implementation. If you have a project in mind, we can talk."
+      }
+    },
+    skills: [
+      {
+        num: "01",
+        title: { pt: "Full Stack Web", en: "Full Stack Web" },
+        desc: { pt: "Interfaces, APIs e bases de dados no mesmo fluxo de trabalho.", en: "Interfaces, APIs, and databases in the same workflow." }
+      },
+      {
+        num: "02",
+        title: { pt: "UI e UX", en: "UI and UX" },
+        desc: { pt: "Ecrãs simples, com hierarquia clara e boa leitura em telemóvel.", en: "Simple screens, clear hierarchy, and strong mobile reading." }
+      },
+      {
+        num: "03",
+        title: { pt: "Equipa", en: "Teamwork" },
+        desc: { pt: "Colaboração, liderança de tarefas e comunicação direta com o cliente.", en: "Collaboration, task leadership, and direct client communication." }
+      }
+    ],
+    cta: {
+      title: {
+        pt: "Vamos construir algo em conjunto.",
+        en: "Let’s build something together."
+      },
+      button: {
+        pt: "Enviar mensagem",
+        en: "Send a message"
+      }
+    }
+  };
+
   function getStorage(key, fallback) {
     try {
       const data = localStorage.getItem(key);
@@ -371,6 +451,7 @@
     DEFAULT_EXPERIENCES,
     DEFAULT_EDUCATION,
     DEFAULT_PROJECTS,
+    DEFAULT_LANDING,
 
     getExperiences() {
       return getStorage(STORAGE_KEYS.EXPERIENCES, DEFAULT_EXPERIENCES);
@@ -393,11 +474,27 @@
       return setStorage(STORAGE_KEYS.PROJECTS, items);
     },
 
+    getLanding() {
+      const stored = getStorage(STORAGE_KEYS.LANDING, null);
+      if (!stored) return JSON.parse(JSON.stringify(DEFAULT_LANDING));
+      return {
+        hero: Object.assign({}, DEFAULT_LANDING.hero, stored.hero || {}),
+        stats: (stored.stats && stored.stats.length) ? stored.stats : DEFAULT_LANDING.stats,
+        about: Object.assign({}, DEFAULT_LANDING.about, stored.about || {}),
+        skills: (stored.skills && stored.skills.length) ? stored.skills : DEFAULT_LANDING.skills,
+        cta: Object.assign({}, DEFAULT_LANDING.cta, stored.cta || {})
+      };
+    },
+    saveLanding(data) {
+      return setStorage(STORAGE_KEYS.LANDING, data);
+    },
+
     resetAll() {
       try {
         localStorage.removeItem(STORAGE_KEYS.EXPERIENCES);
         localStorage.removeItem(STORAGE_KEYS.EDUCATION);
         localStorage.removeItem(STORAGE_KEYS.PROJECTS);
+        localStorage.removeItem(STORAGE_KEYS.LANDING);
         return true;
       } catch {
         return false;
@@ -410,7 +507,8 @@
         exportedAt: new Date().toISOString(),
         experiences: this.getExperiences(),
         education: this.getEducation(),
-        projects: this.getProjects()
+        projects: this.getProjects(),
+        landing: this.getLanding()
       }, null, 2);
     },
 
@@ -425,6 +523,9 @@
         }
         if (parsed.projects && Array.isArray(parsed.projects)) {
           this.saveProjects(parsed.projects);
+        }
+        if (parsed.landing && typeof parsed.landing === "object") {
+          this.saveLanding(parsed.landing);
         }
         return true;
       } catch (e) {
@@ -675,6 +776,73 @@
       this.injectAdminControls();
     },
 
+    renderLanding(lang) {
+      const data = this.getLanding();
+
+      // 1. Hero
+      const badgeEl = document.getElementById("heroBadge");
+      if (badgeEl && data.hero?.badge) badgeEl.textContent = this.getText(data.hero.badge, lang);
+
+      const kickerEl = document.getElementById("heroKicker");
+      if (kickerEl && data.hero?.kicker) kickerEl.textContent = this.getText(data.hero.kicker, lang);
+
+      const titleEl = document.getElementById("heroTitle");
+      if (titleEl && data.hero?.title) titleEl.innerHTML = this.getText(data.hero.title, lang);
+
+      const locEl = document.getElementById("heroLocation");
+      if (locEl && data.hero?.location) locEl.textContent = this.getText(data.hero.location, lang);
+
+      // 2. Stats Row under Hero (Full Stack, DGERT, PT + remoto)
+      const statsRowEl = document.getElementById("heroStatsRow");
+      if (statsRowEl && data.stats && Array.isArray(data.stats)) {
+        statsRowEl.innerHTML = data.stats.map((st) => {
+          const title = this.getText(st.title, lang);
+          const sub = this.getText(st.subtitle, lang);
+          return `<div class="stat"><strong>${this.escapeHtml(title)}</strong><span>${this.escapeHtml(sub)}</span></div>`;
+        }).join("");
+      }
+
+      // 3. About
+      const aboutTitleEl = document.getElementById("aboutTitle");
+      if (aboutTitleEl && data.about?.title) aboutTitleEl.textContent = this.getText(data.about.title, lang);
+
+      const aboutLeadsEl = document.getElementById("aboutLeadTexts");
+      if (aboutLeadsEl && data.about) {
+        const p1 = this.getText(data.about.p1, lang);
+        const p2 = this.getText(data.about.p2, lang);
+        aboutLeadsEl.innerHTML = `
+          ${p1 ? `<p class="lead">${this.escapeHtml(p1)}</p>` : ""}
+          ${p2 ? `<p class="lead">${this.escapeHtml(p2)}</p>` : ""}
+        `;
+      }
+
+      // 4. Skills
+      const skillsEl = document.getElementById("landingSkillsGrid");
+      if (skillsEl && data.skills && Array.isArray(data.skills)) {
+        skillsEl.innerHTML = data.skills.map((sk) => {
+          const num = sk.num || "";
+          const title = this.getText(sk.title, lang);
+          const desc = this.getText(sk.desc, lang);
+          return `
+            <article class="skill-card">
+              ${num ? `<em>${this.escapeHtml(num)}</em>` : ""}
+              <strong>${this.escapeHtml(title)}</strong>
+              <p>${this.escapeHtml(desc)}</p>
+            </article>
+          `;
+        }).join("");
+      }
+
+      // 5. CTA
+      const ctaTitleEl = document.getElementById("ctaTitle");
+      if (ctaTitleEl && data.cta?.title) ctaTitleEl.textContent = this.getText(data.cta.title, lang);
+
+      const ctaBtnEl = document.getElementById("ctaBtn");
+      if (ctaBtnEl && data.cta?.button) ctaBtnEl.textContent = this.getText(data.cta.button, lang);
+
+      this.injectAdminControls();
+    },
+
     injectAdminControls() {
       const isAuthed = sessionStorage.getItem("portfolio.admin") === "1";
       if (!isAuthed) return;
@@ -699,6 +867,16 @@
 
       // Add direct edit links in section headers if on resume or projects page
       document.querySelectorAll("[data-admin-edit-section]").forEach((el) => el.remove());
+
+      const heroActions = document.querySelector(".hero .hero-actions");
+      if (heroActions && (/index\.html$/i.test(window.location.pathname) || /\/pt\/?$/i.test(window.location.pathname) || window.location.pathname.endsWith("/"))) {
+        const btn = document.createElement("a");
+        btn.setAttribute("data-admin-edit-section", "true");
+        btn.className = "btn-ghost btn-admin-quick";
+        btn.href = `${adminPath}#landing`;
+        btn.innerHTML = `<i class="bi bi-pencil-square"></i> ${isPt ? 'Editar Página Inicial' : 'Edit Landing Page'}`;
+        heroActions.appendChild(btn);
+      }
 
       const expHeader = document.querySelector("#resumeExperienceHeader");
       if (expHeader) {
