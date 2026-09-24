@@ -42,7 +42,11 @@
       copyJson: "Copiar JSON",
       copied: "Copiado!",
       job: "Emprego / Trabalho",
-      internship: "Estágio"
+      internship: "Estágio",
+      changePassword: "Alterar Palavra-passe",
+      changePasswordDesc: "Defina uma nova palavra-passe de acesso a este painel.",
+      newPasswordPlaceholder: "Nova palavra-passe...",
+      passwordUpdated: "Palavra-passe alterada com sucesso!"
     },
     en: {
       title: "Private area",
@@ -83,7 +87,11 @@
       copyJson: "Copy JSON",
       copied: "Copied!",
       job: "Job / Work",
-      internship: "Internship"
+      internship: "Internship",
+      changePassword: "Change Password",
+      changePasswordDesc: "Set a new access password for this dashboard.",
+      newPasswordPlaceholder: "New password...",
+      passwordUpdated: "Password updated successfully!"
     }
   };
 
@@ -154,7 +162,8 @@
         e.preventDefault();
         const value = e.target.password.value;
         const hash = await sha256(value);
-        if (hash !== window.PortfolioAdmin.PASSWORD_HASH) {
+        const expectedHash = localStorage.getItem("portfolio.admin_hash") || window.PortfolioAdmin.PASSWORD_HASH;
+        if (hash !== expectedHash) {
           const err = document.getElementById("adminError");
           err.className = "form-status is-error";
           err.textContent = text.error;
@@ -594,6 +603,15 @@
             </div>
           </div>
 
+          <div class="admin-card-inner">
+            <h3><i class="bi bi-key"></i> ${text.changePassword}</h3>
+            <p class="text-muted small">${text.changePasswordDesc}</p>
+            <div style="display:flex;gap:0.5rem;margin-top:0.75rem;flex-wrap:wrap">
+              <input type="password" id="inputNewPassword" class="form-input" placeholder="${text.newPasswordPlaceholder}" style="flex:1;min-width:180px" />
+              <button class="btn-solid" id="btnSaveNewPassword" type="button"><i class="bi bi-check-lg"></i> ${text.save}</button>
+            </div>
+          </div>
+
           <div class="admin-card-inner border-danger-soft">
             <h3 class="text-danger"><i class="bi bi-arrow-counterclockwise"></i> ${text.resetDefaults}</h3>
             <p class="text-muted small">Repõe a experiência, educação e projetos para o estado padrão do portfólio (incluindo Espiraleducada e Mestrado em Ciência de Computadores).</p>
@@ -630,8 +648,25 @@
         }
       });
 
+      const btnSavePass = document.getElementById("btnSaveNewPassword");
+      if (btnSavePass) {
+        btnSavePass.addEventListener("click", async () => {
+          const inp = document.getElementById("inputNewPassword");
+          const val = inp ? inp.value.trim() : "";
+          if (!val) {
+            alert(isPt ? "Por favor insira uma palavra-passe." : "Please enter a password.");
+            return;
+          }
+          const newHash = await sha256(val);
+          localStorage.setItem("portfolio.admin_hash", newHash);
+          showToast(text.passwordUpdated);
+          inp.value = "";
+        });
+      }
+
       document.getElementById("btnResetAll").addEventListener("click", () => {
         if (!confirm(text.confirmReset)) return;
+        localStorage.removeItem("portfolio.admin_hash");
         window.PortfolioData.resetAll();
         showToast(text.savedSuccess);
         render();

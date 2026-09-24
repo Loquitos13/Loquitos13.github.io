@@ -217,7 +217,7 @@
   window.PortfolioAdmin = {
     CONTACT_EMAIL,
     MESSAGES_KEY,
-    PASSWORD_HASH: "1ec96fce671caef7601766c28d7967e8bbe70644acfbb5fc66beaa34df911e63",
+    PASSWORD_HASH: "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9", // admin123
     readMessages,
     writeMessages
   };
