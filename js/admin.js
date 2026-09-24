@@ -470,10 +470,12 @@
         <div class="admin-items-grid">
           ${items.length === 0 ? `<p class="lead">${text.emptyItems}</p>` : items.map((item, idx) => {
             const desc = window.PortfolioData.getText(item.description, l);
+            const thumbImg = (item.image || "").trim();
+            const normalizedThumb = thumbImg.startsWith("http") ? thumbImg : thumbImg.replace(/^\.?\//, "").replace(/^\.\.\//, "");
 
             return `
               <article class="admin-item-card admin-project-card" data-id="${item.id}">
-                ${item.image ? `<div class="admin-proj-thumb"><img src="${item.image}" alt="${escapeHtml(item.title)}"></div>` : ""}
+                ${normalizedThumb ? `<div class="admin-proj-thumb"><img src="${normalizedThumb}" alt="${escapeHtml(item.title)}"></div>` : ""}
                 <div class="admin-item-main">
                   <h3 class="admin-item-title">${escapeHtml(item.title)}</h3>
                   <p class="admin-item-desc">${escapeHtml(desc)}</p>

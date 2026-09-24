@@ -433,6 +433,14 @@
       }
     },
 
+    escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    },
+
     getText(obj, lang) {
       if (!obj) return "";
       if (typeof obj === "string") return obj;
@@ -627,25 +635,40 @@
 
       container.innerHTML = projects.map((proj) => {
         const desc = this.getText(proj.description, lang);
-        const tags = (proj.tags || []).map((t) => `<span class="tag">${t}</span>`).join("");
-        let imgSrc = proj.image || "";
-        if (imgSrc && !imgSrc.startsWith("http") && !imgSrc.startsWith("data:") && basePath) {
-          imgSrc = basePath + imgSrc.replace(/^\.\.\//, "");
-        }
-        let href = proj.link || "#";
-        if (href && !href.startsWith("http") && basePath && !href.startsWith("../")) {
-          href = basePath + href;
+        const tags = (proj.tags || []).map((t) => `<span class="tag">${this.escapeHtml(t)}</span>`).join("");
+
+        let imgSrc = (proj.image || "").trim();
+        if (imgSrc && !imgSrc.startsWith("http") && !imgSrc.startsWith("data:")) {
+          const cleanPath = imgSrc.replace(/^\.?\//, "").replace(/^\.\.\//, "");
+          imgSrc = basePath ? (basePath + cleanPath) : cleanPath;
         }
 
+        let href = (proj.link || "").trim();
+        let isExternal = false;
+        if (href) {
+          if (/^https?:\/\//i.test(href)) {
+            isExternal = true;
+          } else if (basePath && !href.startsWith("../") && !href.startsWith("#")) {
+            href = basePath + href.replace(/^\.?\//, "");
+          }
+        } else {
+          href = "#";
+        }
+
+        const hasLink = href && href !== "#";
+        const tag = hasLink ? "a" : "article";
+        const targetAttr = isExternal ? ' target="_blank" rel="noopener noreferrer"' : "";
+        const hrefAttr = hasLink ? ` href="${href}"${targetAttr}` : "";
+
         return `
-          <article class="project-card" data-id="${proj.id}">
+          <${tag}${hrefAttr} class="project-card" data-id="${proj.id}">
             <div class="project-card__body">
-              <h2><a href="${href}">${proj.title}</a></h2>
-              <p>${desc}</p>
+              <h2 class="project-card__title">${this.escapeHtml(proj.title)}</h2>
+              <p>${this.escapeHtml(desc)}</p>
               <div class="tag-row">${tags}</div>
             </div>
-            ${imgSrc ? `<img src="${imgSrc}" alt="${proj.title}" />` : ""}
-          </article>
+            ${imgSrc ? `<img src="${imgSrc}" alt="${this.escapeHtml(proj.title)}" />` : ""}
+          </${tag}>
         `;
       }).join("");
 
