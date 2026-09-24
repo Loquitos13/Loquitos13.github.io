@@ -243,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const template = document.querySelector("#cvPdfTemplate .cv-a4");
     if (!template || typeof html2pdf !== "function") return;
     const clone = template.cloneNode(true);
+    clone.style.display = "block";
     html2pdf().set({
       margin: 0,
       filename: "Diogo_Pinto_CV.pdf",
@@ -250,6 +251,10 @@ document.addEventListener("DOMContentLoaded", () => {
       html2canvas: { scale: 2, useCORS: true },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       pagebreak: { mode: [] }
-    }).from(clone).save();
+    }).from(clone).toPdf().get("pdf").then((pdf) => {
+      while (pdf.internal.getNumberOfPages() > 1) {
+        pdf.deletePage(pdf.internal.getNumberOfPages());
+      }
+    }).save();
   });
 });

@@ -12052,45 +12052,157 @@ html {
 }
 
 /* ==== PDF STRUCTURE ==== */
-.cv-a4{width:210mm;min-height:297mm;background:#fff;color:#111;
-font-family:"Plus Jakarta Sans",sans-serif;font-size:9.6pt;}
-.cv-grid{display:grid;grid-template-columns:36% 64%;}
+.cv-a4 {
+  width: 210mm;
+  height: 296mm;
+  max-height: 296mm;
+  background: #fff;
+  color: #111;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 8.5pt;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.cv-grid {
+  display: grid;
+  grid-template-columns: 34% 66%;
+  height: 296mm;
+}
 
 /* ==== LEFT PANEL ==== */
-.cv-left{background:#f5f5f5;}
-.cv-left-inner{padding:12mm 8mm;display:flex;flex-direction:column;height:100%;}
-.cv-photo-wrap{display:flex;justify-content:center;margin-bottom:6mm;}
-.cv-photo{width:69mm;height:58mm;border-radius:50%;object-fit:cover;
-object-position:center;box-shadow:0 2px 8px rgba(0,0,0,.08);}
-.cv-name{text-align:center;font-size:15pt;font-weight:700;
-margin:2mm 0 0 0;color:#0d6efd;}
-.cv-role{text-align:center;font-size:10pt;margin:1mm 0 6mm 0;color:#333;}
-.cv-sec-title{font-size:10.8pt;font-weight:800;color:#0d6efd;
-margin:0 0 3mm 0;text-transform:uppercase;}
-.cv-about{margin:0 0 3mm 0;line-height:1.32;}
-.cv-social{list-style:none;padding:0;margin:0;line-height:1.4;font-size:8.4pt;}
-.cv-social li{margin:2mm 0;display:flex;align-items:center;gap:5px;min-width:0;}
-.cv-social i{color:#0d6efd;font-size:11pt;flex-shrink:0;}
-.cv-social-link{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0;word-break:keep-all;hyphens:none;}
+.cv-left {
+  background: #f5f5f5;
+  height: 296mm;
+}
+.cv-left-inner {
+  padding: 8mm 6.5mm;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100%;
+}
+.cv-photo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3mm;
+}
+.cv-photo {
+  width: 44mm;
+  height: 44mm;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.cv-name {
+  text-align: center;
+  font-size: 13.5pt;
+  font-weight: 700;
+  margin: 1.5mm 0 0 0;
+  color: #0d6efd;
+}
+.cv-role {
+  text-align: center;
+  font-size: 8.8pt;
+  margin: 0.5mm 0 3mm 0;
+  color: #333;
+}
+.cv-sec-title {
+  font-size: 9.2pt;
+  font-weight: 800;
+  color: #0d6efd;
+  margin: 0 0 1.8mm 0;
+  text-transform: uppercase;
+}
+.cv-about {
+  font-size: 7.8pt;
+  margin: 0 0 1.8mm 0;
+  line-height: 1.25;
+}
+.cv-social {
+  list-style: none;
+  padding: 0;
+  margin: 1mm 0 0 0;
+  line-height: 1.35;
+  font-size: 7.6pt;
+}
+.cv-social li {
+  margin: 1.2mm 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.cv-social i {
+  color: #0d6efd;
+  font-size: 9pt;
+  flex-shrink: 0;
+}
+.cv-social-link {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0;
+  word-break: keep-all;
+  hyphens: none;
+}
 
 /* ==== RIGHT SIDE ==== */
-.cv-right{padding:12mm 10mm;display:flex;flex-direction:column;gap:8mm;}
-.cv-cards{display:flex;flex-direction:column;gap:5mm;}
-.cv-card{border:1px solid #e5e7eb;border-radius:10px;padding:6px 8px;
-box-shadow:0 1px 5px rgba(0,0,0,.08);}
-.cv-card-title{font-size:10.5pt;font-weight:700;margin:0 0 1mm 0;}
-.cv-card-sub{font-size:9.2pt;font-weight:600;margin:0 0 1.5mm 0;color:#475569;}
-.cv-card-body{font-size:9.3pt;margin:0;line-height:1.28;}
+.cv-right {
+  padding: 7mm 7.5mm;
+  display: flex;
+  flex-direction: column;
+  gap: 2.8mm;
+  box-sizing: border-box;
+}
+.cv-right .cv-sec-title {
+  font-size: 9.2pt;
+  font-weight: 800;
+  color: #0d6efd;
+  margin: 0 0 1.2mm 0;
+  text-transform: uppercase;
+}
+.cv-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8mm;
+}
+.cv-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 3.5px 6.5px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+.cv-card-title {
+  font-size: 8.8pt;
+  font-weight: 700;
+  margin: 0 0 0.4mm 0;
+}
+.cv-card-sub {
+  font-size: 7.6pt;
+  font-weight: 600;
+  margin: 0 0 0.6mm 0;
+  color: #475569;
+}
+.cv-card-body {
+  font-size: 7.7pt;
+  margin: 0;
+  line-height: 1.2;
+}
 
-/* ==== SKILL BADGES (STYLE 3) ==== */
-.cv-skill-badges{display:flex;flex-wrap:wrap;gap:5px;}
-.cv-badge{
-background:#0d6efd;
-color:#fff;
-font-size:8.8pt;
-padding:4px 8px;
-border-radius:8px;
-font-weight:600;
-white-space:nowrap;
+/* ==== SKILL BADGES ==== */
+.cv-skill-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3.5px;
+}
+.cv-badge {
+  background: #0d6efd;
+  color: #fff;
+  font-size: 7.4pt;
+  padding: 2px 5.5px;
+  border-radius: 5px;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
