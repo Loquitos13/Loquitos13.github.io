@@ -25,7 +25,8 @@
       projectsBody: "Entre contratos, estes sistemas continuam a contar o trabalho: formação, loja e oficina.",
       next: "Capítulo seguinte",
       count: "Capítulo",
-      brand: "A linha",
+      brand: "Jornada",
+      hint: "Desce. A jornada é longa.",
       pdf: "Descarregar CV",
       mail: "Email",
       send: "Enviar mensagem",
@@ -44,7 +45,8 @@
       projectsBody: "Between contracts, these systems keep the work visible: training, a shop, and a workshop.",
       next: "Next chapter",
       count: "Chapter",
-      brand: "The line",
+      brand: "Journey",
+      hint: "Scroll. The journey is long.",
       pdf: "Download CV",
       mail: "Email",
       send: "Send message",
@@ -167,7 +169,10 @@
     const t = copy();
     const key = spec.id || spec.kind;
     const tags = (model.tags || []).map((tag) => "<span>" + esc(tag) + "</span>").join("");
-    const projects = (model.projects || []).map(projectCard).join("");
+    const projects = (model.projects || []).map((proj, i) => {
+      const card = projectCard(proj);
+      return card.replace("class=\"beat\"", "class=\"beat\" style=\"--i:" + i + "\"");
+    }).join("");
     const link = model.href
       ? '<div class="story-cta"><a class="story-btn" href="' + esc(model.href) + '" target="_blank" rel="noopener">↗</a></div>'
       : "";
@@ -182,23 +187,35 @@
         '<p id="contactStatus" class="form-status"></p></form>' +
         '<div class="story-cta"><button type="button" class="story-btn story-btn--ghost" id="downloadResumeBtn">' + esc(t.pdf) + "</button></div>"
       : "";
-    const next = index < total - 1
-      ? '<button type="button" class="scene__next" data-next="' + (index + 1) + '" aria-label="' + esc(t.next) + '">↓</button>'
-      : "";
+    const kind = model.epilogue ? " stage--end" : (spec.kind === "prologue" ? " stage--hero" : (spec.kind === "projects" ? " stage--projects" : ""));
+    const hint = spec.kind === "prologue" ? '<p class="stage__hint">' + esc(t.hint) + "</p>" : "";
     return (
-      '<section class="scene" id="scene-' + index + '" data-index="' + index + '" data-key="' + esc(key) + '">' +
-      '<div class="scene__inner">' +
-      '<p class="scene__act">' + esc(model.act) + "</p>" +
-      (model.year ? '<p class="scene__year">' + esc(model.year) + "</p>" : "") +
-      '<h2 class="scene__title">' + esc(model.title) + "</h2>" +
-      (model.place ? '<p class="scene__place">' + esc(model.place) + "</p>" : "") +
-      '<p class="scene__body">' + esc(model.body) + "</p>" +
-      (tags ? '<div class="scene__tags">' + tags + "</div>" : "") +
+      '<section class="stage' + kind + '" id="scene-' + index + '" data-index="' + index + '" data-key="' + esc(key) + '" data-act="' + esc(spec.act || "now") + '">' +
+      '<div class="stage__sticky">' +
+      '<div class="stage__glow" aria-hidden="true"></div>' +
+      (model.year ? '<p class="stage__year" aria-hidden="true">' + esc(model.year) + "</p>" : "") +
+      '<div class="stage__copy">' +
+      '<p class="stage__act">' + esc(model.act) + "</p>" +
+      '<h2 class="stage__title">' + esc(model.title) + "</h2>" +
+      (model.place ? '<p class="stage__place">' + esc(model.place) + "</p>" : "") +
+      '<p class="stage__body">' + esc(model.body) + "</p>" +
+      (tags ? '<div class="stage__tags">' + tags + "</div>" : "") +
       (projects ? '<div class="beats">' + projects + "</div>" : "") +
       link +
       end +
-      "</div>" + next + "</section>"
+      hint +
+      "</div></div></section>"
     );
+  }
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function fade(p, a, b) {
+    if (p <= a) return 0;
+    if (p >= b) return 1;
+    return (p - a) / (b - a);
   }
 
   function render() {
@@ -228,78 +245,98 @@
       archive: "edu-licenciatura"
     };
     const key = alias[zone];
-    const jumped = key ? [...root.querySelectorAll(".scene")].findIndex((el) => el.dataset.key === key) : -1;
-    const saved = Number(sessionStorage.getItem("story.chapter") || 0);
-    const start = jumped >= 0 ? jumped : (Number.isFinite(saved) ? Math.min(Math.max(saved, 0), scenes.length - 1) : 0);
-    window.requestAnimationFrame(() => go(start, false));
+    const jumped = key ? [...root.querySelectorAll(".stage")].findIndex((el) => el.dataset.key === key) : -1;
+    if (jumped >= 0) {
+      window.requestAnimationFrame(() => go(jumped, false));
+    }
     if (window.bindContactFormRetry) window.bindContactFormRetry();
     document.getElementById("storyPdf").addEventListener("click", () => {
       const btn = document.getElementById("downloadResumeBtn");
       if (btn) btn.click();
     });
+    paint();
   }
 
   function go(index, smooth) {
     const el = document.getElementById("scene-" + index);
     if (!el) return;
-    el.scrollIntoView({ behavior: smooth === false ? "auto" : "smooth", block: "start" });
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top, behavior: smooth === false ? "auto" : "smooth" });
   }
 
-  function setActive(index) {
-    document.querySelectorAll(".scene").forEach((scene) => {
-      scene.classList.toggle("is-active", Number(scene.dataset.index) === index);
-    });
-    document.querySelectorAll("#storyRail button").forEach((btn, i) => {
-      btn.classList.toggle("is-current", i === index);
-      btn.classList.toggle("is-done", i < index);
-    });
+  function paint() {
+    const stages = [...document.querySelectorAll(".stage")];
+    const view = window.innerHeight || 1;
+    const max = Math.max(1, document.documentElement.scrollHeight - view);
+    const page = clamp(window.scrollY / max, 0, 1);
     const fill = document.getElementById("storyProgress");
+    const thread = document.getElementById("journeyThread");
+    if (fill) fill.style.width = (page * 100).toFixed(2) + "%";
+    if (thread) thread.style.transform = "scaleY(" + page.toFixed(4) + ")";
+    document.body.classList.toggle("is-scrolled", window.scrollY > view * 0.35);
+
+    let active = 0;
+    stages.forEach((stage, index) => {
+      const rect = stage.getBoundingClientRect();
+      const span = Math.max(1, stage.offsetHeight - view);
+      const p = clamp(-rect.top / span, 0, 1);
+      const reveal = fade(p, 0.06, 0.28);
+      const hold = 1 - fade(p, 0.78, 0.98);
+      stage.style.setProperty("--p", p.toFixed(4));
+      stage.style.setProperty("--reveal", reveal.toFixed(4));
+      stage.style.setProperty("--hold", stage.classList.contains("stage--end") ? "1" : hold.toFixed(4));
+      stage.querySelectorAll(".beat").forEach((card, i) => {
+        const start = 0.12 + i * 0.2;
+        card.style.setProperty("--reveal", fade(p, start, start + 0.16).toFixed(4));
+      });
+      if (rect.top < view * 0.46 && rect.bottom > view * 0.46) active = index;
+    });
+
+    document.querySelectorAll("#storyRail button").forEach((btn, i) => {
+      btn.classList.toggle("is-current", i === active);
+      btn.classList.toggle("is-done", i < active);
+    });
     const count = document.getElementById("storyCount");
-    const t = copy();
-    const pct = scenes.length <= 1 ? 100 : Math.round((index / (scenes.length - 1)) * 100);
-    if (fill) fill.style.width = pct + "%";
-    if (count) count.textContent = t.count + " " + String(index + 1).padStart(2, "0") + " / " + String(scenes.length).padStart(2, "0");
-    try { sessionStorage.setItem("story.chapter", String(index)); } catch {}
+    if (count) {
+      count.textContent = copy().count + " " + String(active + 1).padStart(2, "0") + " / " + String(stages.length).padStart(2, "0");
+    }
   }
 
   function bind() {
-    const scroller = document.getElementById("storyScroll");
-    const observer = new IntersectionObserver((entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (!visible) return;
-      setActive(Number(visible.target.dataset.index) || 0);
-    }, { root: scroller, threshold: [0.55, 0.75] });
-    scroller.querySelectorAll(".scene").forEach((scene) => observer.observe(scene));
+    let ticking = false;
+    const schedule = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        paint();
+        ticking = false;
+      });
+    };
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
 
     document.getElementById("storyRail").addEventListener("click", (e) => {
       const btn = e.target.closest("[data-go]");
       if (!btn) return;
       go(Number(btn.dataset.go));
     });
-    scroller.addEventListener("click", (e) => {
-      const btn = e.target.closest("[data-next]");
-      if (!btn) return;
-      go(Number(btn.dataset.next));
-    });
+
     window.addEventListener("keydown", (e) => {
       const tag = document.activeElement && document.activeElement.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA") return;
-      const current = Number(sessionStorage.getItem("story.chapter") || 0);
+      const view = window.innerHeight || 0;
       if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") {
         e.preventDefault();
-        go(Math.min(scenes.length - 1, current + 1));
+        window.scrollBy({ top: view * 0.85, behavior: "smooth" });
       }
       if (e.key === "ArrowUp" || e.key === "PageUp") {
         e.preventDefault();
-        go(Math.max(0, current - 1));
+        window.scrollBy({ top: -view * 0.85, behavior: "smooth" });
       }
-      if (e.key === "Home") go(0);
-      if (e.key === "End") go(scenes.length - 1);
+      if (e.key === "Home") window.scrollTo({ top: 0, behavior: "smooth" });
+      if (e.key === "End") window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
     });
   }
-
   document.addEventListener("DOMContentLoaded", () => {
     if (!document.body.classList.contains("story-app")) return;
     data = window.PortfolioData;
