@@ -1,101 +1,83 @@
 <!DOCTYPE html>
-<html lang="en-US" class="chronicle-root">
+<html lang="en-US" class="sector-html">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content="Diogo Pinto — gamified portfolio. Explore missions, level up, and sync career data." />
-    <title>Diogo Pinto · DP Chronicle</title>
+    <meta name="description" content="SECTOR — playable portfolio. Move through the facility, read data nodes, open the vault." />
+    <title>Diogo Pinto · SECTOR</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Syne:wght@700;800&amp;display=swap" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Syne:wght@700;800&amp;display=swap" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
-    <link href="css/theme.css" rel="stylesheet" />
-    <link href="css/game.css" rel="stylesheet" />
+    <link href="css/sector.css" rel="stylesheet" />
   </head>
-  <body class="game-app site-body">
-    <div id="gameBoot" class="game-boot">
-      <div class="game-boot__panel">
-        <div id="gameBootTag" class="game-boot__tag">DP.CHRONICLE · INIT</div>
-        <pre id="gameBootLog" class="game-boot__log"></pre>
-        <div class="game-boot__actions">
-          <button type="button" id="gameBootStart">Start campaign</button>
-          <button type="button" id="gameBootSkip" hidden>Continue</button>
-        </div>
-      </div>
-    </div>
+  <body class="sector-app">
+    <canvas id="sectorCanvas" aria-label="SECTOR portfolio game"></canvas>
+    <div id="sectorFlash" class="sector-flash"></div>
 
-    <div class="game-shell">
-      <header class="game-top">
-        <div class="game-top__inner">
-        <div class="game-top__brand">
-          <strong id="gameBrand">Diogo Pinto</strong>
-          <span id="gameTag">Chronicle · gamified portfolio</span>
+    <div class="sector-ui">
+      <header class="sector-bar">
+        <strong id="sectorBrand">Diogo Pinto</strong>
+        <span id="sectorRoom">SECTOR</span>
+        <span id="sectorObjective" class="sector-objective">Read the five nodes and open the vault.</span>
+        <div class="sector-sync">
+          <span>SYNC</span>
+          <div class="sector-sync__track"><span id="sectorSyncFill"></span></div>
+          <span id="sectorSyncLabel">0%</span>
         </div>
-        <div class="game-top__actions">
-          <div class="lang-switch" data-lang-toggle role="group" aria-label="Language">
+        <div class="sector-actions">
+          <div data-lang-toggle role="group" aria-label="Language">
             <button type="button" data-lang="pt" aria-pressed="false">PT</button>
             <button type="button" data-lang="en" aria-pressed="true">EN</button>
           </div>
           <a href="mailto:bdiogo511@gmail.com">Email</a>
         </div>
-        </div>
       </header>
 
-      <main class="game-main">
-        <aside class="game-panel game-char">
-          <div class="game-panel__head">
-            <h2 id="gameCharPanelTitle">Operator</h2>
-            <span>Lv</span>
-          </div>
-          <img id="gameAvatar" class="game-char__avatar" src="assets/profile.png" alt="Diogo Pinto" width="260" height="260" />
-          <p id="gameRank" class="game-char__rank">Recruit</p>
-          <p id="gameCharMeta" class="game-char__meta">Level 1 · 0 XP</p>
-          <div class="game-xp" role="progressbar" aria-valuemin="0" aria-valuemax="100"><span id="gameXpBar"></span></div>
-          <div class="game-char__stats">
-            <div><span>Missions</span><strong id="gameStatQuests">0</strong></div>
-            <div><span>Zones</span><strong id="gameStatZones">0</strong></div>
-          </div>
-          <div id="gameSkills" class="game-skills"></div>
-        </aside>
+      <aside class="sector-log">
+        <h2 id="sectorLogTitle">Nodes</h2>
+        <ul id="sectorLogList"></ul>
+      </aside>
 
-        <section class="game-panel">
-          <div class="game-panel__head">
-            <h2 id="gameMapTitle">Mission map</h2>
-            <span>5+ nodes</span>
-          </div>
-          <div id="gameMap" class="game-map-wrap">
-            <svg id="gameMapLines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
-          </div>
-        </section>
-
-        <aside class="game-panel">
-          <div class="game-panel__head">
-            <h2 id="gameQuestPanelTitle">Quest log</h2>
-            <span>XP</span>
-          </div>
-          <ol id="gameQuestList" class="game-quest-list"></ol>
-          <button type="button" id="gameReset" class="game-reset">Reset campaign</button>
-        </aside>
-      </main>
+      <div id="sectorHint" class="sector-hint">WASD</div>
+      <div class="sector-minimap"><canvas id="sectorMini" width="148" height="110"></canvas></div>
     </div>
 
-    <div id="gameModal" class="game-modal" hidden>
-      <div class="game-modal__window" role="dialog" aria-modal="true" aria-labelledby="gameModalTitle">
-        <div class="game-modal__bar">
-          <div class="game-modal__dots"><span></span><span></span><span></span></div>
-          <span id="gameModalMeta">dp-terminal · briefing</span>
+    <div id="sectorStick" class="sector-touch" aria-hidden="true"><i id="sectorStickKnob"></i></div>
+    <button type="button" id="sectorUse" class="sector-use">E</button>
+
+    <div id="sectorBoot" class="sector-boot">
+      <div class="sector-window sector-window--boot">
+        <div class="sector-window__bar">
+          <div class="sector-dots"><span></span><span></span><span></span></div>
+          <span id="sectorTag">SECTOR</span>
         </div>
-        <div class="game-modal__head">
-          <h2 id="gameModalTitle">Mission</h2>
-          <button type="button" id="gameModalClose" class="game-modal__close" aria-label="Close">×</button>
+        <h1 id="sectorBootTitle">Sector extraction</h1>
+        <p id="sectorBootText"></p>
+        <pre id="sectorBootLog" class="sector-boot__log"></pre>
+        <div class="sector-boot__actions">
+          <button type="button" class="sector-btn" id="sectorBootBtn">Enter sector</button>
+          <button type="button" class="sector-btn sector-btn--ghost" id="sectorBootSkip" hidden>Continue</button>
         </div>
-        <div id="gameModalBody" class="game-modal__body"></div>
       </div>
     </div>
 
-    <div id="gameToast" class="game-toast" hidden role="status"></div>
+    <div id="sectorModal" class="sector-modal" hidden>
+      <div class="sector-window" role="dialog" aria-modal="true" aria-labelledby="sectorModalTitle">
+        <div class="sector-window__bar">
+          <div class="sector-dots"><span></span><span></span><span></span></div>
+          <span>terminal · read</span>
+        </div>
+        <div class="sector-window__head">
+          <h2 id="sectorModalTitle">Node</h2>
+          <button type="button" id="sectorModalClose" class="sector-close" aria-label="Close">×</button>
+        </div>
+        <div id="sectorModalBody" class="sector-body"></div>
+      </div>
+    </div>
+
+    <div id="sectorToast" class="sector-toast" role="status"></div>
 
     <div id="cvPdfTemplate" style="display:none">
       <div class="cv-a4">
@@ -116,6 +98,6 @@
     <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
     <script src="js/portfolio-data.js"></script>
     <script src="js/scripts.js"></script>
-    <script src="js/portfolio-game.js"></script>
+    <script src="js/sector-game.js"></script>
   </body>
 </html>
