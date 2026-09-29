@@ -60,8 +60,12 @@
     });
   }
 
+  function isWorldApp() {
+    return document.body.classList.contains("world-app");
+  }
+
   function maybeRedirectToDefaultPt() {
-    if (isAdminPage()) return false;
+    if (isAdminPage() || isWorldApp()) return false;
     if (currentPathLang() === "pt") return false;
     const saved = storedLang();
     if (saved === "en") return false;
@@ -229,20 +233,21 @@
     document.documentElement.setAttribute("lang", lang === "pt" ? "pt-PT" : "en-US");
     syncLangControls(lang);
     bindLanguage();
-    bindNav();
-    bindHeaderScroll();
+    if (!isWorldApp()) {
+      bindNav();
+      bindHeaderScroll();
+    }
     bindContactForm();
+    window.bindContactFormRetry = bindContactForm;
   });
 })();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("downloadResumeBtn");
+document.addEventListener("click", (e) => {
+  const btn = e.target instanceof Element ? e.target.closest("#downloadResumeBtn") : null;
   if (!btn) return;
 
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    window.dispatchEvent(new CustomEvent("portfolio:quest", { detail: { id: "cv" } }));
-    const template = document.querySelector("#cvPdfTemplate .cv-a4");
+  e.preventDefault();
+  const template = document.querySelector("#cvPdfTemplate .cv-a4");
     if (!template || typeof html2pdf !== "function") return;
     const clone = template.cloneNode(true);
     clone.style.display = "block";
@@ -258,5 +263,4 @@ document.addEventListener("DOMContentLoaded", () => {
         pdf.deletePage(pdf.internal.getNumberOfPages());
       }
     }).save();
-  });
 });
