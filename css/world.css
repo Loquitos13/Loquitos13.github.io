@@ -1,0 +1,321 @@
+html.world-root,
+body.world-app {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #05070d;
+  color: #f6f1ea;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+#worldCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+.world-ui {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.world-ui > * {
+  pointer-events: auto;
+}
+
+.world-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.world-brand {
+  padding: 0.55rem 0.9rem;
+  border-radius: 14px;
+  background: rgba(8, 12, 20, 0.72);
+  border: 1px solid rgba(125, 255, 225, 0.22);
+  backdrop-filter: blur(12px);
+}
+
+.world-brand strong {
+  display: block;
+  font-family: "Syne", sans-serif;
+  letter-spacing: -0.04em;
+}
+
+.world-brand span {
+  color: #9aa3b8;
+  font-size: 0.78rem;
+}
+
+.world-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  justify-content: flex-end;
+}
+
+.world-controls button,
+.world-controls a {
+  border: 1px solid rgba(125, 255, 225, 0.28);
+  background: rgba(8, 12, 20, 0.82);
+  color: #fff;
+  border-radius: 999px;
+  min-height: 38px;
+  padding: 0.35rem 0.85rem;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.world-controls button[aria-pressed="true"] {
+  background: #7dffe1;
+  color: #06221b;
+  border-color: transparent;
+}
+
+.world-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 1.2rem;
+  transform: translateX(-50%);
+  padding: 0.65rem 1rem;
+  border-radius: 14px;
+  background: rgba(8, 12, 20, 0.88);
+  border: 1px solid rgba(125, 255, 225, 0.35);
+  font-size: 0.88rem;
+  max-width: min(92vw, 520px);
+  text-align: center;
+}
+
+.world-start {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(5, 7, 13, 0.82);
+  backdrop-filter: blur(8px);
+}
+
+.world-start.is-hidden {
+  display: none;
+}
+
+.world-start-card {
+  max-width: 420px;
+  padding: 1.6rem;
+  border-radius: 22px;
+  border: 1px solid rgba(125, 255, 225, 0.3);
+  background: rgba(12, 16, 28, 0.94);
+  text-align: center;
+}
+
+.world-start-card h1 {
+  margin: 0 0 0.6rem;
+  font-family: "Syne", sans-serif;
+  font-size: 1.8rem;
+}
+
+.world-start-card p {
+  margin: 0 0 1rem;
+  color: #b7bdc9;
+  line-height: 1.6;
+  font-size: 0.92rem;
+}
+
+.world-start-card button {
+  border: 0;
+  border-radius: 14px;
+  min-height: 48px;
+  padding: 0 1.2rem;
+  background: linear-gradient(135deg, #7c87ff, #ff4f8b);
+  color: #fff;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.world-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(640px, calc(100vw - 2rem));
+  max-height: min(78vh, 720px);
+  overflow: auto;
+  padding: 1.2rem;
+  border-radius: 22px;
+  border: 1px solid rgba(125, 255, 225, 0.28);
+  background: rgba(8, 12, 20, 0.96);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+}
+
+.world-panel[hidden] {
+  display: none;
+}
+
+.world-panel__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.world-panel__head h2 {
+  margin: 0;
+  font-family: "Syne", sans-serif;
+}
+
+.world-panel__close {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 10px;
+  background: #121726;
+  color: #fff;
+  cursor: pointer;
+}
+
+.world-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.world-list button,
+.world-card {
+  text-align: left;
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0d1220;
+  color: inherit;
+  cursor: pointer;
+}
+
+.world-list button strong,
+.world-card strong {
+  display: block;
+}
+
+.world-list button span,
+.world-card span {
+  color: #9aa3b8;
+  font-size: 0.85rem;
+}
+
+.world-code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  padding: 0.8rem;
+  border-radius: 14px;
+  background: #070b14;
+  white-space: pre-wrap;
+}
+
+.world-touch {
+  position: fixed;
+  bottom: 5rem;
+  left: 1rem;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 1px solid rgba(125, 255, 225, 0.25);
+  background: rgba(8, 12, 20, 0.5);
+  display: none;
+}
+
+.world-touch.is-visible {
+  display: block;
+}
+
+.world-touch-knob {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  left: 38px;
+  top: 38px;
+  border-radius: 50%;
+  background: #7dffe1;
+}
+
+.world-touch-action {
+  position: fixed;
+  right: 1rem;
+  bottom: 5rem;
+  min-width: 88px;
+  min-height: 88px;
+  border-radius: 50%;
+  border: 0;
+  background: #7dffe1;
+  color: #06221b;
+  font-weight: 800;
+  display: none;
+}
+
+.world-touch-action.is-visible {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.world-panel .btn-solid,
+.world-panel .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  border-radius: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.world-panel .btn-solid {
+  background: linear-gradient(135deg, #7c87ff, #ff4f8b);
+  color: #fff;
+}
+
+.world-panel .btn-ghost {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.world-panel .contact-form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.world-panel .contact-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.world-panel .contact-form input,
+.world-panel .contact-form textarea {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: #0d1220;
+  color: #fff;
+  padding: 0.7rem 0.8rem;
+  font: inherit;
+}
+
+.world-panel .lead {
+  color: #b7bdc9;
+  line-height: 1.65;
+}

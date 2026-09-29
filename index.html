@@ -1,137 +1,85 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" class="world-root">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Portfolio of Diogo Pinto, a full stack developer based in Portugal." />
-    <title>Portfolio · Diogo Pinto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Explore Diogo Pinto's portfolio in a playable 3D world." />
+    <title>Diogo Pinto · 3D Portfolio</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Syne:wght@700;800&amp;display=swap" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Syne:wght@700;800&amp;display=swap" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/theme.css" rel="stylesheet" />
+    <link href="css/world.css" rel="stylesheet" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
+        }
+      }
+    </script>
   </head>
-  <body class="site-body">
-    <header class="site-header">
-      <nav class="site-nav" aria-label="Main navigation">
-        <a class="site-logo" href="index.html">Diogo Pinto</a>
-        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteMenu">
-          <span class="visually-hidden">Open menu</span>
-          <i class="bi bi-list"></i>
-        </button>
-        <div class="site-menu" id="siteMenu">
-          <a class="site-link is-active" href="index.html">Home</a>
-          <a class="site-link" href="resume.html">Resume</a>
-          <a class="site-link" href="projects.html">Projects</a>
-          <a class="site-link" href="contact.html">Contact</a>
+  <body class="world-app">
+    <canvas id="worldCanvas" aria-label="3D portfolio world"></canvas>
+
+    <div class="world-ui">
+      <div class="world-top">
+        <div class="world-brand">
+          <strong id="worldBrandTitle">Diogo Pinto Portfolio</strong>
+          <span id="worldBrandSub">3D exploration</span>
+        </div>
+        <div class="world-controls">
           <div class="lang-switch" data-lang-toggle role="group" aria-label="Language">
             <button type="button" data-lang="pt" aria-pressed="false">PT</button>
             <button type="button" data-lang="en" aria-pressed="true">EN</button>
           </div>
-        </div>
-      </nav>
-    </header>
-
-    <main>
-      <section class="hero">
-        <div class="site-wrap hero-grid">
-          <div>
-            <span class="hero-badge" id="heroBadge">Web Design · Web Development · Full Stack</span>
-            <p class="hero-kicker" id="heroKicker">I can help your business</p>
-            <h1 id="heroTitle">Start your online journey and <em>grow fast.</em></h1>
-            <div class="hero-actions">
-              <a class="btn-solid" href="resume.html">View resume</a>
-              <a class="btn-ghost" href="projects.html">View projects</a>
-            </div>
-            <div class="stat-row" id="heroStatsRow">
-              <div class="stat"><strong>Full stack</strong><span>End to end web apps</span></div>
-              <div class="stat"><strong>DGERT</strong><span>Certified training</span></div>
-              <div class="stat"><strong>PT + remote</strong><span>Ready to collaborate</span></div>
-            </div>
-          </div>
-          <div class="hero-media">
-            <div class="hero-photo">
-              <img src="assets/profile.png" alt="Portrait of Diogo Pinto" />
-            </div>
-            <div class="hero-float">
-              <strong>Diogo Pinto</strong>
-              <span id="heroLocation">Santa Maria da Feira · PT</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="ticker" aria-hidden="true">
-        <div class="ticker-track">
-          <span>TypeScript</span><span>PHP</span><span>Laravel</span><span>SQL</span><span>Full Stack</span><span>UI / UX</span><span>REST API</span><span>Spring Boot</span>
-          <span>TypeScript</span><span>PHP</span><span>Laravel</span><span>SQL</span><span>Full Stack</span><span>UI / UX</span><span>REST API</span><span>Spring Boot</span>
+          <a href="admin.html">Admin</a>
+          <a href="mailto:bdiogo511@gmail.com">Email</a>
         </div>
       </div>
 
-      <section class="section soft">
-        <div class="site-wrap">
-          <div class="section-head">
-            <h2 class="section-title" id="aboutTitle">About me</h2>
-            <div id="aboutLeadTexts">
-              <p class="lead">My name is Diogo Pinto, and I help businesses build a clear, fast, and easy-to-use online presence.</p>
-              <p class="lead">I work across web development and design, from concept to implementation. If you have a project in mind, we can talk.</p>
-            </div>
-          </div>
-          <div class="skill-grid" id="landingSkillsGrid">
-            <article class="skill-card">
-              <em>01</em>
-              <strong>Full Stack Web</strong>
-              <p>Interfaces, APIs, and databases in the same workflow.</p>
-            </article>
-            <article class="skill-card">
-              <em>02</em>
-              <strong>UI and UX</strong>
-              <p>Simple screens, clear hierarchy, and strong mobile reading.</p>
-            </article>
-            <article class="skill-card">
-              <em>03</em>
-              <strong>Teamwork</strong>
-              <p>Collaboration, task leadership, and direct client communication.</p>
-            </article>
-          </div>
-          <div class="social-row">
-            <a href="https://www.instagram.com/dlocos13/" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-            <a href="https://www.linkedin.com/in/diogo-bpinto" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-            <a href="https://github.com/Loquitos13" aria-label="GitHub"><i class="bi bi-github"></i></a>
-          </div>
-        </div>
-      </section>
+      <div id="worldHint" class="world-hint">WASD · E interact · Esc release mouse</div>
 
-      <div class="site-wrap">
-        <section class="cta-band">
-          <h2 id="ctaTitle">Let’s build something together.</h2>
-          <div class="cta-actions">
-            <a class="btn-light" id="ctaBtn" href="contact.html">Send a message</a>
-          </div>
-        </section>
-      </div>
-    </main>
-
-    <footer class="site-footer">
-      <div class="site-footer__inner">
-        <p>© Diogo Pinto Portfolio</p>
-        <div class="site-footer__links">
-          <a href="mailto:bdiogo511@gmail.com">bdiogo511@gmail.com</a>
-          <a class="admin-entry" href="admin.html" aria-label="Private area"><i class="bi bi-shield-lock"></i></a>
+      <div id="worldStart" class="world-start">
+        <div class="world-start-card">
+          <h1 id="worldStartTitle">Enter the portfolio</h1>
+          <p id="worldStartText">Move with WASD. Look with the mouse. Walk to terminals and press E.</p>
+          <button type="button" id="worldStartBtn">Start exploring</button>
         </div>
       </div>
-    </footer>
-    <script src="js/scripts.js"></script>
-    <script src="js/game.js"></script>
+
+      <div id="worldPanel" class="world-panel" hidden>
+        <div class="world-panel__head">
+          <h2 id="worldPanelTitle">Panel</h2>
+          <button type="button" id="worldPanelClose" class="world-panel__close" aria-label="Close">×</button>
+        </div>
+        <div id="worldPanelBody"></div>
+      </div>
+
+      <div id="worldTouch" class="world-touch"><div id="worldTouchKnob" class="world-touch-knob"></div></div>
+      <button type="button" id="worldTouchAction" class="world-touch-action">E</button>
+    </div>
+
+    <div id="cvPdfTemplate" style="display:none">
+      <div class="cv-a4">
+        <div class="cv-grid">
+          <aside class="cv-left"><div class="cv-left-inner">
+            <h1 class="cv-name">Diogo Pinto</h1>
+            <h2 class="cv-role">Web Developer</h2>
+          </div></aside>
+          <section class="cv-right">
+            <div class="cv-section"><div class="cv-cards" id="cvPdfExperienceCards"></div></div>
+            <div class="cv-section"><div class="cv-cards" id="cvPdfInternshipCards"></div></div>
+            <div class="cv-section"><div class="cv-cards" id="cvPdfEducationCards"></div></div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
     <script src="js/portfolio-data.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        if (window.PortfolioData) {
-          window.PortfolioData.renderLanding("en");
-        }
-      });
-    </script>
+    <script src="js/scripts.js"></script>
+    <script type="module" src="js/world3d.js"></script>
   </body>
 </html>

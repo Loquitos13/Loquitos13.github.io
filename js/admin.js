@@ -212,7 +212,7 @@
     }
 
     const isPt = lang() === "pt";
-    const resumeUrl = isPt ? "pt/resume.html" : "resume.html";
+    const resumeUrl = isPt ? "pt/index.html?spawn=experience" : "index.html?spawn=experience";
     const projectsUrl = isPt ? "pt/projects.html" : "projects.html";
     const homeUrl = isPt ? "pt/index.html" : "index.html";
 
