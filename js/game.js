@@ -263,6 +263,7 @@
       '<button type="button" class="game-hud" id="gameHudBtn" aria-expanded="false" aria-controls="gamePanel"></button>',
       '<section class="game-panel" id="gamePanel" hidden></section>'
     ].join("");
+    document.body.classList.add("has-game-hud");
     document.body.appendChild(root);
   }
 
@@ -378,6 +379,9 @@
     if (current === "home" || current === "resume" || current === "projects" || current === "contact") {
       complete(current, { silent: !state.introSeen });
     }
+    if (/\/projects\/.+/i.test(window.location.pathname)) {
+      complete("inspect", { silent: !state.introSeen });
+    }
 
     if (current === "home") {
       const about = document.querySelector("#aboutTitle, .skill-grid, .section.soft");
@@ -392,8 +396,10 @@
       }
     }
 
-    document.querySelectorAll(".project-card").forEach((card) => {
-      card.addEventListener("click", () => complete("inspect"));
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest(".project-card")) complete("inspect");
     });
 
     document.querySelectorAll("[data-lang-toggle] [data-lang]").forEach((button) => {

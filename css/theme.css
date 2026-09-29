@@ -1428,14 +1428,18 @@ body.site-body footer.bg-white {
   border-color: rgba(124, 135, 255, 0.4) !important;
 }
 
+body.has-game-hud {
+  padding-bottom: 5.4rem;
+}
+
 .game-root {
   position: fixed;
-  left: 1rem;
+  right: 1rem;
   bottom: 1rem;
   z-index: 80;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   gap: 0.7rem;
   max-width: min(380px, calc(100vw - 2rem));
 }
