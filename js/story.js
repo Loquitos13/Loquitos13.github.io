@@ -280,11 +280,19 @@
       const rect = stage.getBoundingClientRect();
       const span = Math.max(1, stage.offsetHeight - view);
       const p = clamp(-rect.top / span, 0, 1);
-      const reveal = fade(p, 0.06, 0.28);
-      const hold = 1 - fade(p, 0.78, 0.98);
+      let reveal = fade(p, 0.08, 0.32);
+      let hold = 1 - fade(p, 0.72, 0.96);
+      if (stage.classList.contains("stage--hero")) {
+        reveal = 1;
+        hold = 1 - fade(p, 0.42, 0.9);
+      }
+      if (stage.classList.contains("stage--end")) {
+        reveal = 1;
+        hold = 1;
+      }
       stage.style.setProperty("--p", p.toFixed(4));
       stage.style.setProperty("--reveal", reveal.toFixed(4));
-      stage.style.setProperty("--hold", stage.classList.contains("stage--end") ? "1" : hold.toFixed(4));
+      stage.style.setProperty("--hold", hold.toFixed(4));
       stage.querySelectorAll(".beat").forEach((card, i) => {
         const start = 0.12 + i * 0.2;
         card.style.setProperty("--reveal", fade(p, start, start + 0.16).toFixed(4));
