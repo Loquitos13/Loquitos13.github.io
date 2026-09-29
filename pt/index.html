@@ -1,72 +1,106 @@
 <!DOCTYPE html>
-<html lang="pt-PT" class="world-root">
+<html lang="pt-PT" class="game-root">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="description" content="Explora o portfólio de Diogo Pinto num mundo 3D jogável." />
-    <title>Diogo Pinto · Portfólio 3D</title>
+    <meta name="description" content="Diogo Pinto — portfólio gamificado. Explora missões, sobe de nível e sincroniza a carreira." />
+    <title>Diogo Pinto · DP Chronicle</title>
     <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;family=Syne:wght@700;800&amp;display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
     <link href="../css/styles.css" rel="stylesheet" />
     <link href="../css/theme.css" rel="stylesheet" />
-    <link href="../css/world.css" rel="stylesheet" />
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
-        }
-      }
-    </script>
+    <link href="../css/game.css" rel="stylesheet" />
   </head>
-  <body class="world-app">
-    <canvas id="worldCanvas" aria-label="Mundo 3D do portfólio"></canvas>
-
-    <div class="world-ui">
-      <div class="world-top">
-        <div class="world-brand">
-          <strong id="worldBrandTitle">Portfólio Diogo Pinto</strong>
-          <span id="worldBrandSub">Exploração 3D</span>
+  <body class="game-app site-body">
+    <div id="gameBoot" class="game-boot">
+      <div class="game-boot__panel">
+        <div id="gameBootTag" class="game-boot__tag">DP.CHRONICLE · INIT</div>
+        <pre id="gameBootLog" class="game-boot__log"></pre>
+        <div class="game-boot__actions">
+          <button type="button" id="gameBootStart">Iniciar campanha</button>
+          <button type="button" id="gameBootSkip" hidden>Continuar</button>
         </div>
-        <div class="world-controls">
+      </div>
+    </div>
+
+    <div class="game-shell">
+      <header class="game-top">
+        <div class="game-top__brand">
+          <strong id="gameBrand">Diogo Pinto</strong>
+          <span id="gameTag">Chronicle · portfólio gamificado</span>
+        </div>
+        <div class="game-top__actions">
           <div class="lang-switch" data-lang-toggle role="group" aria-label="Idioma">
             <button type="button" data-lang="pt" aria-pressed="true">PT</button>
             <button type="button" data-lang="en" aria-pressed="false">EN</button>
           </div>
-          <a href="../admin.html">Admin</a>
           <a href="mailto:bdiogo511@gmail.com">Email</a>
         </div>
-      </div>
+      </header>
 
-      <div id="worldHint" class="world-hint">WASD · E interagir · Esc libertar rato</div>
+      <main class="game-main">
+        <aside class="game-panel game-char">
+          <div class="game-panel__head">
+            <h2 id="gameCharPanelTitle">Operador</h2>
+            <span>Nv</span>
+          </div>
+          <img id="gameAvatar" class="game-char__avatar" src="../assets/profile.png" alt="Diogo Pinto" width="260" height="260" />
+          <p id="gameRank" class="game-char__rank">Recruta</p>
+          <p id="gameCharMeta" class="game-char__meta">Nível 1 · 0 XP</p>
+          <div class="game-xp" role="progressbar" aria-valuemin="0" aria-valuemax="100"><span id="gameXpBar"></span></div>
+          <div class="game-char__stats">
+            <div><span>Missões</span><strong id="gameStatQuests">0</strong></div>
+            <div><span>Zonas</span><strong id="gameStatZones">0</strong></div>
+          </div>
+          <div id="gameSkills" class="game-skills"></div>
+        </aside>
 
-      <div id="worldStart" class="world-start">
-        <div class="world-start-card">
-          <h1 id="worldStartTitle">Entra no portfólio</h1>
-          <p id="worldStartText">Move-te com WASD. Olha com o rato. Aproxima-te dos terminais e prime E.</p>
-          <button type="button" id="worldStartBtn">Começar exploração</button>
-        </div>
-      </div>
+        <section class="game-panel">
+          <div class="game-panel__head">
+            <h2 id="gameMapTitle">Mapa de missões</h2>
+            <span>5+ nós</span>
+          </div>
+          <div id="gameMap" class="game-map-wrap">
+            <svg id="gameMapLines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+          </div>
+        </section>
 
-      <div id="worldPanel" class="world-panel" hidden>
-        <div class="world-panel__head">
-          <h2 id="worldPanelTitle">Painel</h2>
-          <button type="button" id="worldPanelClose" class="world-panel__close" aria-label="Fechar">×</button>
-        </div>
-        <div id="worldPanelBody"></div>
-      </div>
-
-      <div id="worldTouch" class="world-touch"><div id="worldTouchKnob" class="world-touch-knob"></div></div>
-      <button type="button" id="worldTouchAction" class="world-touch-action">E</button>
+        <aside class="game-panel">
+          <div class="game-panel__head">
+            <h2 id="gameQuestPanelTitle">Registo de missões</h2>
+            <span>XP</span>
+          </div>
+          <ol id="gameQuestList" class="game-quest-list"></ol>
+          <button type="button" id="gameReset" class="game-reset">Repor campanha</button>
+        </aside>
+      </main>
     </div>
+
+    <div id="gameModal" class="game-modal" hidden>
+      <div class="game-modal__window" role="dialog" aria-modal="true" aria-labelledby="gameModalTitle">
+        <div class="game-modal__bar">
+          <div class="game-modal__dots"><span></span><span></span><span></span></div>
+          <span id="gameModalMeta">dp-terminal · briefing</span>
+        </div>
+        <div class="game-modal__head">
+          <h2 id="gameModalTitle">Missão</h2>
+          <button type="button" id="gameModalClose" class="game-modal__close" aria-label="Fechar">×</button>
+        </div>
+        <div id="gameModalBody" class="game-modal__body"></div>
+      </div>
+    </div>
+
+    <div id="gameToast" class="game-toast" hidden role="status"></div>
 
     <div id="cvPdfTemplate" style="display:none">
       <div class="cv-a4">
         <div class="cv-grid">
           <aside class="cv-left"><div class="cv-left-inner">
             <h1 class="cv-name">Diogo Pinto</h1>
-            <h2 class="cv-role">Desenvolvedor Web</h2>
+            <h2 class="cv-role">Web Developer</h2>
           </div></aside>
           <section class="cv-right">
             <div class="cv-section"><div class="cv-cards" id="cvPdfExperienceCards"></div></div>
@@ -80,6 +114,6 @@
     <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
     <script src="../js/portfolio-data.js"></script>
     <script src="../js/scripts.js"></script>
-    <script type="module" src="../js/world3d.js"></script>
+    <script src="../js/portfolio-game.js"></script>
   </body>
 </html>

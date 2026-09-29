@@ -4,8 +4,19 @@
     <meta charset="utf-8" />
     <title>Redirecting…</title>
     <script>
-      const spawn = new URLSearchParams(location.search).get("spawn") || "experience";
-      location.replace("index.html?spawn=" + encodeURIComponent(spawn));
+      const params = new URLSearchParams(location.search);
+      const spawn = params.get("spawn") || "experience";
+      const zone =
+        spawn === "contact"
+          ? "comms"
+          : spawn === "projects"
+            ? "field"
+            : spawn === "education"
+              ? "archive"
+              : spawn === "experience" || spawn === "resume"
+                ? "career"
+                : "hq";
+      location.replace("index.html?zone=" + encodeURIComponent(zone));
     </script>
   </head>
   <body></body>

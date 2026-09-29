@@ -6,7 +6,17 @@
     <script>
       const params = new URLSearchParams(location.search);
       const spawn = params.get("spawn") || "experience";
-      location.replace("index.html?spawn=" + spawn);
+      const zone =
+        spawn === "contact"
+          ? "comms"
+          : spawn === "projects"
+            ? "field"
+            : spawn === "education"
+              ? "archive"
+              : spawn === "experience" || spawn === "resume"
+                ? "career"
+                : "hq";
+      location.replace("index.html?zone=" + encodeURIComponent(zone));
     </script>
   </head>
   <body></body>

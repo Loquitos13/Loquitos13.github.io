@@ -60,12 +60,12 @@
     });
   }
 
-  function isWorldApp() {
-    return document.body.classList.contains("world-app");
+  function isGameApp() {
+    return document.body.classList.contains("game-app") || document.body.classList.contains("world-app");
   }
 
   function maybeRedirectToDefaultPt() {
-    if (isAdminPage() || isWorldApp()) return false;
+    if (isAdminPage() || isGameApp()) return false;
     if (currentPathLang() === "pt") return false;
     const saved = storedLang();
     if (saved === "en") return false;
@@ -233,7 +233,7 @@
     document.documentElement.setAttribute("lang", lang === "pt" ? "pt-PT" : "en-US");
     syncLangControls(lang);
     bindLanguage();
-    if (!isWorldApp()) {
+    if (!isGameApp()) {
       bindNav();
       bindHeaderScroll();
     }
