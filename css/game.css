@@ -1,4 +1,4 @@
-html.game-root,
+html.chronicle-root,
 body.game-app {
   margin: 0;
   min-height: 100%;
@@ -7,8 +7,25 @@ body.game-app {
   font-family: "IBM Plex Mono", ui-monospace, monospace;
 }
 
+html.chronicle-root {
+  position: static;
+  width: 100%;
+  height: auto;
+}
+
 body.game-app {
   overflow-x: hidden;
+}
+
+body.game-app.site-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background: #04060c;
+}
+
+body.game-app.site-body::before {
+  display: none;
 }
 
 .game-shell {
@@ -94,15 +111,22 @@ body.game-app {
 .game-top {
   position: relative;
   z-index: 2;
+  border-bottom: 1px solid rgba(125, 255, 225, 0.15);
+  background: rgba(5, 8, 14, 0.92);
+  backdrop-filter: blur(10px);
+}
+
+.game-top__inner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.85rem 1rem;
-  border-bottom: 1px solid rgba(125, 255, 225, 0.15);
-  background: rgba(5, 8, 14, 0.92);
-  backdrop-filter: blur(10px);
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .game-top__brand {
@@ -276,6 +300,7 @@ body.game-app {
   background-size: 24px 24px;
   border-radius: 4px;
   overflow: hidden;
+  width: 100%;
 }
 
 .game-map-wrap svg {
