@@ -61,7 +61,7 @@
   }
 
   function isGameApp() {
-    return document.body.classList.contains("game-app") || document.body.classList.contains("world-app");
+    return document.body.classList.contains("game-app") || document.body.classList.contains("world-app") || document.body.classList.contains("sector-app");
   }
 
   function maybeRedirectToDefaultPt() {
