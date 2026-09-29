@@ -235,13 +235,13 @@
   });
 })();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.getElementById("downloadResumeBtn");
+document.addEventListener("click", (e) => {
+  const btn = e.target instanceof Element ? e.target.closest("#downloadResumeBtn") : null;
   if (!btn) return;
 
-  btn.addEventListener("click", (e) => {
-    e.preventDefault();
-    window.dispatchEvent(new CustomEvent("portfolio:quest", { detail: { id: "cv" } }));
+  e.preventDefault();
+  window.dispatchEvent(new CustomEvent("portfolio:quest", { detail: { id: "cv" } }));
+  const startDownload = () => {
     const template = document.querySelector("#cvPdfTemplate .cv-a4");
     if (!template || typeof html2pdf !== "function") return;
     const clone = template.cloneNode(true);
@@ -258,5 +258,6 @@ document.addEventListener("DOMContentLoaded", () => {
         pdf.deletePage(pdf.internal.getNumberOfPages());
       }
     }).save();
-  });
+  };
+  startDownload();
 });
