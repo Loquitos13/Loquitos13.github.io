@@ -189,6 +189,7 @@
       }
 
       saveMessage(payload);
+      window.dispatchEvent(new CustomEvent("portfolio:quest", { detail: { id: "message" } }));
 
       try {
         await sendContact(payload);
@@ -240,6 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   btn.addEventListener("click", (e) => {
     e.preventDefault();
+    window.dispatchEvent(new CustomEvent("portfolio:quest", { detail: { id: "cv" } }));
     const template = document.querySelector("#cvPdfTemplate .cv-a4");
     if (!template || typeof html2pdf !== "function") return;
     const clone = template.cloneNode(true);
