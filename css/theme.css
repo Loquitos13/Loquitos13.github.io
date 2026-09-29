@@ -1428,6 +1428,326 @@ body.site-body footer.bg-white {
   border-color: rgba(124, 135, 255, 0.4) !important;
 }
 
+.profiler {
+  --mint: #7dffe1;
+  width: min(1180px, calc(100% - 2rem));
+  margin: 1.4rem auto 3rem;
+  border: 1px solid rgba(125, 255, 225, 0.18);
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(125, 255, 225, 0.05), transparent 28%),
+    rgba(8, 12, 20, 0.92);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.profiler-top,
+.profiler-shell {
+  position: relative;
+  z-index: 1;
+}
+
+.profiler-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-end;
+  padding: 1.3rem 1.4rem 1rem;
+  border-bottom: 1px solid rgba(125, 255, 225, 0.14);
+}
+
+.profiler-top p,
+.profiler-kicker {
+  margin: 0;
+  color: var(--mint);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.profiler-top h1 {
+  margin: 0.15rem 0 0;
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.05em;
+}
+
+.profiler-actions,
+.profiler-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.profiler-actions a,
+.profiler-actions button,
+.profiler-tools button,
+.profiler-add,
+.profiler-nav button {
+  border: 1px solid rgba(125, 255, 225, 0.28);
+  background: transparent;
+  color: #fff;
+  border-radius: 999px;
+  min-height: 40px;
+  padding: 0.45rem 0.9rem;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.profiler-tools .is-solid,
+.profiler-add,
+.profiler-nav button.is-active,
+.profiler-record.is-active {
+  background: var(--mint);
+  color: #06221b;
+  border-color: transparent;
+}
+
+.profiler-shell {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  min-height: 640px;
+}
+
+.profiler-side {
+  padding: 1.3rem 1rem;
+  border-right: 1px solid rgba(125, 255, 225, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.profiler-portrait {
+  width: 148px;
+  height: 148px;
+  margin-bottom: 0.8rem;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid rgba(125, 255, 225, 0.4);
+  box-shadow: 0 0 0 6px rgba(125, 255, 225, 0.06);
+}
+
+.profiler-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.profiler-side strong {
+  font-family: var(--display);
+  font-size: 1.25rem;
+}
+
+.profiler-side > span,
+.profiler-meta,
+.profiler-empty {
+  color: var(--muted);
+}
+
+.profiler-nav {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 1.2rem;
+}
+
+.profiler-nav button {
+  text-align: left;
+  border-radius: 14px;
+}
+
+.profiler-stage {
+  position: relative;
+  padding: 1.2rem;
+}
+
+.profiler-code {
+  border-radius: 18px;
+  background: #070b14;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 1rem 0.4rem;
+  overflow: auto;
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.code-line {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  gap: 0.8rem;
+  padding: 0 0.8rem;
+}
+
+.code-line > span {
+  color: #5d6b84;
+  text-align: right;
+}
+
+.tok-key { color: #9ec1ff; }
+.tok-string { color: #7dffe1; }
+.tok-comment { color: #8b93a7; }
+
+.profiler-split {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.profiler-list {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.8rem;
+}
+
+.profiler-record {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.7rem;
+  text-align: left;
+  padding: 0.75rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0d1220;
+  color: #fff;
+  cursor: pointer;
+}
+
+.profiler-record em {
+  grid-row: span 2;
+  align-self: center;
+  font-style: normal;
+  color: var(--mint);
+  font-weight: 800;
+}
+
+.profiler-record.is-active em,
+.profiler-record.is-active strong,
+.profiler-record.is-active span {
+  color: #06221b;
+}
+
+.profiler-record span,
+.profiler-dossier p {
+  color: var(--muted);
+}
+
+.code-line code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+body:has(#profiler) .admin-floating-badge {
+  top: 5.4rem;
+  bottom: auto;
+}
+
+.profiler-dossier {
+  min-height: 280px;
+  padding: 1.2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.profiler-dossier h2 {
+  margin: 0.3rem 0;
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+.profiler-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.profiler-tags span {
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  background: rgba(125, 255, 225, 0.1);
+  color: var(--mint);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.profiler-editor {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 20px;
+  background: #0d1220;
+  border: 1px solid rgba(125, 255, 225, 0.2);
+  display: grid;
+  gap: 0.75rem;
+}
+
+.profiler-editor h2 {
+  margin: 0;
+  font-family: var(--display);
+}
+
+.profiler-editor label,
+.profiler-pair {
+  display: grid;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.profiler-pair {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+
+.profiler-pair p {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.profiler-editor input,
+.profiler-editor textarea,
+.profiler-editor select {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: #080b13;
+  color: #fff;
+  font: inherit;
+  padding: 0.7rem 0.8rem;
+}
+
+.profiler-add {
+  margin-top: 0.7rem;
+}
+
+@media (max-width: 900px) {
+  .profiler-shell,
+  .profiler-split,
+  .profiler-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .profiler-side {
+    border-right: 0;
+    border-bottom: 1px solid rgba(125, 255, 225, 0.14);
+  }
+
+  .profiler-nav {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .profiler-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 body.has-game-hud {
   padding-bottom: 5.4rem;
 }
