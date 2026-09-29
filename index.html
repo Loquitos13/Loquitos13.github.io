@@ -23,7 +23,39 @@
   <body class="world-app">
     <canvas id="worldCanvas" aria-label="3D portfolio world"></canvas>
 
+    <div id="worldBoot" class="world-boot" aria-live="polite">
+      <div class="world-boot__screen">
+        <div class="world-boot__label">SYS · DP-NODE · v3.1</div>
+        <pre id="worldBootLog" class="world-boot__log"></pre>
+        <div class="world-boot__bar"><span id="worldBootFill"></span></div>
+      </div>
+    </div>
+
     <div class="world-ui">
+      <div class="world-scanline" aria-hidden="true"></div>
+      <div id="worldCrosshair" class="world-crosshair" aria-hidden="true"></div>
+      <div id="worldToast" class="world-toast" role="status"></div>
+
+      <div id="worldHud" class="world-hud is-hidden">
+        <div class="world-hud__bar">
+          <div class="world-hud__segment"><strong>LINK</strong>&nbsp;STABLE</div>
+          <div class="world-hud__segment" id="worldHudCoords">X0 Z0</div>
+          <div class="world-hud__sync">
+            <span>SYNC</span>
+            <div class="world-hud__sync-track"><div id="worldHudSyncFill" class="world-hud__sync-fill"></div></div>
+            <span id="worldHudSyncPct">0%</span>
+          </div>
+        </div>
+        <aside class="world-hud__missions">
+          <h3 id="worldMissionTitle">Objectives</h3>
+          <ul id="worldMissionList"></ul>
+        </aside>
+        <div class="world-minimap">
+          <span class="world-minimap__label">MAP</span>
+          <canvas id="worldMinimap" width="132" height="132" aria-hidden="true"></canvas>
+        </div>
+      </div>
+
       <div class="world-top">
         <div class="world-brand">
           <strong id="worldBrandTitle">Diogo Pinto Portfolio</strong>
@@ -41,15 +73,29 @@
 
       <div id="worldHint" class="world-hint">WASD · E interact · Esc release mouse</div>
 
-      <div id="worldStart" class="world-start">
+      <div id="worldStart" class="world-start is-hidden">
         <div class="world-start-card">
-          <h1 id="worldStartTitle">Enter the portfolio</h1>
-          <p id="worldStartText">Move with WASD. Look with the mouse. Walk to terminals and press E.</p>
-          <button type="button" id="worldStartBtn">Start exploring</button>
+          <div class="world-start-card__titlebar">
+            <div class="world-start-card__dots"><span></span><span></span><span></span></div>
+            <span>session.init — operator</span>
+          </div>
+          <div class="world-start-card__body">
+            <h1 id="worldStartTitle">Enter the portfolio</h1>
+            <p id="worldStartText">Move with WASD. Look with the mouse. Walk to terminals and press E.</p>
+            <div class="world-start-meta">
+              <span id="worldStartMeta1">Mission: sync nodes</span>
+              <span id="worldStartMeta2">Input: WASD · E</span>
+            </div>
+            <button type="button" id="worldStartBtn">Engage link</button>
+          </div>
         </div>
       </div>
 
       <div id="worldPanel" class="world-panel" hidden>
+        <div class="world-panel__chrome">
+          <div class="world-panel__dots"><span></span><span></span><span></span></div>
+          <span id="worldPanelMeta">dp-terminal · read</span>
+        </div>
         <div class="world-panel__head">
           <h2 id="worldPanelTitle">Panel</h2>
           <button type="button" id="worldPanelClose" class="world-panel__close" aria-label="Close">×</button>

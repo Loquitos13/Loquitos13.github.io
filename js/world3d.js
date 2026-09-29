@@ -3,10 +3,12 @@ import * as THREE from "three";
 const COPY = {
   pt: {
     title: "Portfólio Diogo Pinto",
-    subtitle: "Exploração 3D",
+    subtitle: "Operador · mundo 3D",
     startTitle: "Entra no portfólio",
-    startText: "Move-te com WASD ou setas. Olha com o rato. Aproxima-te dos terminais e prime E.",
-    startBtn: "Começar exploração",
+    startText: "Sincroniza os cinco nós do sistema. Move-te com WASD, olha com o rato e prime E nos terminais.",
+    startBtn: "Activar ligação",
+    startMeta1: "Missão: sincronizar nós",
+    startMeta2: "Input: WASD · E",
     move: "WASD · E interagir · Esc libertar rato",
     interact: "Prime E · ",
     close: "Fechar",
@@ -24,14 +26,28 @@ const COPY = {
     formName: "Nome",
     formEmail: "Email",
     formMessage: "Mensagem",
-    formSubject: "Assunto"
+    formSubject: "Assunto",
+    missionTitle: "Objectivos",
+    panelMeta: "dp-terminal · leitura",
+    hudLink: "ESTÁVEL",
+    synced: "Nó sincronizado",
+    complete: "Rede completa · operador verificado",
+    bootLines: [
+      "> boot dp-node v3.1",
+      "> carregar assets/portfolio-data",
+      "> inicializar mundo WebGL",
+      "> mapear terminais · 5 nós",
+      "> pronto para operador"
+    ]
   },
   en: {
     title: "Diogo Pinto Portfolio",
-    subtitle: "3D exploration",
+    subtitle: "Operator · 3D world",
     startTitle: "Enter the portfolio",
-    startText: "Move with WASD or arrow keys. Look with the mouse. Walk to terminals and press E.",
-    startBtn: "Start exploring",
+    startText: "Sync all five system nodes. Move with WASD, look with the mouse, press E at terminals.",
+    startBtn: "Engage link",
+    startMeta1: "Mission: sync nodes",
+    startMeta2: "Input: WASD · E",
     move: "WASD · E interact · Esc release mouse",
     interact: "Press E · ",
     close: "Close",
@@ -49,9 +65,31 @@ const COPY = {
     formName: "Name",
     formEmail: "Email",
     formMessage: "Message",
-    formSubject: "Subject"
+    formSubject: "Subject",
+    missionTitle: "Objectives",
+    panelMeta: "dp-terminal · read",
+    hudLink: "STABLE",
+    synced: "Node synced",
+    complete: "Network complete · operator verified",
+    bootLines: [
+      "> boot dp-node v3.1",
+      "> load assets/portfolio-data",
+      "> init WebGL world",
+      "> map terminals · 5 nodes",
+      "> ready for operator"
+    ]
   }
 };
+
+const MISSION_NODES = [
+  { key: "core", x: 0, z: 0, labelPt: "Núcleo", labelEn: "Core" },
+  { key: "ops", x: -10, z: -14, labelPt: "Operações", labelEn: "Operations" },
+  { key: "archive", x: 10, z: -14, labelPt: "Arquivo", labelEn: "Archive" },
+  { key: "net", x: 0, z: 16, labelPt: "Rede", labelEn: "Network" },
+  { key: "comms", x: 0, z: -16, labelPt: "Comms", labelEn: "Comms" }
+];
+
+const GAME_STORAGE_KEY = "portfolio.world.sync.v1";
 
 const state = {
   lang: "en",
@@ -76,6 +114,11 @@ let interactables = [];
 let colliders = [];
 let data;
 let ui;
+let terminalMeshes = new Map();
+let nearestMesh = null;
+let gameProgress = { synced: {} };
+let minimapCtx;
+let pulseTime = 0;
 
 function t() {
   return COPY[state.lang];
@@ -91,6 +134,152 @@ function initLang() {
   document.documentElement.lang = state.lang === "pt" ? "pt-PT" : "en-US";
 }
 
+function loadGameProgress() {
+  try {
+    const raw = localStorage.getItem(GAME_STORAGE_KEY);
+    if (raw) gameProgress = { synced: {}, ...JSON.parse(raw) };
+  } catch {
+    gameProgress = { synced: {} };
+  }
+}
+
+function saveGameProgress() {
+  try {
+    localStorage.setItem(GAME_STORAGE_KEY, JSON.stringify(gameProgress));
+  } catch {}
+}
+
+function syncKeyFor(payload) {
+  if (!payload) return null;
+  if (payload.syncKey) return payload.syncKey;
+  if (payload.type === "profile") return "core";
+  if (payload.type === "experience") return "ops";
+  if (payload.type === "education") return "archive";
+  if (payload.type === "projects") return "net";
+  if (payload.type === "contact") return "comms";
+  return null;
+}
+
+function missionLabel(node) {
+  return state.lang === "pt" ? node.labelPt : node.labelEn;
+}
+
+function syncPercent() {
+  const total = MISSION_NODES.length;
+  const done = MISSION_NODES.filter((n) => gameProgress.synced[n.key]).length;
+  return Math.round((done / total) * 100);
+}
+
+function renderMissionHud() {
+  const copy = t();
+  const title = document.getElementById("worldMissionTitle");
+  const list = document.getElementById("worldMissionList");
+  const fill = document.getElementById("worldHudSyncFill");
+  const pct = document.getElementById("worldHudSyncPct");
+  if (title) title.textContent = copy.missionTitle;
+  if (list) {
+    list.innerHTML = MISSION_NODES.map(
+      (n) =>
+        `<li data-done="${gameProgress.synced[n.key] ? "true" : "false"}">${escapeHtml(missionLabel(n))}</li>`
+    ).join("");
+  }
+  const p = syncPercent();
+  if (fill) fill.style.width = `${p}%`;
+  if (pct) pct.textContent = `${p}%`;
+  applySyncedTerminalVisuals();
+}
+
+function applySyncedTerminalVisuals() {
+  MISSION_NODES.forEach((node) => {
+    const mesh = terminalMeshes.get(node.key);
+    if (!mesh?.material) return;
+    if (gameProgress.synced[node.key]) {
+      mesh.material.emissive.setHex(0x7dffe1);
+      mesh.material.emissiveIntensity = 0.55;
+    }
+  });
+}
+
+function recordSync(payload) {
+  const key = syncKeyFor(payload);
+  if (!key || gameProgress.synced[key]) return;
+  gameProgress.synced[key] = Date.now();
+  saveGameProgress();
+  renderMissionHud();
+  showToast(t().synced + " · " + missionLabel(MISSION_NODES.find((n) => n.key === key) || { labelPt: key, labelEn: key }));
+  if (syncPercent() === 100) {
+    setTimeout(() => showToast(t().complete), 900);
+  }
+}
+
+function showToast(message) {
+  const el = document.getElementById("worldToast");
+  if (!el) return;
+  el.textContent = message;
+  el.classList.add("is-visible");
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => el.classList.remove("is-visible"), 2200);
+}
+
+function runBootSequence() {
+  const copy = t();
+  const log = document.getElementById("worldBootLog");
+  const fill = document.getElementById("worldBootFill");
+  const boot = document.getElementById("worldBoot");
+  const start = document.getElementById("worldStart");
+  if (!log || !boot) {
+    start?.classList.remove("is-hidden");
+    return;
+  }
+  let i = 0;
+  const lines = [];
+  const step = () => {
+    if (i >= copy.bootLines.length) {
+      if (fill) fill.style.width = "100%";
+      setTimeout(() => {
+        boot.classList.add("is-done");
+        start?.classList.remove("is-hidden");
+      }, 400);
+      return;
+    }
+    lines.push(copy.bootLines[i]);
+    log.innerHTML = lines
+      .map((line, idx) => (idx === lines.length - 1 ? `<span class="ok">${escapeHtml(line)}</span>` : escapeHtml(line)))
+      .join("\n");
+    if (fill) fill.style.width = `${((i + 1) / copy.bootLines.length) * 100}%`;
+    i += 1;
+    setTimeout(step, 380 + Math.random() * 220);
+  };
+  step();
+}
+
+function drawMinimap() {
+  if (!minimapCtx) return;
+  const canvas = document.getElementById("worldMinimap");
+  if (!canvas) return;
+  const w = canvas.width;
+  const h = canvas.height;
+  const scale = w / 72;
+  minimapCtx.fillStyle = "#060a12";
+  minimapCtx.fillRect(0, 0, w, h);
+  minimapCtx.strokeStyle = "rgba(125,255,225,0.15)";
+  minimapCtx.strokeRect(0.5, 0.5, w - 1, h - 1);
+  MISSION_NODES.forEach((node) => {
+    const px = (node.x + 36) * scale;
+    const py = (node.z + 36) * scale;
+    minimapCtx.beginPath();
+    minimapCtx.fillStyle = gameProgress.synced[node.key] ? "#7dffe1" : "#4a5568";
+    minimapCtx.arc(px, py, gameProgress.synced[node.key] ? 4 : 3, 0, Math.PI * 2);
+    minimapCtx.fill();
+  });
+  const px = (state.position.x + 36) * scale;
+  const py = (state.position.z + 36) * scale;
+  minimapCtx.fillStyle = "#ffffff";
+  minimapCtx.beginPath();
+  minimapCtx.arc(px, py, 3, 0, Math.PI * 2);
+  minimapCtx.fill();
+}
+
 function bindUi() {
   const copy = t();
   document.getElementById("worldBrandTitle").textContent = copy.title;
@@ -98,6 +287,14 @@ function bindUi() {
   document.getElementById("worldStartTitle").textContent = copy.startTitle;
   document.getElementById("worldStartText").textContent = copy.startText;
   document.getElementById("worldStartBtn").textContent = copy.startBtn;
+  const m1 = document.getElementById("worldStartMeta1");
+  const m2 = document.getElementById("worldStartMeta2");
+  if (m1) m1.textContent = copy.startMeta1;
+  if (m2) m2.textContent = copy.startMeta2;
+  const linkSeg = document.querySelector(".world-hud__segment strong");
+  if (linkSeg?.parentElement) {
+    linkSeg.parentElement.innerHTML = `<strong>LINK</strong>&nbsp;${copy.hudLink}`;
+  }
   document.querySelectorAll("[data-lang-toggle] [data-lang]").forEach((btn) => {
     btn.setAttribute("aria-pressed", String(btn.getAttribute("data-lang") === state.lang));
     btn.addEventListener("click", () => {
@@ -118,6 +315,7 @@ function bindUi() {
 
 function startGame() {
   document.getElementById("worldStart").classList.add("is-hidden");
+  document.getElementById("worldHud")?.classList.remove("is-hidden");
   const canvas = document.getElementById("worldCanvas");
   if (!("ontouchstart" in window)) {
     canvas.requestPointerLock();
@@ -126,6 +324,7 @@ function startGame() {
     document.getElementById("worldTouchAction").classList.add("is-visible");
   }
   state.locked = true;
+  updateCrosshair();
 }
 
 function addCollider(minX, maxX, minZ, maxZ) {
@@ -159,8 +358,30 @@ function createZoneLight(x, z, color) {
 
 function addInteract(mesh, payload) {
   mesh.userData.interact = payload;
+  const sk = syncKeyFor(payload);
+  if (sk) {
+    payload.syncKey = sk;
+    terminalMeshes.set(sk, mesh);
+  }
   interactables.push(mesh);
   scene.add(mesh);
+  addTerminalBeacon(mesh, payload);
+}
+
+function addTerminalBeacon(mesh, payload) {
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(1.1, 1.35, 32),
+    new THREE.MeshBasicMaterial({
+      color: mesh.material?.emissive?.getHex?.() || 0x7dffe1,
+      transparent: true,
+      opacity: 0.35,
+      side: THREE.DoubleSide
+    })
+  );
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.y = 0.05;
+  mesh.add(ring);
+  mesh.userData.beacon = ring;
 }
 
 function buildWorld() {
@@ -192,16 +413,16 @@ function buildWorld() {
   portraitMesh.position.set(0, 2.2, -0.05);
   const hub = createTerminal(0, 0, 0x7dffe1, 3.6);
   hub.add(portraitMesh);
-  addInteract(hub, { type: "profile" });
+  addInteract(hub, { type: "profile", syncKey: "core" });
   createZoneLight(0, 0, 0x7dffe1);
   addCollider(-2.5, 2.5, -2.5, 2.5);
 
   const exp = createTerminal(-10, -14, 0x7c87ff, 2.8);
-  addInteract(exp, { type: "experience" });
+  addInteract(exp, { type: "experience", syncKey: "ops" });
   createZoneLight(-10, -14, 0x7c87ff);
 
   const edu = createTerminal(10, -14, 0xff4f8b, 2.8);
-  addInteract(edu, { type: "education" });
+  addInteract(edu, { type: "education", syncKey: "archive" });
   createZoneLight(10, -14, 0xff4f8b);
 
   const projects = data.getProjects();
@@ -213,9 +434,9 @@ function buildWorld() {
     createZoneLight(x, z, 0x9aa8ff);
     addCollider(x - 1.4, x + 1.4, z - 1, z + 1);
   });
-  addInteract(createTerminal(0, 16, 0x7dffe1, 2.6), { type: "projects" });
+  addInteract(createTerminal(0, 16, 0x7dffe1, 2.6), { type: "projects", syncKey: "net" });
 
-  addInteract(createTerminal(0, -16, 0xff4f8b, 2.5), { type: "contact" });
+  addInteract(createTerminal(0, -16, 0xff4f8b, 2.5), { type: "contact", syncKey: "comms" });
   createZoneLight(0, -16, 0xff4f8b);
 
   addInteract(createTerminal(14, 2, 0xffffff, 2), { type: "admin" });
@@ -257,15 +478,20 @@ function openPanel(title, html) {
   document.getElementById("worldPanelTitle").textContent = title;
   document.getElementById("worldPanelBody").innerHTML = html;
   document.getElementById("worldPanel").hidden = false;
+  const meta = document.getElementById("worldPanelMeta");
+  if (meta) meta.textContent = t().panelMeta;
   document.exitPointerLock?.();
+  updateCrosshair();
 }
 
 function closePanel() {
   state.panelOpen = false;
   document.getElementById("worldPanel").hidden = true;
+  updateCrosshair();
 }
 
 function openInteract(payload) {
+  recordSync(payload);
   const copy = t();
   if (payload.type === "profile") {
     const landing = data.getLanding();
@@ -343,17 +569,27 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
+function updateCrosshair() {
+  const ch = document.getElementById("worldCrosshair");
+  if (!ch) return;
+  const started = document.getElementById("worldStart")?.classList.contains("is-hidden");
+  ch.classList.toggle("is-active", Boolean(started && state.locked && !state.panelOpen));
+}
+
 function updateNearest() {
   let best = null;
+  let bestMesh = null;
   let bestDist = Infinity;
   interactables.forEach((mesh) => {
     const d = mesh.position.distanceTo(state.position);
     if (d < bestDist) {
       bestDist = d;
       best = mesh.userData.interact;
+      bestMesh = mesh;
     }
   });
   state.nearest = bestDist < 4.2 ? best : null;
+  nearestMesh = bestDist < 4.2 ? bestMesh : null;
   const hint = document.getElementById("worldHint");
   if (!hint) return;
   if (state.panelOpen) {
@@ -408,11 +644,32 @@ function updateMovement(dt) {
   camera.rotation.x = state.pitch;
 }
 
+function animateTerminalPulse(dt) {
+  pulseTime += dt;
+  interactables.forEach((mesh) => {
+    if (!mesh.material?.emissiveIntensity) return;
+    const key = syncKeyFor(mesh.userData.interact);
+    const base = gameProgress.synced[key] ? 0.5 : 0.32;
+    const pulse = Math.sin(pulseTime * 2.2 + mesh.position.x) * 0.08;
+    if (mesh === nearestMesh) {
+      mesh.material.emissiveIntensity = base + 0.35 + pulse;
+      if (mesh.userData.beacon) mesh.userData.beacon.material.opacity = 0.55 + pulse;
+    } else {
+      mesh.material.emissiveIntensity = base + pulse * 0.5;
+      if (mesh.userData.beacon) mesh.userData.beacon.material.opacity = 0.28;
+    }
+  });
+}
+
 function animate() {
   requestAnimationFrame(animate);
   const dt = Math.min(clock.getDelta(), 0.05);
   updateMovement(dt);
   updateNearest();
+  animateTerminalPulse(dt);
+  const coords = document.getElementById("worldHudCoords");
+  if (coords) coords.textContent = `X${Math.round(state.position.x)} Z${Math.round(state.position.z)}`;
+  drawMinimap();
   renderer.render(scene, camera);
 }
 
@@ -433,6 +690,7 @@ function bindInput() {
   });
   document.addEventListener("pointerlockchange", () => {
     state.locked = document.pointerLockElement === canvas;
+    updateCrosshair();
   });
   canvas.addEventListener("click", () => {
     if (!state.panelOpen && !("ontouchstart" in window)) canvas.requestPointerLock();
@@ -494,7 +752,12 @@ function init() {
   data = window.PortfolioData;
   if (!data) return;
   initLang();
+  loadGameProgress();
+  const mm = document.getElementById("worldMinimap");
+  if (mm) minimapCtx = mm.getContext("2d");
   bindUi();
+  renderMissionHud();
+  runBootSequence();
   data.renderResume(state.lang);
 
   scene = new THREE.Scene();
