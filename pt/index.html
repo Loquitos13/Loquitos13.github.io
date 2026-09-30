@@ -1,38 +1,64 @@
 <!DOCTYPE html>
-<html lang="pt-PT" class="story-html">
+<html lang="pt-PT" class="focus-html">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Diogo Pinto — a carreira contada numa linha do tempo." />
-    <title>Diogo Pinto · Jornada</title>
+    <meta name="description" content="Diogo Pinto, programador full stack. Um ecrã: o papel actual, a linha da carreira e três sistemas." />
+    <title>Diogo Pinto</title>
     <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Syne:wght@700;800&amp;display=swap" rel="stylesheet" />
     <link href="../css/styles.css" rel="stylesheet" />
-    <link href="../css/story.css" rel="stylesheet" />
+    <link href="../css/focus.css" rel="stylesheet" />
   </head>
-  <body class="story-app">
-    <div class="journey-thread" aria-hidden="true"><span id="journeyThread"></span></div>
-    <div class="story-progress" aria-hidden="true"><span id="storyProgress"></span></div>
-    <header class="story-top">
-      <div class="story-top__inner">
-        <a class="story-brand" href="#scene-0">
+  <body class="focus-app">
+    <div class="focus">
+      <header class="focus-top">
+        <div class="focus-brand">
           <strong>Diogo Pinto</strong>
-          <span id="storyBrandSub">A linha</span>
-        </a>
-        <span id="storyCount" class="story-count">Capítulo 01</span>
-        <div class="story-actions">
+          <span id="focusPlace">Santa Maria da Feira · PT</span>
+        </div>
+        <div class="focus-actions">
           <div data-lang-toggle role="group" aria-label="Idioma">
             <button type="button" data-lang="pt" aria-pressed="true">PT</button>
             <button type="button" data-lang="en" aria-pressed="false">EN</button>
           </div>
-          <button type="button" id="storyPdf">CV</button>
+          <button type="button" id="focusContact">Contacto</button>
+          <button type="button" class="is-solid" id="downloadResumeBtn">CV</button>
         </div>
+      </header>
+
+      <section class="focus-stage" aria-live="polite">
+        <div class="focus-glow" aria-hidden="true"></div>
+        <p id="focusYear" class="focus-year">2026</p>
+        <div id="focusCopy" class="focus-copy">
+          <p id="focusKicker" class="focus-kicker">Agora</p>
+          <h1 id="focusTitle">Full Stack Web Developer</h1>
+          <p id="focusMeta" class="focus-meta"></p>
+          <p id="focusBody" class="lead"></p>
+        </div>
+      </section>
+
+      <div class="focus-scrub">
+        <input id="focusRange" type="range" min="0" max="4" step="1" value="4" aria-label="Carreira" />
+        <div id="focusYears" class="focus-years"></div>
+        <p id="focusHint" class="focus-hint">Arrasta a linha para recuar</p>
       </div>
-    </header>
-    <nav id="storyRail" class="story-rail" aria-label="Linha do tempo"></nav>
-    <main id="storyScroll" class="story-scroll"></main>
+
+      <div id="focusCases" class="focus-cases"></div>
+    </div>
+
+    <div id="focusSheet" class="focus-sheet" hidden>
+      <div class="focus-sheet__panel" role="dialog" aria-modal="true">
+        <div class="focus-sheet__bar">
+          <p id="focusSheetLabel">Caso</p>
+          <button type="button" id="focusSheetClose" class="focus-close" aria-label="Fechar">×</button>
+        </div>
+        <div id="focusSheetBody"></div>
+      </div>
+    </div>
+
     <div id="cvPdfTemplate" style="display:none">
       <div class="cv-a4">
         <div class="cv-grid">
@@ -48,9 +74,10 @@
         </div>
       </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
     <script src="../js/portfolio-data.js"></script>
     <script src="../js/scripts.js"></script>
-    <script src="../js/story.js"></script>
+    <script src="../js/focus.js"></script>
   </body>
 </html>
