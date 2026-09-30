@@ -61,7 +61,7 @@
   }
 
   function isGameApp() {
-    return document.body.classList.contains("game-app") || document.body.classList.contains("world-app") || document.body.classList.contains("story-app");
+    return document.body.classList.contains("game-app") || document.body.classList.contains("world-app") || document.body.classList.contains("story-app") || document.body.classList.contains("focus-app");
   }
 
   function maybeRedirectToDefaultPt() {
