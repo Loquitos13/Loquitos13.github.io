@@ -1,10 +1,75 @@
 (function () {
-  const BEATS = [
-    { year: "2020", kind: "edu", id: "edu-10-11ano", accent: "#8eb6ff", act: "origin" },
-    { year: "2022", kind: "edu", id: "edu-12ano", accent: "#c9b6ff", act: "origin" },
-    { year: "2023", kind: "exp", id: "exp-normadidatica", accent: "#9aa8ff", act: "craft" },
-    { year: "2025", kind: "exp", id: "exp-formafuturo-redesign", accent: "#ff7aa2", act: "field" },
-    { year: "2026", kind: "exp", id: "exp-espiraleducada", accent: "#7dffe1", act: "now" }
+  const MONTHS = {
+    pt: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+    en: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  };
+
+  const YEARS = [
+    {
+      year: "2020",
+      accent: "#8eb6ff",
+      events: [{ month: 9, kind: "edu", id: "edu-10-11ano", act: "origin", lead: true }]
+    },
+    {
+      year: "2022",
+      accent: "#c9b6ff",
+      events: [
+        {
+          month: 6,
+          kind: "edu",
+          id: "edu-10-11ano",
+          act: "origin",
+          title: { pt: "Fecha o ciclo em Castelo de Paiva", en: "Closes the Castelo de Paiva years" }
+        },
+        { month: 9, kind: "edu", id: "edu-12ano", act: "origin", lead: true }
+      ]
+    },
+    {
+      year: "2023",
+      accent: "#9aa8ff",
+      events: [
+        { month: 4, kind: "exp", id: "exp-normadidatica", act: "craft", lead: true },
+        { month: 9, kind: "edu", id: "edu-licenciatura", act: "craft" }
+      ]
+    },
+    {
+      year: "2024",
+      accent: "#b7c0ff",
+      events: [
+        {
+          month: 9,
+          kind: "edu",
+          id: "edu-licenciatura",
+          act: "craft",
+          lead: true,
+          title: { pt: "Licenciatura em curso", en: "Bachelor's in progress" }
+        }
+      ]
+    },
+    {
+      year: "2025",
+      accent: "#ff7aa2",
+      events: [
+        { month: 1, kind: "exp", id: "exp-formafuturo-1", act: "field" },
+        { month: 9, kind: "exp", id: "exp-formafuturo-redesign", act: "field", lead: true }
+      ]
+    },
+    {
+      year: "2026",
+      accent: "#7dffe1",
+      events: [
+        { month: 2, kind: "exp", id: "exp-devlop", act: "now" },
+        { month: 4, kind: "exp", id: "exp-espiraleducada", act: "now", lead: true },
+        {
+          month: 7,
+          kind: "edu",
+          id: "edu-licenciatura",
+          act: "now",
+          title: { pt: "Licenciatura concluída", en: "Bachelor's completed" }
+        },
+        { month: 9, kind: "edu", id: "edu-mestrado", act: "now" }
+      ]
+    }
   ];
 
   const COPY = {
@@ -13,7 +78,8 @@
       craft: "Ofício",
       field: "Campo",
       now: "Agora",
-      hint: "Arrasta a linha para recuar",
+      hint: "Abre um ano. Recolhe para saltar para outro.",
+      fold: "Recolher",
       contact: "Contacto",
       close: "Fechar",
       open: "Abrir o trabalho",
@@ -31,7 +97,8 @@
       craft: "Craft",
       field: "Field",
       now: "Now",
-      hint: "Drag the line to go back",
+      hint: "Open a year. Collapse it to jump to any other.",
+      fold: "Collapse",
       contact: "Contact",
       close: "Close",
       open: "Open the work",
@@ -48,7 +115,8 @@
 
   let data;
   let lang = "en";
-  let index = BEATS.length - 1;
+  let openYear = "2026";
+  let active = { year: "2026", month: 4, id: "exp-espiraleducada" };
   let timer = 0;
 
   function currentLang() {
@@ -81,50 +149,82 @@
     return cut.length > 220 ? cut.slice(0, 217) + "…" : cut;
   }
 
-  function beatModel(beat) {
+  function yearOf(year) {
+    return YEARS.find((row) => row.year === year);
+  }
+
+  function leadOf(year) {
+    const row = yearOf(year);
+    if (!row) return null;
+    return row.events.find((event) => event.lead) || row.events[row.events.length - 1];
+  }
+
+  function sameEvent(a, b) {
+    return a && b && a.year === b.year && a.month === b.month && a.id === b.id;
+  }
+
+  function eventModel(year, event) {
     const copy = t();
-    if (beat.kind === "edu") {
-      const item = data.getEducation().find((row) => row.id === beat.id);
-      if (!item) return null;
-      return {
-        kicker: copy[beat.act],
-        title: text(item.degree),
-        meta: [text(item.institution), text(item.location)].filter(Boolean).join(" · "),
-        body: sentence(text(item.description))
-      };
-    }
-    const item = data.getExperiences().find((row) => row.id === beat.id);
-    if (!item) return null;
+    const record = event.kind === "edu"
+      ? data.getEducation().find((row) => row.id === event.id)
+      : data.getExperiences().find((row) => row.id === event.id);
+    if (!record) return null;
+    const month = MONTHS[lang][event.month - 1];
+    const fallbackTitle = event.kind === "edu" ? text(record.degree) : text(record.role);
+    const place = event.kind === "edu"
+      ? [text(record.institution), text(record.location)].filter(Boolean).join(" · ")
+      : [record.company, text(record.period)].filter(Boolean).join(" · ");
     return {
-      kicker: copy[beat.act],
-      title: text(item.role),
-      meta: [item.company, text(item.period)].filter(Boolean).join(" · "),
-      body: sentence(text(item.description))
+      accent: yearOf(year).accent,
+      year,
+      kicker: copy[event.act] + " · " + month,
+      title: event.title ? event.title[lang] : fallbackTitle,
+      meta: place,
+      body: sentence(text(record.description)),
+      short: event.kind === "edu" ? text(record.institution) : (record.companyShort || record.company)
     };
   }
 
-  function paint(next, animate) {
-    if (animate && next === index) return;
-    const beat = BEATS[next];
-    const model = beatModel(beat);
+  function renderSpine() {
+    const copy = t();
+    document.getElementById("focusSpine").innerHTML = YEARS.map((year) => {
+      const open = openYear === year.year;
+      const current = active && active.year === year.year;
+      const events = year.events.map((event) => {
+        const model = eventModel(year.year, event);
+        if (!model) return "";
+        const on = sameEvent(active, { year: year.year, month: event.month, id: event.id });
+        return (
+          '<button type="button" class="month' + (on ? " is-on" : "") + '" data-year="' + year.year + '" data-month="' + event.month + '" data-id="' + esc(event.id) + '">' +
+          "<b>" + esc(MONTHS[lang][event.month - 1]) + "</b><span>" + esc(model.short) + "</span></button>"
+        );
+      }).join("");
+      return (
+        '<div class="year' + (open ? " is-open" : "") + (current ? " is-current" : "") + '" data-year="' + year.year + '">' +
+        '<button type="button" class="year__main" data-toggle="' + year.year + '" aria-expanded="' + open + '">' +
+        "<i></i><b>" + year.year + "</b></button>" +
+        '<div class="year__events">' + events +
+        '<button type="button" class="year__fold" data-fold="' + year.year + '">' + esc(copy.fold) + "</button></div></div>"
+      );
+    }).join("");
+  }
+
+  function show(year, event, animate) {
+    const model = eventModel(year, event);
     if (!model) return;
+    const next = { year, month: event.month, id: event.id };
+    if (animate && sameEvent(active, next) && openYear === year) return;
     const copyEl = document.getElementById("focusCopy");
     const apply = () => {
-      index = next;
-      document.documentElement.style.setProperty("--accent", beat.accent);
-      const max = BEATS.length - 1;
-      document.documentElement.style.setProperty("--fill", (max === 0 ? 100 : (index / max) * 100) + "%");
-      document.getElementById("focusYear").textContent = beat.year;
+      active = next;
+      openYear = year;
+      document.documentElement.style.setProperty("--accent", model.accent);
+      document.getElementById("focusYear").textContent = year;
       document.getElementById("focusKicker").textContent = model.kicker;
       document.getElementById("focusTitle").textContent = model.title;
       document.getElementById("focusMeta").textContent = model.meta;
       document.getElementById("focusBody").textContent = model.body;
-      document.getElementById("focusRange").value = String(index);
-      document.querySelectorAll("#focusYears button").forEach((btn, i) => {
-        btn.classList.toggle("is-on", i === index);
-      });
-      const hint = document.getElementById("focusHint");
-      hint.hidden = index !== BEATS.length - 1;
+      renderSpine();
     };
     if (!animate) {
       apply();
@@ -136,6 +236,34 @@
       apply();
       copyEl.classList.remove("is-out");
     }, 160);
+  }
+
+  function toggleYear(year) {
+    if (openYear === year) {
+      openYear = null;
+      renderSpine();
+      return;
+    }
+    const event = leadOf(year);
+    if (event) show(year, event, true);
+  }
+
+  function step(direction) {
+    const yearIndex = YEARS.findIndex((row) => row.year === (active && active.year));
+    const year = YEARS[Math.max(0, yearIndex)];
+    if (!year) return;
+    if (openYear === year.year) {
+      const eventIndex = year.events.findIndex((event) => sameEvent(active, { year: year.year, month: event.month, id: event.id }));
+      const nextEvent = year.events[eventIndex + direction];
+      if (nextEvent) {
+        show(year.year, nextEvent, true);
+        return;
+      }
+    }
+    const neighbor = YEARS[yearIndex + direction];
+    if (!neighbor) return;
+    const event = leadOf(neighbor.year);
+    if (event) show(neighbor.year, event, true);
   }
 
   function renderCases() {
@@ -197,13 +325,22 @@
   }
 
   function bind() {
-    const range = document.getElementById("focusRange");
-    range.max = String(BEATS.length - 1);
-    range.addEventListener("input", () => paint(Number(range.value), true));
-    document.getElementById("focusYears").addEventListener("click", (event) => {
-      const btn = event.target.closest("[data-year]");
-      if (!btn) return;
-      paint(Number(btn.dataset.year), true);
+    document.getElementById("focusSpine").addEventListener("click", (event) => {
+      const fold = event.target.closest("[data-fold]");
+      if (fold) {
+        openYear = null;
+        renderSpine();
+        return;
+      }
+      const month = event.target.closest(".month");
+      if (month) {
+        const year = yearOf(month.dataset.year);
+        const item = year && year.events.find((row) => row.month === Number(month.dataset.month) && row.id === month.dataset.id);
+        if (item) show(year.year, item, true);
+        return;
+      }
+      const toggle = event.target.closest("[data-toggle]");
+      if (toggle) toggleYear(toggle.dataset.toggle);
     });
     document.getElementById("focusCases").addEventListener("click", (event) => {
       const btn = event.target.closest("[data-project]");
@@ -221,9 +358,16 @@
         if (event.key === "Escape") closeSheet();
         return;
       }
-      if (event.key === "Escape") closeSheet();
-      if (event.key === "ArrowLeft") paint(Math.max(0, index - 1), true);
-      if (event.key === "ArrowRight") paint(Math.min(BEATS.length - 1, index + 1), true);
+      if (event.key === "Escape") {
+        if (!document.getElementById("focusSheet").hidden) closeSheet();
+        else if (openYear) {
+          openYear = null;
+          renderSpine();
+        }
+        return;
+      }
+      if (event.key === "ArrowLeft") step(-1);
+      if (event.key === "ArrowRight") step(1);
     });
   }
 
@@ -241,24 +385,24 @@
     const landing = data.getLanding();
     const place = text(landing.hero && landing.hero.location);
     if (place) document.getElementById("focusPlace").textContent = place;
-    document.getElementById("focusYears").innerHTML = BEATS.map((beat, i) =>
-      '<button type="button" data-year="' + i + '">' + beat.year + "</button>"
-    ).join("");
     renderCases();
     bind();
     const params = new URLSearchParams(window.location.search);
     const zone = params.get("zone") || params.get("spawn") || "";
     const jump = {
-      education: 2,
-      archive: 2,
-      experience: 4,
-      resume: 4,
-      career: 4,
-      ops: 4,
-      projects: 3,
-      field: 3
+      education: { year: "2023", id: "edu-licenciatura" },
+      archive: { year: "2023", id: "edu-licenciatura" },
+      experience: { year: "2026", id: "exp-espiraleducada" },
+      resume: { year: "2026", id: "exp-espiraleducada" },
+      career: { year: "2026", id: "exp-espiraleducada" },
+      ops: { year: "2026", id: "exp-espiraleducada" },
+      projects: { year: "2025", id: "exp-formafuturo-redesign" },
+      field: { year: "2025", id: "exp-formafuturo-redesign" }
     };
-    paint(Object.prototype.hasOwnProperty.call(jump, zone) ? jump[zone] : BEATS.length - 1, false);
+    const target = jump[zone] || { year: "2026", id: "exp-espiraleducada" };
+    const year = yearOf(target.year);
+    const event = year && year.events.find((row) => row.id === target.id);
+    if (event) show(target.year, event, false);
     if (zone === "contact" || zone === "comms") openContact();
   });
 })();

@@ -166,72 +166,136 @@ body.focus-app {
 }
 
 .focus-scrub {
-  display: grid;
-  gap: 0.55rem;
-  margin-bottom: 1.1rem;
+  position: relative;
+  margin-bottom: 0.85rem;
 }
 
-.focus-scrub input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 28px;
-  background: transparent;
-  cursor: pointer;
-  margin: 0;
+.spine {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 2px;
 }
 
-.focus-scrub input[type="range"]::-webkit-slider-runnable-track {
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent, #7dffe1) var(--fill, 100%), rgba(255, 255, 255, 0.16) var(--fill, 100%));
-}
-
-.focus-scrub input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  margin-top: -8px;
-  border-radius: 50%;
-  background: #f4f1ea;
-  border: 0;
-  box-shadow: 0 0 0 6px rgba(244, 241, 234, 0.08);
-}
-
-.focus-scrub input[type="range"]::-moz-range-track {
-  height: 2px;
+.spine::before {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: 12px;
+  right: 12px;
+  height: 1px;
   background: rgba(255, 255, 255, 0.16);
 }
 
-.focus-scrub input[type="range"]::-moz-range-progress {
-  height: 2px;
-  background: var(--accent, #7dffe1);
-}
-
-.focus-scrub input[type="range"]::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border: 0;
-  border-radius: 50%;
-  background: #f4f1ea;
-}
-
-.focus-years {
+.year {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
 }
 
-.focus-years button {
+.year__main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
   border: 0;
   background: transparent;
-  color: rgba(244, 241, 234, 0.38);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
+  color: rgba(244, 241, 234, 0.45);
   cursor: pointer;
-  padding: 0.2rem 0;
+  font: inherit;
+  padding: 0;
 }
 
-.focus-years button.is-on {
+.year__main i {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 1px solid rgba(244, 241, 234, 0.45);
+  background: #09090b;
+  position: relative;
+  z-index: 1;
+}
+
+.year__main b {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.year.is-current .year__main,
+.year.is-open .year__main {
   color: #f4f1ea;
+}
+
+.year.is-current .year__main i,
+.year.is-open .year__main i {
+  background: var(--accent, #7dffe1);
+  border-color: transparent;
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent, #7dffe1) 22%, transparent);
+}
+
+.year:first-child { align-items: flex-start; }
+.year:last-child { align-items: flex-end; }
+.year:first-child .year__main,
+.year:last-child .year__main { align-items: inherit; }
+
+.year.is-open { flex: 1.6 1 220px; }
+
+.year__events {
+  display: none;
+  width: min(260px, 70vw);
+  margin-top: 0.85rem;
+}
+
+.year.is-open .year__events {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.month,
+.year__fold {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  gap: 0.45rem;
+  align-items: baseline;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: rgba(244, 241, 234, 0.62);
+  text-align: left;
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  padding: 0.28rem 0.1rem;
+}
+
+.month b,
+.year__fold {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.month.is-on {
+  color: #f4f1ea;
+}
+
+.month.is-on b {
+  color: var(--accent, #7dffe1);
+}
+
+.year__fold {
+  grid-template-columns: 1fr;
+  margin-top: 0.15rem;
+  color: rgba(244, 241, 234, 0.4);
 }
 
 .focus-hint {
@@ -453,6 +517,22 @@ body.focus-app {
 .hp-field { position: absolute; left: -9999px; }
 
 @media (max-width: 800px) {
+  .spine {
+    overflow-x: auto;
+    justify-content: flex-start;
+    gap: 1.1rem;
+    padding-bottom: 0.4rem;
+  }
+
+  .year {
+    flex: 0 0 auto;
+    min-width: 64px;
+  }
+
+  .year.is-open {
+    min-width: 210px;
+  }
+
   .focus-cases {
     grid-template-columns: 1fr;
   }
