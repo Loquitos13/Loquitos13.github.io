@@ -251,6 +251,7 @@
       document.getElementById("focusMeta").textContent = model.meta;
       document.getElementById("focusBody").textContent = model.body;
       renderSpine();
+      renderProject();
     };
     if (!animate) {
       apply();
@@ -292,20 +293,24 @@
     if (event) show(neighbor.year, event, true);
   }
 
-  function renderCases() {
-    const projects = data.getProjects().slice(0, 3);
-    document.getElementById("focusCases").innerHTML = projects.map((proj, i) => {
-      const img = proj.image ? base() + proj.image : "";
-      const tag = (proj.tags && proj.tags[0]) || "";
-      return (
-        '<button type="button" class="case" data-project="' + esc(proj.id) + '">' +
-        (img ? '<img src="' + esc(img) + '" alt="">' : "") +
-        "<span>" + String(i + 1).padStart(2, "0") + "</span>" +
-        "<strong>" + esc(proj.title) + "</strong>" +
-        "<em>" + esc(tag) + "</em>" +
-        "</button>"
-      );
-    }).join("");
+  function renderProject() {
+    const el = document.getElementById("focusCases");
+    const year = active && yearOf(active.year);
+    const event = year && year.events.find((row) => sameEvent(active, { year: year.year, month: row.month, id: row.id }));
+    const project = event && event.project ? data.getProjects().find((row) => row.id === event.project) : null;
+    if (!project) {
+      el.innerHTML = "";
+      return;
+    }
+    const img = project.image ? base() + project.image : "";
+    const line = sentence(text(project.description));
+    el.innerHTML =
+      '<button type="button" class="case" data-project="' + esc(project.id) + '">' +
+      (img ? '<img src="' + esc(img) + '" alt="">' : "") +
+      "<span>" + esc(t().project) + "</span>" +
+      "<strong>" + esc(project.title) + "</strong>" +
+      "<em>" + esc(line) + "</em>" +
+      "</button>";
   }
 
   function openSheet(label, html) {
@@ -456,7 +461,6 @@
     const landing = data.getLanding();
     const place = text(landing.hero && landing.hero.location);
     if (place) document.getElementById("focusPlace").textContent = place;
-    renderCases();
     bind();
     const params = new URLSearchParams(window.location.search);
     const zone = params.get("zone") || params.get("spawn") || "";

@@ -380,16 +380,18 @@ body.focus-app {
 }
 
 .focus-cases {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
+  display: block;
+}
+
+.focus-cases:empty {
+  display: none;
 }
 
 .case {
   position: relative;
   display: block;
   width: 100%;
-  min-height: 168px;
+  min-height: 220px;
   padding: 0;
   border: 0;
   border-radius: 18px;
@@ -432,6 +434,7 @@ body.focus-app {
   font-family: "IBM Plex Mono", ui-monospace, monospace;
   font-size: 0.68rem;
   letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .case strong,
@@ -443,7 +446,7 @@ body.focus-app {
 }
 
 .case strong {
-  bottom: 1.7rem;
+  bottom: 2.7rem;
   font-family: "Syne", sans-serif;
   font-size: 1.35rem;
   letter-spacing: -0.04em;
@@ -452,8 +455,13 @@ body.focus-app {
 .case em {
   bottom: 0.75rem;
   font-style: normal;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.78);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .case:hover img,
@@ -604,10 +612,6 @@ body.focus-app {
 
   .year.is-open {
     min-width: max-content;
-  }
-
-  .focus-cases {
-    grid-template-columns: 1fr;
   }
 
   .case { min-height: 200px; }
