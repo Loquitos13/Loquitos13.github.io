@@ -50,8 +50,8 @@
       year: "2025",
       accent: "#ff7aa2",
       events: [
-        { month: 1, kind: "exp", id: "exp-formafuturo-1", act: "field" },
-        { month: 9, kind: "exp", id: "exp-formafuturo-redesign", act: "field", lead: true }
+        { month: 1, kind: "exp", id: "exp-formafuturo-1", act: "field", project: "proj-formafuturo" },
+        { month: 9, kind: "exp", id: "exp-formafuturo-redesign", act: "field", lead: true, project: "proj-formafuturo" }
       ]
     },
     {
@@ -78,7 +78,7 @@
       craft: "Ofício",
       field: "Campo",
       now: "Agora",
-      hint: "Abre um ano. Recolhe para saltar para outro.",
+      hint: "Clica num mês. Recolhe o ano para saltar.",
       fold: "Recolher",
       contact: "Contacto",
       close: "Fechar",
@@ -90,14 +90,19 @@
       message: "Mensagem",
       pdf: "CV",
       sheetCase: "Caso",
-      sheetContact: "Contacto"
+      sheetContact: "Contacto",
+      role: "Função",
+      course: "Curso",
+      experience: "Experiência",
+      project: "Projeto",
+      education: "Formação"
     },
     en: {
       origin: "Origin",
       craft: "Craft",
       field: "Field",
       now: "Now",
-      hint: "Open a year. Collapse it to jump to any other.",
+      hint: "Click a month. Collapse the year to jump.",
       fold: "Collapse",
       contact: "Contact",
       close: "Close",
@@ -109,7 +114,12 @@
       message: "Message",
       pdf: "CV",
       sheetCase: "Case",
-      sheetContact: "Contact"
+      sheetContact: "Contact",
+      role: "Role",
+      course: "Course",
+      experience: "Experience",
+      project: "Project",
+      education: "Education"
     }
   };
 
@@ -194,9 +204,10 @@
         const model = eventModel(year.year, event);
         if (!model) return "";
         const on = sameEvent(active, { year: year.year, month: event.month, id: event.id });
+        const abbr = MONTHS[lang][event.month - 1];
         return (
-          '<button type="button" class="month' + (on ? " is-on" : "") + '" data-year="' + year.year + '" data-month="' + event.month + '" data-id="' + esc(event.id) + '">' +
-          "<b>" + esc(MONTHS[lang][event.month - 1]) + "</b><span>" + esc(model.short) + "</span></button>"
+          '<button type="button" class="month' + (on ? " is-on" : "") + '" data-year="' + year.year + '" data-month="' + event.month + '" data-id="' + esc(event.id) + '" aria-label="' + esc(abbr + " " + year.year + ", " + model.short) + '">' +
+          "<i></i><b>" + esc(abbr) + "</b></button>"
         );
       }).join("");
       return (
@@ -207,6 +218,21 @@
         '<button type="button" class="year__fold" data-fold="' + year.year + '">' + esc(copy.fold) + "</button></div></div>"
       );
     }).join("");
+    revealOpenYear();
+  }
+
+  function revealOpenYear() {
+    const spine = document.getElementById("focusSpine");
+    const open = spine && spine.querySelector(".year.is-open");
+    if (!open) return;
+    const left = Math.max(0, open.offsetLeft - 4);
+    const right = open.offsetLeft + open.offsetWidth + 12;
+    if (open.offsetWidth + 16 >= spine.clientWidth) {
+      spine.scrollLeft = left;
+      return;
+    }
+    if (right > spine.scrollLeft + spine.clientWidth) spine.scrollLeft = right - spine.clientWidth;
+    else if (left < spine.scrollLeft) spine.scrollLeft = left;
   }
 
   function show(year, event, animate) {
@@ -295,6 +321,48 @@
     document.body.style.overflow = "";
   }
 
+  function openRecord(year, event) {
+    const copy = t();
+    const record = event.kind === "edu"
+      ? data.getEducation().find((row) => row.id === event.id)
+      : data.getExperiences().find((row) => row.id === event.id);
+    if (!record) return;
+    const month = MONTHS[lang][event.month - 1];
+    const role = event.title
+      ? event.title[lang]
+      : (event.kind === "edu" ? text(record.degree) : text(record.role));
+    const heading = event.kind === "edu"
+      ? text(record.institution)
+      : (record.companyShort || record.company);
+    const period = text(record.period);
+    const project = event.project ? data.getProjects().find((row) => row.id === event.project) : null;
+    const href = project && project.link
+      ? (String(project.link).startsWith("http") ? project.link : base() + project.link)
+      : "";
+    const image = project && project.image ? base() + project.image : "";
+    const projectHtml = project
+      ? '<div class="focus-record"><span>' + esc(copy.project) + "</span>" +
+        (href ? '<a class="focus-project" href="' + esc(href) + '">' : '<div class="focus-project">') +
+        (image ? '<img src="' + esc(image) + '" alt="">' : "") +
+        "<div><strong>" + esc(project.title) + "</strong><p>" + esc(sentence(text(project.description))) + "</p></div>" +
+        (href ? "</a>" : "</div>") +
+        "</div>"
+      : "";
+    const roleLabel = event.kind === "edu" ? copy.course : copy.role;
+    const roleHtml = role && role !== heading
+      ? '<div class="focus-record"><span>' + esc(roleLabel) + "</span><strong>" + esc(role) + "</strong></div>"
+      : "";
+    openSheet(
+      month + " " + year,
+      "<h2>" + esc(heading) + "</h2>" +
+      (period ? '<p class="lead">' + esc(period) + "</p>" : "") +
+      roleHtml +
+      '<div class="focus-record"><span>' + esc(event.kind === "edu" ? copy.education : copy.experience) + "</span>" +
+      '<p class="lead">' + esc(text(record.description)) + "</p></div>" +
+      projectHtml
+    );
+  }
+
   function openProject(id) {
     const proj = data.getProjects().find((row) => row.id === id);
     if (!proj) return;
@@ -336,7 +404,10 @@
       if (month) {
         const year = yearOf(month.dataset.year);
         const item = year && year.events.find((row) => row.month === Number(month.dataset.month) && row.id === month.dataset.id);
-        if (item) show(year.year, item, true);
+        if (item) {
+          show(year.year, item, true);
+          openRecord(year.year, item);
+        }
         return;
       }
       const toggle = event.target.closest("[data-toggle]");
