@@ -250,6 +250,13 @@
       caption.textContent = shot.caption;
       caption.hidden = !shot.caption;
       thumbs.querySelectorAll("button").forEach((b, n) => b.setAttribute("aria-current", String(n === index)));
+      const active = thumbs.children[index];
+      if (active) {
+        thumbs.scrollTo({
+          left: active.offsetLeft - (thumbs.clientWidth - active.offsetWidth) / 2,
+          behavior: reduceMotion ? "auto" : "smooth"
+        });
+      }
       const next = new Image();
       next.src = shots[(index + 1) % shots.length].src;
     };
