@@ -1319,8 +1319,8 @@
         </div>
 
         <label>
-          Galeria de ecrãs (um caminho ou URL por linha; o primeiro serve de capa se a imagem estiver vazia)
-          <textarea name="gallery" rows="3" placeholder="assets/work/projeto-1.webp">${escapeHtml((data.gallery || []).join("\n"))}</textarea>
+          Galeria de ecrãs (uma linha por ecrã: caminho | legenda PT | legenda EN; as legendas são opcionais)
+          <textarea name="gallery" rows="6" placeholder="assets/work/projeto-1.webp | Painel principal | Main dashboard">${escapeHtml((data.gallery || []).map((g) => typeof g === "string" ? g : [g.src, g.caption?.pt || "", g.caption?.en || ""].join(" | ").replace(/( \| )+$/, "")).join("\n"))}</textarea>
         </label>
 
         <label>
@@ -1361,7 +1361,11 @@
         title: form.title.value.trim(),
         link: form.link.value.trim(),
         image: form.image.value.trim(),
-        gallery: form.gallery.value.split("\n").map((v) => v.trim()).filter(Boolean),
+        gallery: form.gallery.value.split("\n").map((line) => {
+          const [src, pt, en] = line.split("|").map((v) => v.trim());
+          if (!src) return null;
+          return pt || en ? { src, caption: { pt: pt || en, en: en || pt } } : src;
+        }).filter(Boolean),
         tags,
         description: {
           pt: form.desc_pt.value.trim(),

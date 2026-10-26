@@ -347,7 +347,23 @@
       title: "NexiForma",
       link: "https://nexiforma.pt",
       image: "assets/work/nexiforma-1.webp",
-      gallery: ["assets/work/nexiforma-1.webp", "assets/work/nexiforma-2.webp", "assets/work/nexiforma-3.webp", "assets/work/nexiforma-4.webp", "assets/work/nexiforma-5.webp"],
+      gallery: [
+        { src: "assets/work/nexiforma-1.webp", caption: { pt: "Landing pública: «Da inscrição à inspeção»", en: "Public landing page: “From enrolment to inspection”" } },
+        { src: "assets/work/nexiforma-2.webp", caption: { pt: "Painel do gestor: sessões, assinaturas, dossiês e pipeline", en: "Manager dashboard: sessions, signatures, dossiers and pipeline" } },
+        { src: "assets/work/nexiforma-6.webp", caption: { pt: "Fatura com ATCUD e QR da AT, com painel de cobrança", en: "Invoice with Tax Authority ATCUD and QR code, plus collection panel" } },
+        { src: "assets/work/nexiforma-7.webp", caption: { pt: "CRM: painel comercial com funil de leads e de propostas", en: "CRM: sales dashboard with lead and proposal funnels" } },
+        { src: "assets/work/nexiforma-3.webp", caption: { pt: "Dossiê da ação: checklist DGERT ordenada pelo impacto na inspeção", en: "Course dossier: DGERT checklist ranked by inspection impact" } },
+        { src: "assets/work/nexiforma-8.webp", caption: { pt: "Presenças por QR projetado na sala, com código rotativo", en: "Attendance via a QR code projected in the room, with a rotating code" } },
+        { src: "assets/work/nexiforma-11.webp", caption: { pt: "Assinaturas digitais com o progresso de cada signatário", en: "Digital signatures with each signer's progress" } },
+        { src: "assets/work/nexiforma-9.webp", caption: { pt: "Editor de propostas com pré-visualização do documento", en: "Proposal editor with live document preview" } },
+        { src: "assets/work/nexiforma-12.webp", caption: { pt: "Faturas, recibos e notas de crédito, com cobranças vencidas", en: "Invoices, receipts and credit notes, with overdue collections" } },
+        { src: "assets/work/nexiforma-13.webp", caption: { pt: "Calendário com sessões, reuniões comerciais e lembretes", en: "Calendar with sessions, sales meetings and reminders" } },
+        { src: "assets/work/nexiforma-4.webp", caption: { pt: "Qualidade: conformidade DGERT de todas as ações", en: "Quality: DGERT compliance across every course" } },
+        { src: "assets/work/nexiforma-5.webp", caption: { pt: "LMS do formando: módulos, vídeo, quiz e SCORM", en: "Trainee LMS: modules, video, quiz and SCORM" } },
+        { src: "assets/work/nexiforma-10.webp", caption: { pt: "Consola da plataforma: entidades, sessões e serviços externos", en: "Platform console: tenants, sessions and external services" } },
+        { src: "assets/work/nexiforma-14.webp", caption: { pt: "Verificação pública de certificados", en: "Public certificate verification" } },
+        { src: "assets/work/nexiforma-15.webp", caption: { pt: "Landing: faturação dentro da ação, com ATCUD e SAF-T", en: "Landing page: invoicing inside each course, with ATCUD and SAF-T" } }
+      ],
       tags: ["SaaS B2B", "LMS", "NestJS + Next.js"],
       description: {
         pt: "Plataforma SaaS multi-tenant para entidades formadoras certificadas pela DGERT. Monta o dossiê técnico-pedagógico a partir do que a equipa já regista e junta gestão de ações e presenças, LMS com SCORM e testes, CRM e faturação.",
@@ -359,7 +375,22 @@
       title: "Atelier",
       link: "",
       image: "assets/work/atelier-1.webp",
-      gallery: ["assets/work/atelier-1.webp", "assets/work/atelier-2.webp", "assets/work/atelier-3.webp", "assets/work/atelier-4.webp"],
+      gallery: [
+        { src: "assets/work/atelier-1.webp", caption: { pt: "Loja: entrada de inventário com ficha da peça", en: "Storefront: inventory entry with the piece's record" } },
+        { src: "assets/work/atelier-2.webp", caption: { pt: "Página de produto com oficina, origem e variantes", en: "Product page with workshop, origin and variants" } },
+        { src: "assets/work/atelier-5.webp", caption: { pt: "Produto com galeria e variantes de cor e tamanho", en: "Product with gallery and colour and size variants" } },
+        { src: "assets/work/atelier-6.webp", caption: { pt: "«A nossa história»: página editorial da marca", en: "“Our story”: the brand's editorial page" } },
+        { src: "assets/work/atelier-3.webp", caption: { pt: "Back office: métricas e funil de conversão", en: "Back office: metrics and conversion funnel" } },
+        { src: "assets/work/atelier-7.webp", caption: { pt: "Detalhe de encomenda com envio, guia e reembolso", en: "Order detail with shipping, label and refund" } },
+        { src: "assets/work/atelier-8.webp", caption: { pt: "Checkout, passo 2: entrega com envio CTT", en: "Checkout step 2: delivery with CTT shipping" } },
+        { src: "assets/work/atelier-12.webp", caption: { pt: "Checkout, passo 3: revisão e pagamento seguro", en: "Checkout step 3: review and secure payment" } },
+        { src: "assets/work/atelier-10.webp", caption: { pt: "Categoria com filtros, pesquisa e ordenação", en: "Category with filters, search and sorting" } },
+        { src: "assets/work/atelier-11.webp", caption: { pt: "Favoritos guardados sem conta", en: "Favourites saved without an account" } },
+        { src: "assets/work/atelier-4.webp", caption: { pt: "Back office: encomendas com estado de pagamento e envio", en: "Back office: orders with payment and shipping status" } },
+        { src: "assets/work/atelier-13.webp", caption: { pt: "Editor de produto: SKU, preço, stock e peso por variante", en: "Product editor: SKU, price, stock and weight per variant" } },
+        { src: "assets/work/atelier-14.webp", caption: { pt: "Equipa e funções com sessões ativas", en: "Team and roles with active sessions" } },
+        { src: "assets/work/atelier-9.webp", caption: { pt: "Loja no telemóvel", en: "Storefront on mobile" } }
+      ],
       tags: ["E-commerce", "Next.js + Prisma", "Back office"],
       description: {
         pt: "Loja online de objetos artesanais portugueses. Cada peça tem ficha de oficina, origem e lote; o back office junta métricas e funil de conversão, encomendas, envios CTT, stock, promoções e automações.",
@@ -371,7 +402,22 @@
       title: "Pratten",
       link: "",
       image: "assets/work/pratten-1.webp",
-      gallery: ["assets/work/pratten-1.webp", "assets/work/pratten-2.webp", "assets/work/pratten-3.webp", "assets/work/pratten-4.webp", "assets/work/pratten-5.webp"],
+      gallery: [
+        { src: "assets/work/pratten-1.webp", caption: { pt: "Dashboard: faturação, vendas da semana e stock baixo", en: "Dashboard: revenue, weekly sales and low stock" } },
+        { src: "assets/work/pratten-7.webp", caption: { pt: "Dashboard em tema escuro", en: "Dashboard in dark mode" } },
+        { src: "assets/work/pratten-2.webp", caption: { pt: "Estado das mesas em tempo real", en: "Live table status" } },
+        { src: "assets/work/pratten-8.webp", caption: { pt: "Detalhe da mesa com pedido aberto e saldo por pagar", en: "Table detail with an open order and balance due" } },
+        { src: "assets/work/pratten-6.webp", caption: { pt: "Estatísticas: faturação, pagamentos e reservas", en: "Statistics: revenue, payments and bookings" } },
+        { src: "assets/work/pratten-9.webp", caption: { pt: "Gestão de stock com alertas por categoria", en: "Stock management with category alerts" } },
+        { src: "assets/work/pratten-3.webp", caption: { pt: "Cardápio com preço e margem de cada prato", en: "Menu with each dish's price and margin" } },
+        { src: "assets/work/pratten-10.webp", caption: { pt: "Editor de prato: custo, margem e alergénios", en: "Dish editor: cost, margin and allergens" } },
+        { src: "assets/work/pratten-4.webp", caption: { pt: "Menu online com código QR", en: "Online menu with QR code" } },
+        { src: "assets/work/pratten-5.webp", caption: { pt: "Equipa: desempenho por colaborador", en: "Staff: performance per team member" } },
+        { src: "assets/work/pratten-11.webp", caption: { pt: "Ficha do colaborador com desempenho do mês", en: "Team member profile with monthly performance" } },
+        { src: "assets/work/pratten-12.webp", caption: { pt: "Edição de produto no stock", en: "Editing a stock item" } },
+        { src: "assets/work/pratten-13.webp", caption: { pt: "Definições: tema, dados do restaurante e impressora", en: "Settings: theme, restaurant details and printer" } },
+        { src: "assets/work/pratten-15.webp", caption: { pt: "Importação de dados por CSV", en: "CSV data import" } }
+      ],
       tags: ["SaaS restauração", "Spring Boot", "Flutter"],
       description: {
         pt: "SaaS multi-tenant para restaurantes: cada casa gere equipa, mesas, pedidos, stock, cardápio e menu online com QR. Uma única API em Spring Boot serve a gestão em Flutter Web, a app dos empregados e o POS.",
@@ -383,7 +429,24 @@
       title: "Lume Commerce",
       link: "",
       image: "assets/work/lume-1.webp",
-      gallery: ["assets/work/lume-1.webp", "assets/work/lume-2.webp", "assets/work/lume-3.webp", "assets/work/lume-4.webp", "assets/work/lume-5.webp", "assets/work/lume-6.webp"],
+      gallery: [
+        { src: "assets/work/lume-1.webp", caption: { pt: "Loja: «Objetos que dão luz à casa»", en: "Storefront: “Objects that bring light into the home”" } },
+        { src: "assets/work/lume-2.webp", caption: { pt: "Página de produto com variantes e avaliações", en: "Product page with variants and reviews" } },
+        { src: "assets/work/lume-4.webp", caption: { pt: "Back office: KPIs, gráfico e eventos em tempo real", en: "Back office: KPIs, chart and live events" } },
+        { src: "assets/work/lume-5.webp", caption: { pt: "Globo de visitantes em tempo real", en: "Real-time visitor globe" } },
+        { src: "assets/work/lume-7.webp", caption: { pt: "Analytics: receita, sessões e funil de conversão", en: "Analytics: revenue, sessions and conversion funnel" } },
+        { src: "assets/work/lume-3.webp", caption: { pt: "Checkout com MB WAY, Multibanco, PayPal e cartão", en: "Checkout with MB WAY, Multibanco, PayPal and card" } },
+        { src: "assets/work/lume-14.webp", caption: { pt: "Autenticação 3-D Secure em sandbox", en: "3-D Secure authentication in the sandbox" } },
+        { src: "assets/work/lume-13.webp", caption: { pt: "Checkout, passo 3: revisão da encomenda", en: "Checkout step 3: order review" } },
+        { src: "assets/work/lume-8.webp", caption: { pt: "Encomenda no back office com margem e comissões", en: "Back-office order with margin and fees" } },
+        { src: "assets/work/lume-9.webp", caption: { pt: "Editor de produto: geração de variantes", en: "Product editor: variant generation" } },
+        { src: "assets/work/lume-10.webp", caption: { pt: "Automação de email para carrinho abandonado", en: "Abandoned-cart email automation" } },
+        { src: "assets/work/lume-11.webp", caption: { pt: "Perfil de cliente com valor de vida e histórico", en: "Customer profile with lifetime value and history" } },
+        { src: "assets/work/lume-12.webp", caption: { pt: "Catálogo com filtros de coleção e preço", en: "Catalogue with collection and price filters" } },
+        { src: "assets/work/lume-6.webp", caption: { pt: "Área de cliente com nível de fidelização", en: "Customer area with loyalty tier" } },
+        { src: "assets/work/lume-15.webp", caption: { pt: "Detalhe da encomenda com seguimento CTT", en: "Order detail with CTT tracking" } },
+        { src: "assets/work/lume-16.webp", caption: { pt: "Loja no telemóvel", en: "Storefront on mobile" } }
+      ],
       tags: ["E-commerce", "Pagamentos", "Analytics em tempo real"],
       description: {
         pt: "Plataforma de e-commerce com loja, checkout em três passos (MB WAY, Multibanco, PayPal, Apple Pay, Google Pay e cartão) e área de cliente. O back office tem KPIs, analytics e um globo de visitantes em tempo real.",
@@ -395,7 +458,23 @@
       title: "AdPilot",
       link: "",
       image: "assets/work/adpilot-1.webp",
-      gallery: ["assets/work/adpilot-1.webp", "assets/work/adpilot-2.webp", "assets/work/adpilot-3.webp", "assets/work/adpilot-4.webp", "assets/work/adpilot-5.webp"],
+      gallery: [
+        { src: "assets/work/adpilot-1.webp", caption: { pt: "Visão geral do cliente: KPIs, investimento e receita", en: "Client overview: KPIs, spend and revenue" } },
+        { src: "assets/work/adpilot-5.webp", caption: { pt: "Painel global com todos os clientes", en: "Global dashboard across all clients" } },
+        { src: "assets/work/adpilot-2.webp", caption: { pt: "Mapa hora × dia da semana para programar anúncios", en: "Hour × weekday heatmap for ad scheduling" } },
+        { src: "assets/work/adpilot-10.webp", caption: { pt: "Campanhas multiplataforma em tema escuro", en: "Cross-platform campaigns in dark mode" } },
+        { src: "assets/work/adpilot-6.webp", caption: { pt: "Meta Ads: distribuição, tráfego e conversão", en: "Meta Ads: delivery, traffic and conversion" } },
+        { src: "assets/work/adpilot-8.webp", caption: { pt: "Ritmo do orçamento com projeção do mês", en: "Budget pacing with month-end projection" } },
+        { src: "assets/work/adpilot-13.webp", caption: { pt: "Distribuição de budget proposta por ROAS", en: "Budget allocation proposed by ROAS" } },
+        { src: "assets/work/adpilot-9.webp", caption: { pt: "SEO: Search Console com consultas e posição", en: "SEO: Search Console queries and position" } },
+        { src: "assets/work/adpilot-3.webp", caption: { pt: "Auditoria das landing pages da concorrência", en: "Competitor landing-page audit" } },
+        { src: "assets/work/adpilot-11.webp", caption: { pt: "Lacunas de palavras-chave face à concorrência", en: "Keyword gaps against competitors" } },
+        { src: "assets/work/adpilot-12.webp", caption: { pt: "Biblioteca de anúncios dos concorrentes", en: "Competitor ad library" } },
+        { src: "assets/work/adpilot-14.webp", caption: { pt: "Recomendações priorizadas com impacto estimado", en: "Prioritised recommendations with estimated impact" } },
+        { src: "assets/work/adpilot-15.webp", caption: { pt: "Conteúdo orgânico de Facebook e Instagram", en: "Organic Facebook and Instagram content" } },
+        { src: "assets/work/adpilot-4.webp", caption: { pt: "Relatório mensal com exportação e envio", en: "Monthly report with export and sharing" } },
+        { src: "assets/work/adpilot-7.webp", caption: { pt: "Visão geral de um segundo cliente", en: "Overview of a second client" } }
+      ],
       tags: ["Marketing analytics", "Next.js", "Agente IA"],
       description: {
         pt: "Plataforma para agências acompanharem o marketing de vários clientes: Google, Meta, TikTok e Microsoft Ads, SEO e GA4. Tem mapa hora × dia, auditoria de landing pages da concorrência, recomendações e relatórios em PDF.",
@@ -407,7 +486,23 @@
       title: "GesForma",
       link: "",
       image: "assets/work/gesforma-1.webp",
-      gallery: ["assets/work/gesforma-1.webp", "assets/work/gesforma-2.webp", "assets/work/gesforma-3.webp", "assets/work/gesforma-4.webp", "assets/work/gesforma-5.webp"],
+      gallery: [
+        { src: "assets/work/gesforma-1.webp", caption: { pt: "Site público com catálogo de cursos", en: "Public website with course catalogue" } },
+        { src: "assets/work/gesforma-2.webp", caption: { pt: "Cockpit da turma: tarefas, KPIs e programa", en: "Class cockpit: to-dos, KPIs and syllabus" } },
+        { src: "assets/work/gesforma-7.webp", caption: { pt: "CRM de pré-inscrições em funil", en: "Pre-registration CRM as a pipeline" } },
+        { src: "assets/work/gesforma-8.webp", caption: { pt: "Ficha da pré-inscrição com histórico e ações rápidas", en: "Lead record with history and quick actions" } },
+        { src: "assets/work/gesforma-6.webp", caption: { pt: "Cronograma da turma com grelha de sessões", en: "Class timetable with a session grid" } },
+        { src: "assets/work/gesforma-3.webp", caption: { pt: "Dossiê técnico-pedagógico com completude por turma", en: "Training dossier with completeness per class" } },
+        { src: "assets/work/gesforma-4.webp", caption: { pt: "CMS do site: blocos com pré-visualização", en: "Website CMS: blocks with live preview" } },
+        { src: "assets/work/gesforma-10.webp", caption: { pt: "Campanhas: conversão, receita e ROI", en: "Campaigns: conversion, revenue and ROI" } },
+        { src: "assets/work/gesforma-9.webp", caption: { pt: "Emails automáticos por fase", en: "Automatic emails by stage" } },
+        { src: "assets/work/gesforma-11.webp", caption: { pt: "Formação financiada: turmas UFCD e alertas", en: "Funded training: UFCD classes and alerts" } },
+        { src: "assets/work/gesforma-12.webp", caption: { pt: "Pagamentos e métodos de pagamento", en: "Payments and payment methods" } },
+        { src: "assets/work/gesforma-5.webp", caption: { pt: "Catálogo de cursos no back office", en: "Course catalogue in the back office" } },
+        { src: "assets/work/gesforma-13.webp", caption: { pt: "Área do formando: agenda de sessões", en: "Trainee area: session schedule" } },
+        { src: "assets/work/gesforma-14.webp", caption: { pt: "Página pública do curso com inscrição", en: "Public course page with enrolment" } },
+        { src: "assets/work/gesforma-15.webp", caption: { pt: "Site público no telemóvel", en: "Public website on mobile" } }
+      ],
       tags: ["Back office", "React + Fastify", "Formação"],
       description: {
         pt: "Backoffice de gestão de formação feito para a ENA, com o site público incluído. CRM de pré-inscrições, cockpit por turma, dossiê técnico-pedagógico com completude calculada e um editor visual do site.",
@@ -815,7 +910,8 @@
         const desc = this.getText(proj.description, lang);
         const tags = (proj.tags || []).map((t) => `<span class="tag">${this.escapeHtml(t)}</span>`).join("");
         const gallery = (proj.gallery || []).filter(Boolean);
-        const imgSrc = resolve(proj.image || gallery[0]);
+        const first = typeof gallery[0] === "string" ? gallery[0] : (gallery[0] && gallery[0].src);
+        const imgSrc = resolve(proj.image || first);
 
         let href = (proj.link || "").trim();
         let isExternal = false;
