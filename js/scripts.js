@@ -60,12 +60,8 @@
     });
   }
 
-  function isGameApp() {
-    return document.body.classList.contains("game-app") || document.body.classList.contains("world-app") || document.body.classList.contains("story-app");
-  }
-
   function maybeRedirectToDefaultPt() {
-    if (isAdminPage() || isGameApp()) return false;
+    if (isAdminPage()) return false;
     if (currentPathLang() === "pt") return false;
     const saved = storedLang();
     if (saved === "en") return false;
@@ -193,7 +189,6 @@
       }
 
       saveMessage(payload);
-      window.dispatchEvent(new CustomEvent("portfolio:quest", { detail: { id: "message" } }));
 
       try {
         await sendContact(payload);
@@ -233,10 +228,8 @@
     document.documentElement.setAttribute("lang", lang === "pt" ? "pt-PT" : "en-US");
     syncLangControls(lang);
     bindLanguage();
-    if (!isGameApp()) {
-      bindNav();
-      bindHeaderScroll();
-    }
+    bindNav();
+    bindHeaderScroll();
     bindContactForm();
     window.bindContactFormRetry = bindContactForm;
   });

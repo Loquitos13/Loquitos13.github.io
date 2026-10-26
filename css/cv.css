@@ -1,0 +1,140 @@
+/* CV em PDF (A4), gerado com html2pdf a partir de #cvPdfTemplate */
+.cv-a4 {
+  width: 210mm;
+  height: 296mm;
+  max-height: 296mm;
+  background: #fff;
+  color: #16181d;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 8.5pt;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.cv-grid {
+  display: grid;
+  grid-template-columns: 34% 66%;
+  height: 296mm;
+}
+.cv-left {
+  background: #f4f4f1;
+  height: 296mm;
+}
+.cv-left-inner {
+  padding: 8mm 6.5mm;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100%;
+}
+.cv-photo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3mm;
+}
+.cv-photo {
+  width: 42mm;
+  height: 42mm;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.cv-name {
+  text-align: center;
+  font-size: 14pt;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 1.5mm 0 0;
+  color: #16181d;
+}
+.cv-role {
+  text-align: center;
+  font-size: 8.8pt;
+  font-weight: 400;
+  margin: 0.5mm 0 4mm;
+  color: #0b7a5c;
+}
+.cv-sec-title {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 8.4pt;
+  font-weight: 500;
+  color: #0b7a5c;
+  margin: 0 0 1.8mm;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.cv-about {
+  font-size: 7.8pt;
+  margin: 0 0 1.8mm;
+  line-height: 1.3;
+  color: #3a3d45;
+}
+.cv-social {
+  list-style: none;
+  padding: 0;
+  margin: 1mm 0 0;
+  font-size: 7.6pt;
+}
+.cv-social li {
+  margin: 1.2mm 0;
+  display: flex;
+  gap: 6px;
+  min-width: 0;
+}
+.cv-k {
+  font-family: "IBM Plex Mono", monospace;
+  color: #5a5d66;
+  min-width: 15mm;
+}
+.cv-social-link {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cv-right {
+  padding: 7mm 7.5mm;
+  display: flex;
+  flex-direction: column;
+  gap: 2.8mm;
+  box-sizing: border-box;
+}
+.cv-right .cv-sec-title {
+  margin: 0 0 1.2mm;
+}
+.cv-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8mm;
+}
+.cv-card {
+  border-top: 1px solid #e2e2dd;
+  padding: 1.6mm 0 0;
+}
+.cv-card-title {
+  font-size: 8.8pt;
+  font-weight: 600;
+  margin: 0 0 0.4mm;
+}
+.cv-card-sub {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 7.2pt;
+  margin: 0 0 0.6mm;
+  color: #085c45;
+}
+.cv-card-body {
+  font-size: 7.7pt;
+  margin: 0;
+  line-height: 1.25;
+  color: #3a3d45;
+}
+.cv-skill-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3.5px;
+}
+.cv-badge {
+  background: #dcefe8;
+  color: #085c45;
+  font-size: 7.4pt;
+  padding: 2px 6px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
