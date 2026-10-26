@@ -1319,6 +1319,11 @@
         </div>
 
         <label>
+          Galeria de ecrãs (um caminho ou URL por linha; o primeiro serve de capa se a imagem estiver vazia)
+          <textarea name="gallery" rows="3" placeholder="assets/work/projeto-1.webp">${escapeHtml((data.gallery || []).join("\n"))}</textarea>
+        </label>
+
+        <label>
           Tags / Tecnologias (separadas por vírgula)
           <input type="text" name="tags" value="${escapeHtml((data.tags || []).join(', '))}" placeholder="Full Stack, REST API, SQL">
         </label>
@@ -1356,6 +1361,7 @@
         title: form.title.value.trim(),
         link: form.link.value.trim(),
         image: form.image.value.trim(),
+        gallery: form.gallery.value.split("\n").map((v) => v.trim()).filter(Boolean),
         tags,
         description: {
           pt: form.desc_pt.value.trim(),
