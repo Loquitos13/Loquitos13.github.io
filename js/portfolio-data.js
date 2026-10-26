@@ -7,7 +7,7 @@
   const STORAGE_KEYS = {
     EXPERIENCES: "portfolio.experiences.v2",
     EDUCATION: "portfolio.education.v2",
-    PROJECTS: "portfolio.projects.v2",
+    PROJECTS: "portfolio.projects.v3",
     LANDING: "portfolio.landing.v2"
   };
 
@@ -314,6 +314,78 @@
   ];
 
   const DEFAULT_PROJECTS = [
+    {
+      id: "proj-nexiforma",
+      title: "NexiForma",
+      link: "https://nexiforma.pt",
+      image: "assets/work/nexiforma-1.webp",
+      gallery: ["assets/work/nexiforma-1.webp", "assets/work/nexiforma-2.webp", "assets/work/nexiforma-3.webp", "assets/work/nexiforma-4.webp"],
+      tags: ["SaaS B2B", "LMS", "NestJS + Next.js"],
+      description: {
+        pt: "Plataforma SaaS multi-tenant para entidades formadoras certificadas pela DGERT. Monta o dossiê técnico-pedagógico a partir do que a equipa já regista e junta gestão de ações e presenças, LMS com SCORM e testes, CRM e faturação.",
+        en: "Multi-tenant SaaS for DGERT-certified training providers. It builds the technical-pedagogical dossier from the records the team already keeps, and brings course and attendance management, an LMS with SCORM and quizzes, a CRM and invoicing together."
+      }
+    },
+    {
+      id: "proj-atelier",
+      title: "Atelier",
+      link: "",
+      image: "assets/work/atelier-1.webp",
+      gallery: ["assets/work/atelier-1.webp", "assets/work/atelier-2.webp", "assets/work/atelier-3.webp", "assets/work/atelier-4.webp"],
+      tags: ["E-commerce", "Next.js + Prisma", "Back office"],
+      description: {
+        pt: "Loja online de objetos artesanais portugueses. Cada peça tem ficha de oficina, origem e lote; o back office junta métricas e funil de conversão, encomendas, envios CTT, stock, promoções e automações.",
+        en: "Online shop for Portuguese handmade goods. Each piece has its workshop, origin and batch; the back office brings together metrics and a conversion funnel, orders, CTT shipping, stock, promotions and automations."
+      }
+    },
+    {
+      id: "proj-pratten",
+      title: "Pratten",
+      link: "",
+      image: "assets/work/pratten-1.webp",
+      gallery: ["assets/work/pratten-1.webp", "assets/work/pratten-2.webp", "assets/work/pratten-3.webp", "assets/work/pratten-4.webp"],
+      tags: ["SaaS restauração", "Spring Boot", "Flutter"],
+      description: {
+        pt: "SaaS multi-tenant para restaurantes: cada casa gere equipa, mesas, pedidos, stock, cardápio e menu online com QR. Uma única API em Spring Boot serve a gestão em Flutter Web, a app dos empregados e o POS.",
+        en: "Multi-tenant SaaS for restaurants: each venue manages staff, tables, orders, stock, menu and a QR online menu. A single Spring Boot API serves the Flutter Web management app, the staff app and the POS."
+      }
+    },
+    {
+      id: "proj-lume",
+      title: "Lume Commerce",
+      link: "",
+      image: "assets/work/lume-1.webp",
+      gallery: ["assets/work/lume-1.webp", "assets/work/lume-2.webp", "assets/work/lume-3.webp", "assets/work/lume-4.webp", "assets/work/lume-5.webp"],
+      tags: ["E-commerce", "Pagamentos", "Analytics em tempo real"],
+      description: {
+        pt: "Plataforma de e-commerce com loja, checkout em três passos (MB WAY, Multibanco, PayPal, Apple Pay, Google Pay e cartão) e área de cliente. O back office tem KPIs, analytics e um globo de visitantes em tempo real.",
+        en: "E-commerce platform with a storefront, a three-step checkout (MB WAY, Multibanco, PayPal, Apple Pay, Google Pay and card) and a customer area. The back office has KPIs, analytics and a real-time visitor globe."
+      }
+    },
+    {
+      id: "proj-adpilot",
+      title: "AdPilot",
+      link: "",
+      image: "assets/work/adpilot-1.webp",
+      gallery: ["assets/work/adpilot-1.webp", "assets/work/adpilot-2.webp", "assets/work/adpilot-3.webp", "assets/work/adpilot-4.webp"],
+      tags: ["Marketing analytics", "Next.js", "Agente IA"],
+      description: {
+        pt: "Plataforma para agências acompanharem o marketing de vários clientes: Google, Meta, TikTok e Microsoft Ads, SEO e GA4. Tem mapa hora × dia, auditoria de landing pages da concorrência, recomendações e relatórios em PDF.",
+        en: "A platform for agencies to track marketing across many clients: Google, Meta, TikTok and Microsoft Ads, SEO and GA4. It has an hour × weekday heatmap, competitor landing-page audits, recommendations and PDF reports."
+      }
+    },
+    {
+      id: "proj-gesforma",
+      title: "GesForma",
+      link: "",
+      image: "assets/work/gesforma-1.webp",
+      gallery: ["assets/work/gesforma-1.webp", "assets/work/gesforma-2.webp", "assets/work/gesforma-3.webp", "assets/work/gesforma-4.webp"],
+      tags: ["Back office", "React + Fastify", "Formação"],
+      description: {
+        pt: "Backoffice de gestão de formação feito para a ENA, com o site público incluído. CRM de pré-inscrições, cockpit por turma, dossiê técnico-pedagógico com completude calculada e um editor visual do site.",
+        en: "Training-management back office built for ENA, public website included. Pre-registration CRM, a per-class cockpit, a technical-pedagogical dossier with calculated completeness and a visual site editor."
+      }
+    },
     {
       id: "proj-formafuturo",
       title: "Forma Futuro",
@@ -693,40 +765,59 @@
         return;
       }
 
+      const resolve = (src) => {
+        src = (src || "").trim();
+        if (!src || /^(https?:|data:)/i.test(src)) return src;
+        return basePath + src.replace(/^\.?\//, "").replace(/^\.\.\//, "");
+      };
+      const screensLabel = (n) => lang === "pt" ? `${n} ecrãs` : `${n} screens`;
+
       container.innerHTML = list.map((proj) => {
         const desc = this.getText(proj.description, lang);
         const tags = (proj.tags || []).map((t) => `<span class="tag">${this.escapeHtml(t)}</span>`).join("");
-
-        let imgSrc = (proj.image || "").trim();
-        if (imgSrc && !/^(https?:|data:)/i.test(imgSrc)) {
-          imgSrc = basePath + imgSrc.replace(/^\.?\//, "").replace(/^\.\.\//, "");
-        }
+        const gallery = (proj.gallery || []).filter(Boolean);
+        const imgSrc = resolve(proj.image || gallery[0]);
 
         let href = (proj.link || "").trim();
         let isExternal = false;
         if (/^https?:\/\//i.test(href)) {
           isExternal = true;
         } else if (href && !href.startsWith("#")) {
-          href = basePath + href.replace(/^\.?\//, "").replace(/^\.\.\//, "");
+          href = resolve(href);
         } else {
           href = "";
         }
-
-        const tag = href ? "a" : "article";
         const hrefAttr = href ? ` href="${this.escapeHtml(href)}"${isExternal ? ' target="_blank" rel="noopener noreferrer"' : ""}` : "";
-        const visit = href
-          ? `<span class="project-card__visit">${visitLabel} <svg class="icon" aria-hidden="true"><use href="${basePath}assets/brand/icons.svg#out"></use></svg></span>`
+        const visitInner = `${visitLabel} <svg class="icon" aria-hidden="true"><use href="${basePath}assets/brand/icons.svg#out"></use></svg>`;
+        const shot = imgSrc
+          ? `<div class="project-card__shot"><img src="${this.escapeHtml(imgSrc)}" alt="${lang === "pt" ? "Ecrã de" : "Screenshot of"} ${this.escapeHtml(proj.title)}" loading="lazy" decoding="async" />${gallery.length > 1 ? `<span class="project-card__count mono">${screensLabel(gallery.length)}</span>` : ""}</div>`
           : "";
 
+        if (gallery.length) {
+          return `
+            <article class="project-card has-gallery" data-id="${this.escapeHtml(proj.id)}">
+              <button type="button" class="project-card__open" data-gallery="${this.escapeHtml(proj.id)}" aria-label="${lang === "pt" ? "Ver ecrãs de" : "View screens of"} ${this.escapeHtml(proj.title)}"></button>
+              <div class="project-card__body">
+                <h3 class="project-card__title">${this.escapeHtml(proj.title)}</h3>
+                <p>${this.escapeHtml(desc)}</p>
+                <div class="tag-row">${tags}</div>
+                ${href ? `<a class="project-card__visit"${hrefAttr}>${visitInner}</a>` : ""}
+              </div>
+              ${shot}
+            </article>
+          `;
+        }
+
+        const tag = href ? "a" : "article";
         return `
           <${tag}${hrefAttr} class="project-card" data-id="${this.escapeHtml(proj.id)}">
             <div class="project-card__body">
               <h3 class="project-card__title">${this.escapeHtml(proj.title)}</h3>
               <p>${this.escapeHtml(desc)}</p>
               <div class="tag-row">${tags}</div>
-              ${visit}
+              ${href ? `<span class="project-card__visit">${visitInner}</span>` : ""}
             </div>
-            ${imgSrc ? `<div class="project-card__shot"><img src="${this.escapeHtml(imgSrc)}" alt="${lang === "pt" ? "Ecrã de" : "Screenshot of"} ${this.escapeHtml(proj.title)}" loading="lazy" decoding="async" /></div>` : ""}
+            ${shot}
           </${tag}>
         `;
       }).join("");

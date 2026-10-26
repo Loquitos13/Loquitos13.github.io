@@ -202,6 +202,100 @@
     primaries.forEach((el) => io.observe(el));
   }
 
+  // Project screens: one shared <dialog>, opened from any card with a gallery.
+  function bindGallery() {
+    const data = window.PortfolioData;
+    if (!data || !document.querySelector(".project-grid")) return;
+    const base = lang === "pt" ? "../" : "";
+    const L = lang === "pt"
+      ? { close: "Fechar", prev: "Ecrã anterior", next: "Ecrã seguinte", visit: "Ver projeto", of: "de", screen: "Ecrã" }
+      : { close: "Close", prev: "Previous screen", next: "Next screen", visit: "View project", of: "of", screen: "Screen" };
+    const icon = (name) => `<svg class="icon" aria-hidden="true"><use href="${base}assets/brand/icons.svg#${name}"></use></svg>`;
+    const resolve = (src) => (/^(https?:|data:)/i.test(src) ? src : base + src.replace(/^\.?\//, "").replace(/^\.\.\//, ""));
+
+    const dialog = document.createElement("dialog");
+    dialog.className = "lightbox";
+    dialog.innerHTML = `
+      <div class="lightbox__bar">
+        <div><h2 class="lightbox__title"></h2><p class="lightbox__count mono" aria-live="polite"></p></div>
+        <div class="lightbox__actions">
+          <a class="btn btn--line lightbox__visit" target="_blank" rel="noopener">${L.visit} ${icon("out")}</a>
+          <button type="button" class="lightbox__close" aria-label="${L.close}">${icon("plus")}</button>
+        </div>
+      </div>
+      <div class="lightbox__stage">
+        <button type="button" class="lightbox__nav lightbox__nav--prev" aria-label="${L.prev}">${icon("arrow")}</button>
+        <img class="lightbox__img" alt="" />
+        <button type="button" class="lightbox__nav lightbox__nav--next" aria-label="${L.next}">${icon("arrow")}</button>
+      </div>
+      <div class="lightbox__thumbs"></div>`;
+    document.body.appendChild(dialog);
+
+    const img = dialog.querySelector(".lightbox__img");
+    const thumbs = dialog.querySelector(".lightbox__thumbs");
+    const count = dialog.querySelector(".lightbox__count");
+    const visit = dialog.querySelector(".lightbox__visit");
+    let shots = [];
+    let index = 0;
+    let title = "";
+
+    const show = (i) => {
+      index = (i + shots.length) % shots.length;
+      img.src = shots[index];
+      img.alt = `${title}, ${L.screen.toLowerCase()} ${index + 1} ${L.of} ${shots.length}`;
+      count.textContent = `${index + 1} / ${shots.length}`;
+      thumbs.querySelectorAll("button").forEach((b, n) => b.setAttribute("aria-current", String(n === index)));
+      const next = new Image();
+      next.src = shots[(index + 1) % shots.length];
+    };
+
+    const open = (id) => {
+      const proj = data.getProjects().find((p) => p.id === id);
+      if (!proj) return;
+      shots = (proj.gallery || []).filter(Boolean).map(resolve);
+      if (!shots.length) return;
+      title = proj.title;
+      dialog.querySelector(".lightbox__title").textContent = title;
+      const link = (proj.link || "").trim();
+      visit.hidden = !/^https?:\/\//i.test(link);
+      if (!visit.hidden) visit.href = link;
+      thumbs.innerHTML = shots.map((src, n) =>
+        `<button type="button" aria-label="${L.screen} ${n + 1}"><img src="${src}" alt="" loading="lazy" /></button>`).join("");
+      thumbs.hidden = shots.length < 2;
+      dialog.querySelectorAll(".lightbox__nav").forEach((b) => { b.hidden = shots.length < 2; });
+      show(0);
+      dialog.showModal();
+      document.documentElement.classList.add("has-lightbox");
+    };
+
+    document.addEventListener("click", (e) => {
+      const trigger = e.target instanceof Element ? e.target.closest("[data-gallery]") : null;
+      if (trigger) open(trigger.getAttribute("data-gallery"));
+    });
+    dialog.querySelector(".lightbox__close").addEventListener("click", () => dialog.close());
+    dialog.querySelector(".lightbox__nav--prev").addEventListener("click", () => show(index - 1));
+    dialog.querySelector(".lightbox__nav--next").addEventListener("click", () => show(index + 1));
+    thumbs.addEventListener("click", (e) => {
+      const b = e.target instanceof Element ? e.target.closest("button") : null;
+      if (b) show(Array.from(thumbs.children).indexOf(b));
+    });
+    dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
+    dialog.addEventListener("close", () => document.documentElement.classList.remove("has-lightbox"));
+    dialog.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") show(index + 1);
+      if (e.key === "ArrowLeft") show(index - 1);
+    });
+
+    let startX = null;
+    img.addEventListener("pointerdown", (e) => { startX = e.clientX; });
+    img.addEventListener("pointerup", (e) => {
+      if (startX === null) return;
+      const dx = e.clientX - startX;
+      startX = null;
+      if (Math.abs(dx) > 40) show(index + (dx < 0 ? 1 : -1));
+    });
+  }
+
   function setYear() {
     document.querySelectorAll("[data-year]").forEach((el) => {
       el.textContent = String(new Date().getFullYear());
@@ -216,6 +310,7 @@
     bindBuild();
     bindTurn();
     bindFloat();
+    bindGallery();
     setYear();
   });
 
