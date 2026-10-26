@@ -1,56 +1,306 @@
 <!DOCTYPE html>
-<html lang="en-US" class="story-html">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Diogo Pinto — a career told as a timeline." />
-    <title>Diogo Pinto · Journey</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Diogo Pinto · Websites, online shops and custom systems</title>
+    <meta name="description" content="Diogo Pinto, full stack developer in Portugal. Websites, online shops and custom systems for businesses. Get a quote on WhatsApp." />
+    <meta name="theme-color" content="#f4f4f1" />
+    <link rel="canonical" href="https://loquitos13.github.io/" />
+    <link rel="alternate" hreflang="en" href="https://loquitos13.github.io/pt/" />
+    <link rel="alternate" hreflang="en" href="https://loquitos13.github.io/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:title" content="Diogo Pinto · Websites that bring in clients" />
+    <meta property="og:description" content="Websites, online shops and custom systems for businesses. From design to server, with direct contact." />
+    <meta property="og:image" content="https://loquitos13.github.io/assets/work/formafuturo.webp" />
+    <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="assets/favicon.ico" sizes="any" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Syne:wght@700;800&amp;display=swap" rel="stylesheet" />
-    <link href="css/styles.css" rel="stylesheet" />
-    <link href="css/story.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+    <script>document.documentElement.classList.add("js");</script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Diogo Pinto",
+        "description": "Websites, online shops and custom systems.",
+        "url": "https://loquitos13.github.io/",
+        "image": "https://loquitos13.github.io/assets/brand/diogo.webp",
+        "email": "bdiogo511@gmail.com",
+        "areaServed": "PT",
+        "address": { "@type": "PostalAddress", "addressLocality": "Santa Maria da Feira", "addressCountry": "PT" },
+        "sameAs": ["https://www.linkedin.com/in/diogo-bpinto", "https://github.com/Loquitos13"]
+      }
+    </script>
   </head>
-  <body class="story-app">
-    <div class="journey-thread" aria-hidden="true"><span id="journeyThread"></span></div>
-    <div class="story-progress" aria-hidden="true"><span id="storyProgress"></span></div>
-    <header class="story-top">
-      <div class="story-top__inner">
-        <a class="story-brand" href="#scene-0">
-          <strong>Diogo Pinto</strong>
-          <span id="storyBrandSub">The line</span>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+
+    <header class="site-header">
+      <nav class="wrap site-nav" aria-label="Main">
+        <a class="brand" href="index.html" aria-label="Diogo Pinto, home">
+          <svg class="brand__mark" aria-hidden="true"><use href="assets/brand/icons.svg#dp"></use></svg>
+          <svg class="brand__type" aria-hidden="true"><use href="assets/brand/icons.svg#type"></use></svg>
         </a>
-        <span id="storyCount" class="story-count">Chapter 01</span>
-        <div class="story-actions">
-          <div data-lang-toggle role="group" aria-label="Language">
+        <div class="site-menu" id="menu">
+          <a class="site-link" href="#work">Work</a>
+          <a class="site-link" href="#services">Services</a>
+          <a class="site-link" href="#process">Process</a>
+          <a class="site-link" href="#about">About</a>
+          <a class="site-link" href="contact.html">Contact</a>
+        </div>
+        <div class="site-actions">
+          <div class="lang" data-lang-toggle role="group" aria-label="Language">
             <button type="button" data-lang="pt" aria-pressed="false">PT</button>
             <button type="button" data-lang="en" aria-pressed="true">EN</button>
           </div>
-          <button type="button" id="storyPdf">CV</button>
+          <a class="btn btn--green" data-wa aria-label="Get a quote on WhatsApp">
+            <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#wa"></use></svg>
+            <span>Get a quote</span>
+          </a>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+            <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#menu"></use></svg>
+          </button>
         </div>
-      </div>
+      </nav>
     </header>
-    <nav id="storyRail" class="story-rail" aria-label="Timeline"></nav>
-    <main id="storyScroll" class="story-scroll"></main>
-    <div id="cvPdfTemplate" style="display:none">
-      <div class="cv-a4">
-        <div class="cv-grid">
-          <aside class="cv-left"><div class="cv-left-inner">
-            <h1 class="cv-name">Diogo Pinto</h1>
-            <h2 class="cv-role">Web Developer</h2>
-          </div></aside>
-          <section class="cv-right">
-            <div class="cv-section"><div class="cv-cards" id="cvPdfExperienceCards"></div></div>
-            <div class="cv-section"><div class="cv-cards" id="cvPdfInternshipCards"></div></div>
-            <div class="cv-section"><div class="cv-cards" id="cvPdfEducationCards"></div></div>
-          </section>
+
+    <main id="content">
+      <section class="hero" data-hero>
+        <div class="wrap">
+          <div class="hero__grid">
+            <div class="hero__copy">
+              <h1 class="hero__title rise" id="heroTitle">Websites that bring in clients, <em>not just visits.</em></h1>
+              <p class="hero__lede rise" style="--i: 1" id="heroKicker">I design and build websites, online shops and custom systems for businesses. You talk to me directly, from the quote to the launch.</p>
+              <div class="hero-actions rise" style="--i: 2">
+                <a class="btn btn--green btn--lg" data-wa data-wa-primary>
+                  <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#wa"></use></svg>
+                  Get a quote on WhatsApp
+                </a>
+                <a class="btn btn--line btn--lg" href="#work">See the work</a>
+              </div>
+              <p class="hero__note mono rise" style="--i: 3">
+                <span id="heroLocation">Santa Maria da Feira · Portugal and remote</span>
+                <span id="heroBadge">Websites · Online shops · Custom systems · Maintenance</span>
+              </p>
+            </div>
+
+            <div class="hero__panel rise" style="--i: 1">
+              <svg class="hero__panel-mark" viewBox="0 0 256 256" aria-hidden="true" data-turn><use href="assets/brand/icons.svg#dp"></use></svg>
+              <img class="hero__portrait" src="assets/brand/diogo.webp" alt="Diogo Pinto in a dark suit, walking" width="480" height="1039" fetchpriority="high" />
+              <div class="hero__tag">
+                <img src="assets/brand/diogo-face.webp" alt="" width="44" height="44" />
+                <div>
+                  <strong>Diogo Pinto</strong>
+                  <span>Full stack developer</span>
+                </div>
+                <span class="status">Available for projects</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="proof" id="heroStatsRow" data-stagger="rise">
+            <div class="stat"><strong>From design to server</strong><span>One person responsible for the whole project.</span></div>
+            <div class="stat"><strong>Projects in production</strong><span>SaaS with tax-compliant invoicing, e-commerce and certified training.</span></div>
+            <div class="stat"><strong>No-strings quote</strong><span>Share your idea on WhatsApp and get a clear proposal.</span></div>
+          </div>
         </div>
+      </section>
+
+      <section class="section section--tight-top" id="work" aria-labelledby="work-title">
+        <div class="wrap">
+          <div class="section-head" data-b="rise">
+            <h2 class="section-title" id="work-title">Recent work</h2>
+            <a class="link-arrow" href="projects.html">All projects <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#arrow"></use></svg></a>
+          </div>
+          <div class="project-grid project-grid--feature" data-limit="3" data-stagger="card"></div>
+        </div>
+      </section>
+
+      <section class="section band-ink" data-b="band" id="services" aria-labelledby="services-title">
+        <div class="wrap">
+          <div class="section-head" data-b="rise">
+            <h2 class="section-title" id="services-title">What I can do for your business</h2>
+            <p class="section-sub">Every project is built from scratch, no generic templates. Pick a starting point and we will talk about the rest.</p>
+          </div>
+          <ul class="services">
+            <li class="service" data-b="row">
+              <h3>Business websites</h3>
+              <div>
+                <p>A website that explains what you do in seconds and turns visitors into enquiries.</p>
+                <ul><li>Custom design</li><li>Copy review</li><li>SEO basics</li><li>WhatsApp button</li></ul>
+              </div>
+              <a class="link-arrow" data-wa="Hi Diogo! I would like a quote for a website for my business.">Get a quote <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#arrow"></use></svg></a>
+            </li>
+            <li class="service" data-b="row">
+              <h3>Online shops</h3>
+              <div>
+                <p>Catalogue, cart, payments and order management, ready to sell from day one.</p>
+                <ul><li>Online payments</li><li>Product management</li><li>Orders</li><li>Customer accounts</li></ul>
+              </div>
+              <a class="link-arrow" data-wa="Hi Diogo! I would like a quote for an online shop.">Get a quote <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#arrow"></use></svg></a>
+            </li>
+            <li class="service" data-b="row">
+              <h3>Custom systems</h3>
+              <div>
+                <p>Back offices, client areas, APIs and integrations for what off-the-shelf tools cannot solve.</p>
+                <ul><li>Admin dashboards</li><li>REST APIs</li><li>Integrations</li><li>Invoicing</li></ul>
+              </div>
+              <a class="link-arrow" data-wa="Hi Diogo! I need a custom system and would like to talk about it.">Get a quote <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#arrow"></use></svg></a>
+            </li>
+            <li class="service" data-b="row">
+              <h3>Maintenance and hosting</h3>
+              <div>
+                <p>Domain, hosting, backups and small changes, without you having to think about it.</p>
+                <ul><li>Hosting</li><li>Backups</li><li>Updates</li><li>Support</li></ul>
+              </div>
+              <a class="link-arrow" data-wa="Hi Diogo! I would like to know more about maintenance and hosting for my website.">Learn more <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#arrow"></use></svg></a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="process" aria-labelledby="process-title">
+        <div class="wrap">
+          <div class="section-head" data-b="rise">
+            <h2 class="section-title" id="process-title">From first message to live website</h2>
+            <p class="section-sub">Four steps, always with the same person. You know where the project stands at any moment.</p>
+          </div>
+          <ol class="steps">
+            <li class="step" data-b="step" style="--d: 0">
+              <span class="step__n mono">1 · Chat</span>
+              <h3>Tell me what you need</h3>
+              <p>On WhatsApp or a call. I learn the goal, who the website is for and your deadline.</p>
+            </li>
+            <li class="step" data-b="step" style="--d: 1">
+              <span class="step__n mono">2 · Proposal</span>
+              <h3>Price and timeline in writing</h3>
+              <p>You get what I will build, what it costs and when it is ready, before we start.</p>
+            </li>
+            <li class="step" data-b="step" style="--d: 2">
+              <span class="step__n mono">3 · Build</span>
+              <h3>Follow every stage</h3>
+              <p>Watch the website grow on a preview link and give feedback along the way.</p>
+            </li>
+            <li class="step" data-b="step" style="--d: 3">
+              <span class="step__n mono">4 · Launch</span>
+              <h3>Live, and you are not alone</h3>
+              <p>I set up domain and hosting, publish the website and stay available for tweaks.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section section--tight-top" id="about" aria-labelledby="aboutTitle">
+        <div class="wrap about">
+          <div class="about__photo" data-b="reveal">
+            <img src="assets/brand/diogo.webp" alt="Portrait of Diogo Pinto" width="480" height="1039" loading="lazy" />
+          </div>
+          <div class="about__text">
+            <h2 class="section-title" data-b="rise" id="aboutTitle">Who builds your website</h2>
+            <div id="aboutLeadTexts" class="about__text" data-b="rise" style="--d: 1">
+              <p class="lead">I'm Diogo Pinto, a full stack developer based in Santa Maria da Feira. You work with me from the first sketch to the live site, with no middlemen.</p>
+              <p class="lead">Today I build a B2B SaaS with invoicing compliant with the Portuguese Tax Authority, and I redesigned FormaFuturo's website. I bring that standard to every project: fast pages, easy to manage and designed for the people who visit them.</p>
+            </div>
+            <div class="skill-list" id="landingSkillsGrid" data-stagger="rise"></div>
+            <a class="link-arrow" data-b="rise" href="resume.html">See full résumé <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#arrow"></use></svg></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight-top" id="faq" aria-labelledby="faq-title">
+        <div class="wrap faq">
+          <div data-b="rise">
+            <h2 class="section-title" id="faq-title">Frequently asked questions</h2>
+            <p class="section-sub" style="margin-top: 16px">No answer here? <a data-wa="Hi Diogo! I have a question about a project.">Ask on WhatsApp</a>.</p>
+          </div>
+          <div class="faq__list" data-stagger="rise">
+            <details>
+              <summary>How much does a website cost? <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#plus"></use></svg></summary>
+              <p>It depends on what the website needs to do. After a short chat I send a written proposal with price and timeline, before we start.</p>
+            </details>
+            <details>
+              <summary>How long does it take? <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#plus"></use></svg></summary>
+              <p>A business website is quicker than an online shop or a custom system. The timeline is set in the proposal and you follow progress on a preview link.</p>
+            </details>
+            <details>
+              <summary>Can I edit the text myself? <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#plus"></use></svg></summary>
+              <p>Yes. I can include a simple panel to change text, images and projects, and I will show you how it works.</p>
+            </details>
+            <details>
+              <summary>Do you handle domain and hosting? <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#plus"></use></svg></summary>
+              <p>Yes. I help you choose and set up the domain, hosting and professional email, or I work with what you already have.</p>
+            </details>
+            <details>
+              <summary>What happens after launch? <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#plus"></use></svg></summary>
+              <p>You can keep a monthly maintenance plan: updates, backups and small changes. Or you get everything handed over and explained, and run it yourself.</p>
+            </details>
+            <details>
+              <summary>Do you only work in Portugal? <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#plus"></use></svg></summary>
+              <p>No. I am based in Santa Maria da Feira and work with clients anywhere, over video calls and WhatsApp, in Portuguese or English.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--tight-top" aria-labelledby="ctaTitle">
+        <div class="wrap">
+          <div class="cta" data-b="pop" data-wa-primary>
+            <svg class="cta__mark" viewBox="0 0 256 256" aria-hidden="true" data-turn><use href="assets/brand/icons.svg#dp"></use></svg>
+            <h2 id="ctaTitle">Got a project in mind? Let's talk.</h2>
+            <p>Send a message with your idea, even if it is still a rough draft. I will reply with concrete questions and a next step.</p>
+            <a class="btn btn--white btn--lg" data-wa>
+              <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#wa"></use></svg>
+              <span id="ctaBtn">Get a quote on WhatsApp</span>
+            </a>
+            <p class="cta__meta mono">
+              <span>+351 913 417 390</span>
+              <span>or <a href="mailto:bdiogo511@gmail.com">bdiogo511@gmail.com</a></span>
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer__grid">
+          <div class="footer__brand">
+            <a class="brand" href="index.html" aria-label="Diogo Pinto, home">
+              <svg class="brand__mark" aria-hidden="true"><use href="assets/brand/icons.svg#dp"></use></svg>
+              <svg class="brand__type" aria-hidden="true"><use href="assets/brand/icons.svg#type"></use></svg>
+            </a>
+            <p>Websites, online shops and custom systems. Santa Maria da Feira, Portugal.</p>
+          </div>
+          <nav class="footer__links" aria-label="Footer">
+            <a href="projects.html">Projects</a>
+            <a href="resume.html">Résumé</a>
+            <a href="contact.html">Contact</a>
+            <a href="mailto:bdiogo511@gmail.com">bdiogo511@gmail.com</a>
+          </nav>
+          <div class="socials">
+            <a href="https://www.linkedin.com/in/diogo-bpinto" aria-label="LinkedIn" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#linkedin"></use></svg></a>
+            <a href="https://github.com/Loquitos13" aria-label="GitHub" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#github"></use></svg></a>
+            <a href="https://www.instagram.com/dlocos13/" aria-label="Instagram" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#instagram"></use></svg></a>
+          </div>
+        </div>
+        <p class="footer__base mono">
+          <span>© <span data-year>2026</span> Diogo Pinto</span>
+          <a href="admin.html" rel="nofollow">Admin</a>
+        </p>
       </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+    </footer>
+
+    <a class="wa-float is-hidden" data-wa aria-label="Chat on WhatsApp">
+      <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#wa"></use></svg>
+      <span>WhatsApp</span>
+    </a>
+
     <script src="js/portfolio-data.js"></script>
     <script src="js/scripts.js"></script>
-    <script src="js/story.js"></script>
+    <script src="js/site.js"></script>
   </body>
 </html>

@@ -7,7 +7,7 @@
   const STORAGE_KEYS = {
     EXPERIENCES: "portfolio.experiences.v2",
     EDUCATION: "portfolio.education.v2",
-    PROJECTS: "portfolio.projects.v2",
+    PROJECTS: "portfolio.projects.v3",
     LANDING: "portfolio.landing.v2"
   };
 
@@ -315,36 +315,108 @@
 
   const DEFAULT_PROJECTS = [
     {
+      id: "proj-nexiforma",
+      title: "NexiForma",
+      link: "https://nexiforma.pt",
+      image: "assets/work/nexiforma-1.webp",
+      gallery: ["assets/work/nexiforma-1.webp", "assets/work/nexiforma-2.webp", "assets/work/nexiforma-3.webp", "assets/work/nexiforma-4.webp"],
+      tags: ["SaaS B2B", "LMS", "NestJS + Next.js"],
+      description: {
+        pt: "Plataforma SaaS multi-tenant para entidades formadoras certificadas pela DGERT. Monta o dossiê técnico-pedagógico a partir do que a equipa já regista e junta gestão de ações e presenças, LMS com SCORM e testes, CRM e faturação.",
+        en: "Multi-tenant SaaS for DGERT-certified training providers. It builds the technical-pedagogical dossier from the records the team already keeps, and brings course and attendance management, an LMS with SCORM and quizzes, a CRM and invoicing together."
+      }
+    },
+    {
+      id: "proj-atelier",
+      title: "Atelier",
+      link: "",
+      image: "assets/work/atelier-1.webp",
+      gallery: ["assets/work/atelier-1.webp", "assets/work/atelier-2.webp", "assets/work/atelier-3.webp", "assets/work/atelier-4.webp"],
+      tags: ["E-commerce", "Next.js + Prisma", "Back office"],
+      description: {
+        pt: "Loja online de objetos artesanais portugueses. Cada peça tem ficha de oficina, origem e lote; o back office junta métricas e funil de conversão, encomendas, envios CTT, stock, promoções e automações.",
+        en: "Online shop for Portuguese handmade goods. Each piece has its workshop, origin and batch; the back office brings together metrics and a conversion funnel, orders, CTT shipping, stock, promotions and automations."
+      }
+    },
+    {
+      id: "proj-pratten",
+      title: "Pratten",
+      link: "",
+      image: "assets/work/pratten-1.webp",
+      gallery: ["assets/work/pratten-1.webp", "assets/work/pratten-2.webp", "assets/work/pratten-3.webp", "assets/work/pratten-4.webp"],
+      tags: ["SaaS restauração", "Spring Boot", "Flutter"],
+      description: {
+        pt: "SaaS multi-tenant para restaurantes: cada casa gere equipa, mesas, pedidos, stock, cardápio e menu online com QR. Uma única API em Spring Boot serve a gestão em Flutter Web, a app dos empregados e o POS.",
+        en: "Multi-tenant SaaS for restaurants: each venue manages staff, tables, orders, stock, menu and a QR online menu. A single Spring Boot API serves the Flutter Web management app, the staff app and the POS."
+      }
+    },
+    {
+      id: "proj-lume",
+      title: "Lume Commerce",
+      link: "",
+      image: "assets/work/lume-1.webp",
+      gallery: ["assets/work/lume-1.webp", "assets/work/lume-2.webp", "assets/work/lume-3.webp", "assets/work/lume-4.webp", "assets/work/lume-5.webp"],
+      tags: ["E-commerce", "Pagamentos", "Analytics em tempo real"],
+      description: {
+        pt: "Plataforma de e-commerce com loja, checkout em três passos (MB WAY, Multibanco, PayPal, Apple Pay, Google Pay e cartão) e área de cliente. O back office tem KPIs, analytics e um globo de visitantes em tempo real.",
+        en: "E-commerce platform with a storefront, a three-step checkout (MB WAY, Multibanco, PayPal, Apple Pay, Google Pay and card) and a customer area. The back office has KPIs, analytics and a real-time visitor globe."
+      }
+    },
+    {
+      id: "proj-adpilot",
+      title: "AdPilot",
+      link: "",
+      image: "assets/work/adpilot-1.webp",
+      gallery: ["assets/work/adpilot-1.webp", "assets/work/adpilot-2.webp", "assets/work/adpilot-3.webp", "assets/work/adpilot-4.webp"],
+      tags: ["Marketing analytics", "Next.js", "Agente IA"],
+      description: {
+        pt: "Plataforma para agências acompanharem o marketing de vários clientes: Google, Meta, TikTok e Microsoft Ads, SEO e GA4. Tem mapa hora × dia, auditoria de landing pages da concorrência, recomendações e relatórios em PDF.",
+        en: "A platform for agencies to track marketing across many clients: Google, Meta, TikTok and Microsoft Ads, SEO and GA4. It has an hour × weekday heatmap, competitor landing-page audits, recommendations and PDF reports."
+      }
+    },
+    {
+      id: "proj-gesforma",
+      title: "GesForma",
+      link: "",
+      image: "assets/work/gesforma-1.webp",
+      gallery: ["assets/work/gesforma-1.webp", "assets/work/gesforma-2.webp", "assets/work/gesforma-3.webp", "assets/work/gesforma-4.webp"],
+      tags: ["Back office", "React + Fastify", "Formação"],
+      description: {
+        pt: "Backoffice de gestão de formação feito para a ENA, com o site público incluído. CRM de pré-inscrições, cockpit por turma, dossiê técnico-pedagógico com completude calculada e um editor visual do site.",
+        en: "Training-management back office built for ENA, public website included. Pre-registration CRM, a per-class cockpit, a technical-pedagogical dossier with calculated completeness and a visual site editor."
+      }
+    },
+    {
       id: "proj-formafuturo",
       title: "Forma Futuro",
-      link: "projects/formafuturoportugal/",
-      image: "assets/project1.png",
+      link: "https://www.formafuturoportugal.pt",
+      image: "assets/work/formafuturo.webp",
       tags: ["Full Stack", "DGERT", "REST API"],
       description: {
-        pt: "A Forma Futuro Portugal é uma entidade formadora acreditada pela DGERT. O website carrega cursos, recebe inscrições e gere formação certificada. O back-end expõe rotas como /api/courses e /api/enrollments. O front-end consome a API e mostra cartões, filtros e formulários.",
-        en: "Forma Futuro Portugal is a DGERT accredited training provider. The website loads courses, accepts enrollments, and manages certified training. The back end exposes routes such as /api/courses and /api/enrollments. The front end consumes the API and renders cards, filters, and forms."
+        pt: "Site e plataforma de formação para uma entidade formadora certificada pela DGERT. Os cursos são carregados de uma API própria, as inscrições entram por formulário e a equipa gere tudo num back office.",
+        en: "Website and training platform for a DGERT-certified training provider. Courses load from its own API, enrolments arrive through a form, and the team manages everything from a back office."
       }
     },
     {
       id: "proj-printandgo",
       title: "Print and Go",
-      link: "projects/printandgo/",
-      image: "assets/project2.png",
+      link: "",
+      image: "assets/work/printandgo.webp",
       tags: ["E-commerce", "REST API", "SQL"],
       description: {
-        pt: "A Print and Go é uma loja online para produtos personalizáveis. Implementei uma REST API de raiz para ligar o back-end à base de dados. A API cobre autenticação, catálogo, carrinho e encomendas.",
-        en: "Print and Go is an online store for customizable products. I built a REST API from scratch to connect the back end to the database. The API covers authentication, catalog, cart, and orders."
+        pt: "Loja online de produtos personalizáveis. Construí a REST API de raiz: autenticação, catálogo, carrinho e encomendas ligados à base de dados.",
+        en: "Online shop for customisable products. I built the REST API from scratch: authentication, catalogue, cart and orders connected to the database."
       }
     },
     {
       id: "proj-autosyspt",
       title: "Auto Sys PT",
-      link: "projects/autosyspt/",
-      image: "assets/project3.png",
+      link: "",
+      image: "assets/work/autosyspt.webp",
       tags: ["Gestão", "Back office", "UX"],
       description: {
-        pt: "A Auto Sys PT ajuda oficinas a acompanhar o histórico de cada veículo: manutenções, reparações, sinistros e serviços regulares. Inclui um back office para utilizadores, viaturas e diagnósticos. Os clientes podem deixar feedback.",
-        en: "Auto Sys PT helps workshops track each vehicle history: maintenance, repairs, accidents, and routine services. It includes a back office for users, vehicles, and diagnostics. Clients can leave feedback."
+        pt: "Sistema para oficinas acompanharem o histórico de cada viatura: manutenções, reparações, sinistros e serviços. Inclui back office de utilizadores, viaturas e diagnósticos, e feedback de clientes.",
+        en: "A system for workshops to track each vehicle's history: maintenance, repairs, claims and services. Includes a back office for users, vehicles and diagnostics, plus client feedback."
       }
     }
   ];
@@ -352,78 +424,78 @@
   const DEFAULT_LANDING = {
     hero: {
       badge: {
-        pt: "Web Design · Desenvolvimento Web · Full Stack",
-        en: "Web Design · Web Development · Full Stack"
+        pt: "Sites · Lojas online · Sistemas à medida · Manutenção",
+        en: "Websites · Online shops · Custom systems · Maintenance"
       },
       kicker: {
-        pt: "Posso ajudar o seu negócio",
-        en: "I can help your business"
+        pt: "Desenho e programo sites, lojas online e sistemas à medida para negócios. Fala sempre comigo, do orçamento ao lançamento.",
+        en: "I design and build websites, online shops and custom systems for businesses. You talk to me directly, from the quote to the launch."
       },
       title: {
-        pt: "Inicie a sua jornada online e <em>cresça rapidamente.</em>",
-        en: "Start your online journey and <em>grow fast.</em>"
+        pt: "Sites que trazem clientes, <em>não só visitas.</em>",
+        en: "Websites that bring in clients, <em>not just visits.</em>"
       },
       location: {
-        pt: "Santa Maria da Feira · PT",
-        en: "Santa Maria da Feira · PT"
+        pt: "Santa Maria da Feira · Portugal e remoto",
+        en: "Santa Maria da Feira · Portugal and remote"
       }
     },
     stats: [
       {
         id: "stat-1",
-        title: { pt: "Full stack", en: "Full stack" },
-        subtitle: { pt: "Web apps de ponta a ponta", en: "End to end web apps" }
+        title: { pt: "Do design ao servidor", en: "From design to server" },
+        subtitle: { pt: "Uma só pessoa responsável pelo projeto inteiro.", en: "One person responsible for the whole project." }
       },
       {
         id: "stat-2",
-        title: { pt: "DGERT", en: "DGERT" },
-        subtitle: { pt: "Formação certificada", en: "Certified training" }
+        title: { pt: "Projetos em produção", en: "Projects in production" },
+        subtitle: { pt: "SaaS com faturação AT, e-commerce e formação DGERT.", en: "SaaS with tax-compliant invoicing, e-commerce and certified training." }
       },
       {
         id: "stat-3",
-        title: { pt: "PT + remoto", en: "PT + remote" },
-        subtitle: { pt: "Pronto a colaborar", en: "Ready to collaborate" }
+        title: { pt: "Orçamento sem compromisso", en: "No-strings quote" },
+        subtitle: { pt: "Conte a ideia por WhatsApp e recebe uma proposta clara.", en: "Share your idea on WhatsApp and get a clear proposal." }
       }
     ],
     about: {
       title: {
-        pt: "Sobre mim",
-        en: "About me"
+        pt: "Quem faz o seu site",
+        en: "Who builds your website"
       },
       p1: {
-        pt: "O meu nome é Diogo Pinto e ajudo empresas a criar uma presença online clara, rápida e fácil de usar.",
-        en: "My name is Diogo Pinto, and I help businesses build a clear, fast, and easy-to-use online presence."
+        pt: "Sou o Diogo Pinto, programador full stack em Santa Maria da Feira. Trabalha comigo do primeiro esboço até ao site no ar, sem intermediários.",
+        en: "I'm Diogo Pinto, a full stack developer based in Santa Maria da Feira. You work with me from the first sketch to the live site, with no middlemen."
       },
       p2: {
-        pt: "Trabalho em desenvolvimento e design web, do conceito à implementação. Se tem um projeto em mente, podemos falar.",
-        en: "I work across web development and design, from concept to implementation. If you have a project in mind, we can talk."
+        pt: "Hoje desenvolvo um SaaS B2B com faturação em conformidade com a AT, e redesenhei o site da FormaFuturo. Levo essa exigência para cada projeto: páginas rápidas, fáceis de gerir e pensadas para quem as visita.",
+        en: "Today I build a B2B SaaS with invoicing compliant with the Portuguese Tax Authority, and I redesigned FormaFuturo's website. I bring that standard to every project: fast pages, easy to manage and designed for the people who visit them."
       }
     },
     skills: [
       {
         num: "01",
-        title: { pt: "Full Stack Web", en: "Full Stack Web" },
-        desc: { pt: "Interfaces, APIs e bases de dados no mesmo fluxo de trabalho.", en: "Interfaces, APIs, and databases in the same workflow." }
+        title: { pt: "Rápido no telemóvel", en: "Fast on mobile" },
+        desc: { pt: "Páginas leves, testadas em ecrãs pequenos e redes lentas.", en: "Lightweight pages, tested on small screens and slow networks." }
       },
       {
         num: "02",
-        title: { pt: "UI e UX", en: "UI and UX" },
-        desc: { pt: "Ecrãs simples, com hierarquia clara e boa leitura em telemóvel.", en: "Simple screens, clear hierarchy, and strong mobile reading." }
+        title: { pt: "Fácil de gerir", en: "Easy to manage" },
+        desc: { pt: "Um painel para mudar textos, projetos e imagens sem depender de ninguém.", en: "A panel to change text, projects and images without depending on anyone." }
       },
       {
         num: "03",
-        title: { pt: "Equipa", en: "Teamwork" },
-        desc: { pt: "Colaboração, liderança de tarefas e comunicação direta com o cliente.", en: "Collaboration, task leadership, and direct client communication." }
+        title: { pt: "Contacto direto", en: "Direct contact" },
+        desc: { pt: "Fala sempre com quem programa, do orçamento à manutenção.", en: "You always talk to the person writing the code, from quote to maintenance." }
       }
     ],
     cta: {
       title: {
-        pt: "Vamos construir algo em conjunto.",
-        en: "Let’s build something together."
+        pt: "Tem um projeto em mente? Vamos falar.",
+        en: "Got a project in mind? Let's talk."
       },
       button: {
-        pt: "Enviar mensagem",
-        en: "Send a message"
+        pt: "Pedir orçamento no WhatsApp",
+        en: "Get a quote on WhatsApp"
       }
     }
   };
@@ -549,179 +621,129 @@
     },
 
     renderResume(lang) {
-      const isPt = lang === "pt";
       const experiences = this.getExperiences();
       const education = this.getEducation();
+      const esc = (s) => this.escapeHtml(s);
+      const tagsHtml = (tags) => (tags && tags.length)
+        ? `<div class="tag-row">${tags.map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div>`
+        : "";
+      const expItem = (item) => {
+        const role = this.getText(item.role, lang);
+        const period = this.getText(item.period, lang);
+        const sub = this.getText(item.sub, lang);
+        const desc = this.getText(item.description, lang);
+        const url = (item.url || "").trim();
+        const link = /^https?:\/\//i.test(url)
+          ? ` · <a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(url.replace(/^https?:\/\//, "").replace(/\/$/, ""))}</a>`
+          : "";
+        return `
+          <li class="tl-item" data-id="${esc(item.id)}">
+            <p class="tl-when mono">${esc(period)}</p>
+            <div class="tl-body">
+              <h3>${esc(role)}</h3>
+              <p class="tl-org">${esc(item.company)}${sub ? ` · ${esc(sub)}` : ""}${link}</p>
+              ${desc ? `<p>${esc(desc).replace(/\n/g, "<br>")}</p>` : ""}
+              ${tagsHtml(item.tags)}
+            </div>
+          </li>
+        `;
+      };
 
-      // Render Visible Experience Cards
       const expContainer = document.getElementById("resumeExperienceContainer");
       if (expContainer) {
-        const jobs = experiences.filter((e) => e.type !== "internship");
-        expContainer.innerHTML = jobs.map((item) => {
-          const role = this.getText(item.role, lang);
-          const period = this.getText(item.period, lang);
-          const sub = this.getText(item.sub, lang);
-          const desc = this.getText(item.description, lang);
-          const tags = (item.tags || []).map((t) => `<div class="col mb-3 mb-md-0"><div class="d-flex align-items-center bg-light rounded-3 p-3 h-100">${t}</div></div>`).join("");
-          const linkHtml = item.url ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">${item.url.replace(/^https?:\/\//, '')}</a>` : "";
-
-          return `
-            <div class="card shadow border-0 rounded-4 mb-5 resume-item-card" data-id="${item.id}">
-              <div class="card-body p-5">
-                <div class="row align-items-center gx-5">
-                  <div class="col text-center text-lg-start mb-4 mb-lg-0">
-                    <div class="bg-light p-4 rounded-4">
-                      <div class="text-primary fw-bolder mb-2">${period}</div>
-                      <div class="small fw-bolder">${role}</div>
-                      <div class="medium text-muted text-break">${item.company}</div>
-                      ${sub ? `<div class="small text-muted">${sub}</div>` : ""}
-                      ${linkHtml ? `<div class="small text-muted mt-1">${linkHtml}</div>` : ""}
-                    </div>
-                  </div>
-                  <div class="col-lg-8">
-                    <div class="resume-desc">${desc.replace(/\n/g, '<br>')}</div>
-                  </div>
-                </div>
-                ${tags ? `<br><div class="row row-cols-1 row-cols-md-3 mb-2">${tags}</div>` : ""}
-              </div>
-            </div>
-          `;
-        }).join("");
+        expContainer.innerHTML = experiences.filter((e) => e.type !== "internship").map(expItem).join("");
       }
 
-      // Render Visible Internship Cards
       const internContainer = document.getElementById("resumeInternshipContainer");
       if (internContainer) {
         const internships = experiences.filter((e) => e.type === "internship");
-        internContainer.innerHTML = internships.map((item) => {
-          const role = this.getText(item.role, lang);
-          const period = this.getText(item.period, lang);
-          const sub = this.getText(item.sub, lang);
-          const desc = this.getText(item.description, lang);
-          const tags = (item.tags || []).map((t) => `<div class="col mb-3 mb-md-0"><div class="d-flex align-items-center bg-light rounded-3 p-3 h-100">${t}</div></div>`).join("");
-          const linkHtml = item.url ? `<a href="${item.url}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">${item.url.replace(/^https?:\/\//, '')}</a>` : "";
-
-          return `
-            <div class="card shadow border-0 rounded-4 mb-5 resume-item-card" data-id="${item.id}">
-              <div class="card-body p-5">
-                <div class="row align-items-center gx-5">
-                  <div class="col text-center text-lg-start mb-4 mb-lg-0">
-                    <div class="bg-light p-4 rounded-4">
-                      <div class="text-primary fw-bolder mb-2">${period}</div>
-                      <div class="small fw-bolder">${role}</div>
-                      <div class="medium text-muted text-break">${item.company}</div>
-                      ${sub ? `<div class="small text-muted">${sub}</div>` : ""}
-                      ${linkHtml ? `<div class="small text-muted mt-1">${linkHtml}</div>` : ""}
-                    </div>
-                  </div>
-                  <div class="col-lg-8">
-                    <div class="resume-desc">${desc.replace(/\n/g, '<br>')}</div>
-                  </div>
-                </div>
-                ${tags ? `<br><div class="row row-cols-1 row-cols-md-3 mb-2">${tags}</div>` : ""}
-              </div>
-            </div>
-          `;
-        }).join("");
+        internContainer.innerHTML = internships.map(expItem).join("");
+        const section = internContainer.closest(".resume__section");
+        if (section) section.hidden = internships.length === 0;
       }
 
-      // Render Visible Education Cards
       const eduContainer = document.getElementById("resumeEducationContainer");
       if (eduContainer) {
         eduContainer.innerHTML = education.map((item) => {
           const degree = this.getText(item.degree, lang);
           const institution = this.getText(item.institution, lang);
-          const level = this.getText(item.level, lang);
-          const area = this.getText(item.area, lang);
           const period = this.getText(item.period, lang);
           const loc = this.getText(item.location, lang);
           const desc = this.getText(item.description, lang);
           const details = this.getText(item.keyDetails, lang);
-
+          const org = [institution && institution !== degree ? institution : "", loc].filter(Boolean).map(esc).join(" · ");
           return `
-            <div class="card shadow border-0 rounded-4 mb-5 resume-item-card" data-id="${item.id}">
-              <div class="card-body p-5">
-                <div class="row align-items-center gx-5">
-                  <div class="col text-center text-lg-start mb-4 mb-lg-0">
-                    <div class="bg-light p-4 rounded-4">
-                      <div class="text-secondary fw-bolder mb-2">${period}</div>
-                      <div class="mb-2">
-                        <div class="small fw-bolder">${institution || degree}</div>
-                        ${loc ? `<div class="small text-muted">${loc}</div>` : ""}
-                      </div>
-                      <div class="fst-italic">
-                        <div class="small text-muted">${level || degree}</div>
-                        ${area ? `<div class="small text-muted">${area}</div>` : ""}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-8">
-                    <div>
-                      ${desc ? `<div>${desc.replace(/\n/g, '<br>')}</div>` : ""}
-                      ${details ? `<div class="mt-3 text-muted small" style="line-height:1.6">${details.replace(/\n/g, '<br>')}</div>` : ""}
-                    </div>
-                  </div>
-                </div>
+            <li class="tl-item" data-id="${esc(item.id)}">
+              <p class="tl-when mono">${esc(period)}</p>
+              <div class="tl-body">
+                <h3>${esc(degree || institution)}</h3>
+                ${org ? `<p class="tl-org">${org}</p>` : ""}
+                ${desc ? `<p>${esc(desc).replace(/\n/g, "<br>")}</p>` : ""}
+                ${details ? `<p class="tl-detail">${esc(details).replace(/\n/g, "<br>")}</p>` : ""}
+              </div>
+            </li>
+          `;
+        }).join("");
+      }
+
+      // CV em PDF: uma linha temporal (empregos e estágios), projetos e educação
+      const cvTimeline = document.getElementById("cvPdfTimeline");
+      if (cvTimeline) {
+        const internLabel = lang === "pt" ? "Estágio" : "Internship";
+        const ordered = experiences.filter((e) => e.type !== "internship").concat(experiences.filter((e) => e.type === "internship"));
+        cvTimeline.innerHTML = ordered.map((item) => {
+          const role = this.getText(item.role, lang);
+          const period = this.getText(item.periodCv || item.period, lang);
+          const desc = this.getText(item.description, lang);
+          const tags = (item.tags || []).slice(0, 3).map((t) => `<span>${esc(t)}</span>`).join("");
+          return `
+            <div class="cv-item">
+              <div class="cv-when">${esc(period)}${item.type === "internship" ? `<em>${internLabel}</em>` : ""}</div>
+              <div class="cv-what">
+                <div class="cv-title">${esc(role)}</div>
+                <div class="cv-org">${esc(item.companyShort || item.company)}</div>
+                ${desc ? `<p>${esc(desc)}</p>` : ""}
+                ${tags ? `<div class="cv-tags">${tags}</div>` : ""}
               </div>
             </div>
           `;
         }).join("");
       }
 
-      // Render CV PDF Template (Experiences)
-      const cvExpCards = document.getElementById("cvPdfExperienceCards");
-      if (cvExpCards) {
-        const jobs = experiences.filter((e) => e.type !== "internship");
-        cvExpCards.innerHTML = jobs.map((item) => {
-          const role = this.getText(item.role, lang);
-          const period = this.getText(item.periodCv || item.period, lang);
-          const desc = this.getText(item.description, lang);
-          const title = `${role}, ${item.companyShort || item.company}`;
+      const cvProjects = document.getElementById("cvPdfProjects");
+      if (cvProjects) {
+        cvProjects.innerHTML = this.getProjects().slice(0, 3).map((proj) => {
+          const desc = this.getText(proj.description, lang).split(/(?<=\.)\s/)[0];
+          const link = /^https?:\/\//i.test(proj.link || "") ? proj.link.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "") : "";
           return `
-            <div class="cv-card">
-              <div class="cv-card-title">${title}</div>
-              <div class="cv-card-sub">${period}</div>
-              <div class="cv-card-body">${desc}</div>
+            <div class="cv-project">
+              <div class="cv-title">${esc(proj.title)}${link ? ` <span class="cv-link">${esc(link)}</span>` : ""}</div>
+              <p>${esc(desc)}</p>
+              <div class="cv-tags">${(proj.tags || []).slice(0, 2).map((t) => `<span>${esc(t)}</span>`).join("")}</div>
             </div>
           `;
         }).join("");
       }
 
-      // Render CV PDF Template (Internship)
-      const cvInternCards = document.getElementById("cvPdfInternshipCards");
-      if (cvInternCards) {
-        const internships = experiences.filter((e) => e.type === "internship");
-        cvInternCards.innerHTML = internships.map((item) => {
-          const role = this.getText(item.role, lang);
-          const period = this.getText(item.periodCv || item.period, lang);
-          const desc = this.getText(item.description, lang);
-          const title = `${role}, ${item.companyShort || item.company}`;
-          return `
-            <div class="cv-card">
-              <div class="cv-card-title">${title}</div>
-              <div class="cv-card-sub">${period}${item.url ? ` · ${item.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}` : ''}</div>
-              <div class="cv-card-body">${desc}</div>
-            </div>
-          `;
-        }).join("");
-      }
-
-      // Render CV PDF Template (Education)
-      // Note: for compact 1-page A4, we render the degree cards cleanly.
-      const cvEduCards = document.getElementById("cvPdfEducationCards");
-      if (cvEduCards) {
-        cvEduCards.innerHTML = education.map((item) => {
+      const cvEducation = document.getElementById("cvPdfEducation");
+      if (cvEducation) {
+        cvEducation.innerHTML = education.map((item) => {
           const degree = this.getText(item.degree, lang);
           const inst = this.getText(item.institution, lang);
           const period = this.getText(item.periodCv || item.period, lang);
-          const title = inst && inst !== degree ? `${degree}, ${inst}` : degree;
           return `
-            <div class="cv-card">
-              <div class="cv-card-title">${title}</div>
-              <div class="cv-card-sub">${period}</div>
+            <div class="cv-edu">
+              <div class="cv-title">${esc(degree)}</div>
+              ${inst && inst !== degree ? `<div class="cv-org">${esc(inst)}</div>` : ""}
+              <div class="cv-when">${esc(period)}</div>
             </div>
           `;
         }).join("");
+      }
+
+      const cvUpdated = document.getElementById("cvPdfUpdated");
+      if (cvUpdated) {
+        cvUpdated.textContent = new Date().toLocaleDateString(lang === "pt" ? "pt-PT" : "en-GB", { month: "long", year: "numeric" });
       }
 
       this.injectAdminControls();
@@ -733,42 +755,69 @@
       if (!container) return;
 
       const basePath = /\/pt(?:\/|$)/.test(window.location.pathname) ? "../" : "";
+      const limit = parseInt(container.getAttribute("data-limit") || "0", 10);
+      const list = limit > 0 ? projects.slice(0, limit) : projects;
+      const visitLabel = lang === "pt" ? "Ver projeto" : "View project";
 
-      container.innerHTML = projects.map((proj) => {
+      if (!list.length) {
+        container.innerHTML = `<p class="project-empty">${lang === "pt" ? "Novos projetos em breve." : "New projects coming soon."}</p>`;
+        this.injectAdminControls();
+        return;
+      }
+
+      const resolve = (src) => {
+        src = (src || "").trim();
+        if (!src || /^(https?:|data:)/i.test(src)) return src;
+        return basePath + src.replace(/^\.?\//, "").replace(/^\.\.\//, "");
+      };
+      const screensLabel = (n) => lang === "pt" ? `${n} ecrãs` : `${n} screens`;
+
+      container.innerHTML = list.map((proj) => {
         const desc = this.getText(proj.description, lang);
         const tags = (proj.tags || []).map((t) => `<span class="tag">${this.escapeHtml(t)}</span>`).join("");
-
-        let imgSrc = (proj.image || "").trim();
-        if (imgSrc && !imgSrc.startsWith("http") && !imgSrc.startsWith("data:")) {
-          const cleanPath = imgSrc.replace(/^\.?\//, "").replace(/^\.\.\//, "");
-          imgSrc = basePath ? (basePath + cleanPath) : cleanPath;
-        }
+        const gallery = (proj.gallery || []).filter(Boolean);
+        const imgSrc = resolve(proj.image || gallery[0]);
 
         let href = (proj.link || "").trim();
         let isExternal = false;
-        if (href) {
-          if (/^https?:\/\//i.test(href)) {
-            isExternal = true;
-          } else if (basePath && !href.startsWith("../") && !href.startsWith("#")) {
-            href = basePath + href.replace(/^\.?\//, "");
-          }
+        if (/^https?:\/\//i.test(href)) {
+          isExternal = true;
+        } else if (href && !href.startsWith("#")) {
+          href = resolve(href);
         } else {
-          href = "#";
+          href = "";
+        }
+        const hrefAttr = href ? ` href="${this.escapeHtml(href)}"${isExternal ? ' target="_blank" rel="noopener noreferrer"' : ""}` : "";
+        const visitInner = `${visitLabel} <svg class="icon" aria-hidden="true"><use href="${basePath}assets/brand/icons.svg#out"></use></svg>`;
+        const shot = imgSrc
+          ? `<div class="project-card__shot"><img src="${this.escapeHtml(imgSrc)}" alt="${lang === "pt" ? "Ecrã de" : "Screenshot of"} ${this.escapeHtml(proj.title)}" loading="lazy" decoding="async" />${gallery.length > 1 ? `<span class="project-card__count mono">${screensLabel(gallery.length)}</span>` : ""}</div>`
+          : "";
+
+        if (gallery.length) {
+          return `
+            <article class="project-card has-gallery" data-id="${this.escapeHtml(proj.id)}">
+              <button type="button" class="project-card__open" data-gallery="${this.escapeHtml(proj.id)}" aria-label="${lang === "pt" ? "Ver ecrãs de" : "View screens of"} ${this.escapeHtml(proj.title)}"></button>
+              <div class="project-card__body">
+                <h3 class="project-card__title">${this.escapeHtml(proj.title)}</h3>
+                <p>${this.escapeHtml(desc)}</p>
+                <div class="tag-row">${tags}</div>
+                ${href ? `<a class="project-card__visit"${hrefAttr}>${visitInner}</a>` : ""}
+              </div>
+              ${shot}
+            </article>
+          `;
         }
 
-        const hasLink = href && href !== "#";
-        const tag = hasLink ? "a" : "article";
-        const targetAttr = isExternal ? ' target="_blank" rel="noopener noreferrer"' : "";
-        const hrefAttr = hasLink ? ` href="${href}"${targetAttr}` : "";
-
+        const tag = href ? "a" : "article";
         return `
-          <${tag}${hrefAttr} class="project-card" data-id="${proj.id}">
+          <${tag}${hrefAttr} class="project-card" data-id="${this.escapeHtml(proj.id)}">
             <div class="project-card__body">
-              <h2 class="project-card__title">${this.escapeHtml(proj.title)}</h2>
+              <h3 class="project-card__title">${this.escapeHtml(proj.title)}</h3>
               <p>${this.escapeHtml(desc)}</p>
               <div class="tag-row">${tags}</div>
+              ${href ? `<span class="project-card__visit">${visitInner}</span>` : ""}
             </div>
-            ${imgSrc ? `<img src="${imgSrc}" alt="${this.escapeHtml(proj.title)}" />` : ""}
+            ${shot}
           </${tag}>
         `;
       }).join("");
@@ -858,7 +907,7 @@
         badge.className = "admin-floating-badge";
         badge.innerHTML = `
           <a href="${adminPath}" class="admin-badge-btn" title="${isPt ? 'Ir para o Painel de Administração' : 'Go to Admin Dashboard'}">
-            <i class="bi bi-shield-lock-fill"></i>
+            
             <span>${isPt ? 'Modo Admin' : 'Admin Mode'}</span>
           </a>
         `;
@@ -874,7 +923,7 @@
         btn.setAttribute("data-admin-edit-section", "true");
         btn.className = "btn-ghost btn-admin-quick";
         btn.href = `${adminPath}#landing`;
-        btn.innerHTML = `<i class="bi bi-pencil-square"></i> ${isPt ? 'Editar Página Inicial' : 'Edit Landing Page'}`;
+        btn.innerHTML = `${isPt ? 'Editar Página Inicial' : 'Edit Landing Page'}`;
         heroActions.appendChild(btn);
       }
 
@@ -884,7 +933,7 @@
         btn.setAttribute("data-admin-edit-section", "true");
         btn.className = "btn-ghost btn-admin-quick";
         btn.href = `${adminPath}#experience`;
-        btn.innerHTML = `<i class="bi bi-pencil-square"></i> ${isPt ? 'Editar Experiência' : 'Edit Experience'}`;
+        btn.innerHTML = `${isPt ? 'Editar Experiência' : 'Edit Experience'}`;
         expHeader.appendChild(btn);
       }
 
@@ -894,7 +943,7 @@
         btn.setAttribute("data-admin-edit-section", "true");
         btn.className = "btn-ghost btn-admin-quick";
         btn.href = `${adminPath}#education`;
-        btn.innerHTML = `<i class="bi bi-pencil-square"></i> ${isPt ? 'Editar Educação' : 'Edit Education'}`;
+        btn.innerHTML = `${isPt ? 'Editar Educação' : 'Edit Education'}`;
         eduHeader.appendChild(btn);
       }
 
@@ -905,7 +954,7 @@
         btn.className = "btn-ghost btn-admin-quick mt-2";
         btn.style.display = "inline-flex";
         btn.href = `${adminPath}#projects`;
-        btn.innerHTML = `<i class="bi bi-pencil-square"></i> ${isPt ? 'Gerir / Adicionar Projetos' : 'Manage / Add Projects'}`;
+        btn.innerHTML = `${isPt ? 'Gerir / Adicionar Projetos' : 'Manage / Add Projects'}`;
         projHeader.appendChild(btn);
       }
     }

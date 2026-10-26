@@ -2,10 +2,142 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Redirecting…</title>
-    <script>
-      location.replace("index.html?zone=comms");
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Contact · Diogo Pinto</title>
+    <meta name="description" content="Get a quote for your website, online shop or custom system. WhatsApp +351 913 417 390." />
+    <meta name="theme-color" content="#f4f4f1" />
+    <link rel="canonical" href="https://loquitos13.github.io/contact.html" />
+    <link rel="alternate" hreflang="pt-PT" href="https://loquitos13.github.io/pt/contact.html" />
+    <link rel="alternate" hreflang="en" href="https://loquitos13.github.io/contact.html" />
+    <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="assets/favicon.ico" sizes="any" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+    <script>document.documentElement.classList.add("js");</script>
   </head>
-  <body></body>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+
+    <header class="site-header">
+      <nav class="wrap site-nav" aria-label="Main">
+        <a class="brand" href="index.html" aria-label="Diogo Pinto, home">
+          <svg class="brand__mark" aria-hidden="true"><use href="assets/brand/icons.svg#dp"></use></svg>
+          <svg class="brand__type" aria-hidden="true"><use href="assets/brand/icons.svg#type"></use></svg>
+        </a>
+        <div class="site-menu" id="menu">
+          <a class="site-link" href="projects.html">Work</a>
+          <a class="site-link" href="index.html#services">Services</a>
+          <a class="site-link" href="index.html#process">Process</a>
+          <a class="site-link" href="resume.html">Résumé</a>
+          <a class="site-link" href="contact.html" aria-current="page">Contact</a>
+        </div>
+        <div class="site-actions">
+          <div class="lang" data-lang-toggle role="group" aria-label="Language">
+            <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+            <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          </div>
+          <a class="btn btn--green" data-wa aria-label="Get a quote on WhatsApp">
+            <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#wa"></use></svg>
+            <span>Get a quote</span>
+          </a>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+            <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#menu"></use></svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="content">
+      <section class="page-hero">
+        <div class="wrap site-wrap">
+          <h1 class="rise">Let's talk about your project</h1>
+          <p class="rise" style="--i: 1">WhatsApp is the fastest way. If you prefer, leave a message in the form and I will reply by email.</p>
+        </div>
+      </section>
+      <div class="wrap contact">
+        <section class="wa-card rise" style="--i: 2" data-wa-primary aria-labelledby="wa-title">
+          <svg class="cta__mark" viewBox="0 0 256 256" aria-hidden="true" data-turn><use href="assets/brand/icons.svg#dp"></use></svg>
+          <h2 id="wa-title">Message me on WhatsApp</h2>
+          <p>Tell me what you need in two or three sentences: your type of business, what the website should do and whether you have a deadline. I will ask the rest.</p>
+          <p class="wa-number">+351 913 417 390</p>
+          <a class="btn btn--white btn--lg" data-wa><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#wa"></use></svg>Open chat</a>
+          <div class="contact__alt">
+            <span>Email: <a href="mailto:bdiogo511@gmail.com">bdiogo511@gmail.com</a></span>
+            <span>LinkedIn: <a href="https://www.linkedin.com/in/diogo-bpinto" target="_blank" rel="noopener">diogo-bpinto</a></span>
+          </div>
+        </section>
+        <section class="form-card rise" style="--i: 3" aria-labelledby="form-title">
+          <h2 id="form-title">Prefer to write?</h2>
+          <p>I will reply to the email you give.</p>
+          <form class="form" id="contactForm" novalidate>
+            <div class="field">
+              <label for="cf-name">Name</label>
+              <input id="cf-name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="cf-email">Email</label>
+              <input id="cf-email" name="email" type="email" autocomplete="email" inputmode="email" required />
+            </div>
+            <div class="field field--full">
+              <label for="cf-subject">What you need</label>
+              <select id="cf-subject" name="subject">
+                <option>A website for my business</option>
+                <option>Online shop</option>
+                <option>Custom system</option>
+                <option>Maintenance and hosting</option>
+                <option>Something else</option>
+              </select>
+            </div>
+            <div class="field field--full">
+              <label for="cf-message">Message</label>
+              <textarea id="cf-message" name="message" required placeholder="E.g. I run a clinic and want patients to book appointments online."></textarea>
+            </div>
+            <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <button class="btn btn--green" type="submit"><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#mail"></use></svg>Send message</button>
+            <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer__grid">
+          <div class="footer__brand">
+            <a class="brand" href="index.html" aria-label="Diogo Pinto, home">
+              <svg class="brand__mark" aria-hidden="true"><use href="assets/brand/icons.svg#dp"></use></svg>
+              <svg class="brand__type" aria-hidden="true"><use href="assets/brand/icons.svg#type"></use></svg>
+            </a>
+            <p>Websites, online shops and custom systems. Santa Maria da Feira, Portugal.</p>
+          </div>
+          <nav class="footer__links" aria-label="Footer">
+            <a href="projects.html">Projects</a>
+            <a href="resume.html">Résumé</a>
+            <a href="contact.html">Contact</a>
+            <a href="mailto:bdiogo511@gmail.com">bdiogo511@gmail.com</a>
+          </nav>
+          <div class="socials">
+            <a href="https://www.linkedin.com/in/diogo-bpinto" aria-label="LinkedIn" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#linkedin"></use></svg></a>
+            <a href="https://github.com/Loquitos13" aria-label="GitHub" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#github"></use></svg></a>
+            <a href="https://www.instagram.com/dlocos13/" aria-label="Instagram" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#instagram"></use></svg></a>
+          </div>
+        </div>
+        <p class="footer__base mono">
+          <span>© <span data-year>2026</span> Diogo Pinto</span>
+          <a href="admin.html" rel="nofollow">Admin</a>
+        </p>
+      </div>
+    </footer>
+
+    <a class="wa-float is-hidden" data-wa aria-label="Chat on WhatsApp">
+      <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#wa"></use></svg>
+      <span>WhatsApp</span>
+    </a>
+
+    <script src="js/portfolio-data.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/site.js"></script>
+  </body>
 </html>

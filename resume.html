@@ -2,22 +2,170 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Redirecting…</title>
-    <script>
-      const params = new URLSearchParams(location.search);
-      const spawn = params.get("spawn") || "experience";
-      const zone =
-        spawn === "contact"
-          ? "comms"
-          : spawn === "projects"
-            ? "field"
-            : spawn === "education"
-              ? "archive"
-              : spawn === "experience" || spawn === "resume"
-                ? "career"
-                : "hq";
-      location.replace("index.html?zone=" + encodeURIComponent(zone));
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Résumé · Diogo Pinto</title>
+    <meta name="description" content="Experience and education of Diogo Pinto, full stack developer." />
+    <meta name="theme-color" content="#f4f4f1" />
+    <link rel="canonical" href="https://loquitos13.github.io/resume.html" />
+    <link rel="alternate" hreflang="pt-PT" href="https://loquitos13.github.io/pt/resume.html" />
+    <link rel="alternate" hreflang="en" href="https://loquitos13.github.io/resume.html" />
+    <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="assets/favicon.ico" sizes="any" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="css/cv.css" rel="stylesheet" />
+    <script>document.documentElement.classList.add("js");</script>
   </head>
-  <body></body>
+  <body>
+    <a class="skip" href="#content">Skip to content</a>
+
+    <header class="site-header">
+      <nav class="wrap site-nav" aria-label="Main">
+        <a class="brand" href="index.html" aria-label="Diogo Pinto, home">
+          <svg class="brand__mark" aria-hidden="true"><use href="assets/brand/icons.svg#dp"></use></svg>
+          <svg class="brand__type" aria-hidden="true"><use href="assets/brand/icons.svg#type"></use></svg>
+        </a>
+        <div class="site-menu" id="menu">
+          <a class="site-link" href="projects.html">Work</a>
+          <a class="site-link" href="index.html#services">Services</a>
+          <a class="site-link" href="index.html#process">Process</a>
+          <a class="site-link" href="resume.html" aria-current="page">Résumé</a>
+          <a class="site-link" href="contact.html">Contact</a>
+        </div>
+        <div class="site-actions">
+          <div class="lang" data-lang-toggle role="group" aria-label="Language">
+            <button type="button" data-lang="pt" aria-pressed="false">PT</button>
+            <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          </div>
+          <a class="btn btn--green" data-wa aria-label="Get a quote on WhatsApp">
+            <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#wa"></use></svg>
+            <span>Get a quote</span>
+          </a>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Open menu">
+            <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#menu"></use></svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="content">
+      <section class="page-hero">
+        <div class="wrap site-wrap">
+          <h1 class="rise">Résumé</h1>
+          <p class="rise" style="--i: 1">Full stack developer with a degree in Information Technology from the University of Aveiro, now building B2B SaaS and studying for a master's in Computer Science.</p>
+          <div class="hero-actions rise" style="--i: 2">
+            <button type="button" class="btn btn--green" id="downloadResumeBtn"><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#download"></use></svg>Download CV as PDF</button>
+            <a class="btn btn--line" href="contact.html">Get in touch</a>
+          </div>
+        </div>
+      </section>
+      <div class="wrap resume">
+        <aside class="resume__side">
+          <div class="about__photo" style="aspect-ratio: 1">
+            <img src="assets/brand/diogo.webp" alt="Portrait of Diogo Pinto" width="480" height="1039" />
+          </div>
+          <h2>Diogo Pinto</h2>
+          <p>Santa Maria da Feira, Portugal<br /><a href="mailto:bdiogo511@gmail.com">bdiogo511@gmail.com</a></p>
+        </aside>
+        <div>
+          <section class="resume__section" aria-labelledby="resumeExperienceHeader">
+            <h2 id="resumeExperienceHeader">Experience</h2>
+            <ol class="timeline" id="resumeExperienceContainer"></ol>
+          </section>
+          <section class="resume__section" aria-labelledby="resumeInternshipHeader">
+            <h2 id="resumeInternshipHeader">Internships</h2>
+            <ol class="timeline" id="resumeInternshipContainer"></ol>
+          </section>
+          <section class="resume__section" aria-labelledby="resumeEducationHeader">
+            <h2 id="resumeEducationHeader">Education</h2>
+            <ol class="timeline" id="resumeEducationContainer"></ol>
+          </section>
+        </div>
+      </div>
+    <div id="cvPdfTemplate" style="display:none">
+      <div class="cv-a4">
+        <header class="cv-head">
+          <div class="cv-head__id">
+            <img class="cv-logo" src="assets/brand/logo-white.svg" alt="Diogo Pinto" />
+            <p class="cv-role">Full stack developer · Websites, online shops and custom systems</p>
+            <p class="cv-place">Santa Maria da Feira, Portugal</p>
+          </div>
+          <div class="cv-photo" style="background-image: url('assets/resume_profile.jpeg')"></div>
+        </header>
+        <div class="cv-contact"><div><span>WhatsApp</span>+351 913 417 390</div><div><span>Email</span>bdiogo511@gmail.com</div><div><span>Site</span>loquitos13.github.io</div><div><span>LinkedIn</span>in/diogo-bpinto</div><div><span>GitHub</span>Loquitos13</div></div>
+        <div class="cv-body">
+          <main class="cv-main">
+            <section>
+              <h3 class="cv-h">Profile</h3>
+              <p class="cv-lead">Full stack developer with experience in B2B SaaS, e-commerce and training platforms. I work from the interface to the API and the database, focused on fast, clear, maintainable products and direct communication with the people who use them.</p>
+            </section>
+            <section>
+              <h3 class="cv-h">Experience</h3>
+              <div class="cv-timeline" id="cvPdfTimeline"></div>
+            </section>
+            <section>
+              <h3 class="cv-h">Selected projects</h3>
+              <div class="cv-projects" id="cvPdfProjects"></div>
+            </section>
+          </main>
+          <aside class="cv-side">
+            <section>
+              <h3 class="cv-h">Skills</h3>
+              <div class="cv-skill"><div class="cv-skill-k">Front-end</div><div class="cv-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>TypeScript</span><span>UI/UX Design</span></div></div><div class="cv-skill"><div class="cv-skill-k">Back-end</div><div class="cv-tags"><span>PHP</span><span>Laravel</span><span>Spring Boot</span><span>REST APIs</span><span>Web Services</span></div></div><div class="cv-skill"><div class="cv-skill-k">Data and product</div><div class="cv-tags"><span>SQL</span><span>Databases</span><span>Multi-tenant SaaS</span><span>CRM</span></div></div><div class="cv-skill"><div class="cv-skill-k">How I work</div><div class="cv-tags"><span>Project management</span><span>Team leading</span><span>Client communication</span><span>Problem solving</span></div></div>
+            </section>
+            <section>
+              <h3 class="cv-h">Education</h3>
+              <div id="cvPdfEducation"></div>
+            </section>
+            <div class="cv-mark">
+              <img src="assets/brand/mark.svg" alt="" />
+              <p>Portfolio and contact<br /><strong>loquitos13.github.io</strong></p>
+              <p class="cv-updated">Updated <span id="cvPdfUpdated"></span></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer__grid">
+          <div class="footer__brand">
+            <a class="brand" href="index.html" aria-label="Diogo Pinto, home">
+              <svg class="brand__mark" aria-hidden="true"><use href="assets/brand/icons.svg#dp"></use></svg>
+              <svg class="brand__type" aria-hidden="true"><use href="assets/brand/icons.svg#type"></use></svg>
+            </a>
+            <p>Websites, online shops and custom systems. Santa Maria da Feira, Portugal.</p>
+          </div>
+          <nav class="footer__links" aria-label="Footer">
+            <a href="projects.html">Projects</a>
+            <a href="resume.html">Résumé</a>
+            <a href="contact.html">Contact</a>
+            <a href="mailto:bdiogo511@gmail.com">bdiogo511@gmail.com</a>
+          </nav>
+          <div class="socials">
+            <a href="https://www.linkedin.com/in/diogo-bpinto" aria-label="LinkedIn" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#linkedin"></use></svg></a>
+            <a href="https://github.com/Loquitos13" aria-label="GitHub" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#github"></use></svg></a>
+            <a href="https://www.instagram.com/dlocos13/" aria-label="Instagram" rel="noopener" target="_blank"><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#instagram"></use></svg></a>
+          </div>
+        </div>
+        <p class="footer__base mono">
+          <span>© <span data-year>2026</span> Diogo Pinto</span>
+          <a href="admin.html" rel="nofollow">Admin</a>
+        </p>
+      </div>
+    </footer>
+
+    <a class="wa-float is-hidden" data-wa aria-label="Chat on WhatsApp">
+      <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#wa"></use></svg>
+      <span>WhatsApp</span>
+    </a>
+    <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js" defer></script>
+    <script src="js/portfolio-data.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/site.js"></script>
+  </body>
 </html>

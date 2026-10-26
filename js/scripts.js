@@ -60,12 +60,8 @@
     });
   }
 
-  function isGameApp() {
-    return document.body.classList.contains("game-app") || document.body.classList.contains("world-app") || document.body.classList.contains("story-app");
-  }
-
   function maybeRedirectToDefaultPt() {
-    if (isAdminPage() || isGameApp()) return false;
+    if (isAdminPage()) return false;
     if (currentPathLang() === "pt") return false;
     const saved = storedLang();
     if (saved === "en") return false;
@@ -193,7 +189,6 @@
       }
 
       saveMessage(payload);
-      window.dispatchEvent(new CustomEvent("portfolio:quest", { detail: { id: "message" } }));
 
       try {
         await sendContact(payload);
@@ -233,10 +228,8 @@
     document.documentElement.setAttribute("lang", lang === "pt" ? "pt-PT" : "en-US");
     syncLangControls(lang);
     bindLanguage();
-    if (!isGameApp()) {
-      bindNav();
-      bindHeaderScroll();
-    }
+    bindNav();
+    bindHeaderScroll();
     bindContactForm();
     window.bindContactFormRetry = bindContactForm;
   });
@@ -250,12 +243,11 @@ document.addEventListener("click", (e) => {
   const template = document.querySelector("#cvPdfTemplate .cv-a4");
     if (!template || typeof html2pdf !== "function") return;
     const clone = template.cloneNode(true);
-    clone.style.display = "block";
     html2pdf().set({
       margin: 0,
       filename: "Diogo_Pinto_CV.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
+      image: { type: "jpeg", quality: 0.96 },
+      html2canvas: { scale: 3, useCORS: true, backgroundColor: "#ffffff" },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       pagebreak: { mode: [] }
     }).from(clone).toPdf().get("pdf").then((pdf) => {
