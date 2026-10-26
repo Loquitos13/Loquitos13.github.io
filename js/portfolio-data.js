@@ -13,6 +13,34 @@
 
   const DEFAULT_EXPERIENCES = [
     {
+      id: "exp-ena",
+      company: "ENA - Escola de Negócios e Administração",
+      companyShort: "ENA - Escola de Negócios e Administração",
+      type: "job",
+      role: {
+        pt: "Full Stack Developer",
+        en: "Full Stack Developer"
+      },
+      period: {
+        pt: "Setembro de 2026 a presente",
+        en: "September 2026 to Present"
+      },
+      periodCv: {
+        pt: "Set 2026 a presente",
+        en: "Sep 2026 to Present"
+      },
+      sub: {
+        pt: "",
+        en: ""
+      },
+      description: {
+        pt: "Rebranding do website ena.pt e desenvolvimento da plataforma de gestão de formação e backoffice, com um CMS para estruturar as páginas públicas do site.",
+        en: "Rebranding of the ena.pt website and development of the training-management platform and back office, with a CMS to structure the site's public pages."
+      },
+      tags: ["Full Stack Development", "Rebranding", "CMS", "Backoffice"],
+      url: "https://ena.pt"
+    },
+    {
       id: "exp-espiraleducada",
       company: "Espiraleducada - Formação e Consultoria Unipessoal Lda.",
       companyShort: "Espiraleducada",
@@ -319,7 +347,7 @@
       title: "NexiForma",
       link: "https://nexiforma.pt",
       image: "assets/work/nexiforma-1.webp",
-      gallery: ["assets/work/nexiforma-1.webp", "assets/work/nexiforma-2.webp", "assets/work/nexiforma-3.webp", "assets/work/nexiforma-4.webp"],
+      gallery: ["assets/work/nexiforma-1.webp", "assets/work/nexiforma-2.webp", "assets/work/nexiforma-3.webp", "assets/work/nexiforma-4.webp", "assets/work/nexiforma-5.webp"],
       tags: ["SaaS B2B", "LMS", "NestJS + Next.js"],
       description: {
         pt: "Plataforma SaaS multi-tenant para entidades formadoras certificadas pela DGERT. Monta o dossiê técnico-pedagógico a partir do que a equipa já regista e junta gestão de ações e presenças, LMS com SCORM e testes, CRM e faturação.",
@@ -343,7 +371,7 @@
       title: "Pratten",
       link: "",
       image: "assets/work/pratten-1.webp",
-      gallery: ["assets/work/pratten-1.webp", "assets/work/pratten-2.webp", "assets/work/pratten-3.webp", "assets/work/pratten-4.webp"],
+      gallery: ["assets/work/pratten-1.webp", "assets/work/pratten-2.webp", "assets/work/pratten-3.webp", "assets/work/pratten-4.webp", "assets/work/pratten-5.webp"],
       tags: ["SaaS restauração", "Spring Boot", "Flutter"],
       description: {
         pt: "SaaS multi-tenant para restaurantes: cada casa gere equipa, mesas, pedidos, stock, cardápio e menu online com QR. Uma única API em Spring Boot serve a gestão em Flutter Web, a app dos empregados e o POS.",
@@ -355,7 +383,7 @@
       title: "Lume Commerce",
       link: "",
       image: "assets/work/lume-1.webp",
-      gallery: ["assets/work/lume-1.webp", "assets/work/lume-2.webp", "assets/work/lume-3.webp", "assets/work/lume-4.webp", "assets/work/lume-5.webp"],
+      gallery: ["assets/work/lume-1.webp", "assets/work/lume-2.webp", "assets/work/lume-3.webp", "assets/work/lume-4.webp", "assets/work/lume-5.webp", "assets/work/lume-6.webp"],
       tags: ["E-commerce", "Pagamentos", "Analytics em tempo real"],
       description: {
         pt: "Plataforma de e-commerce com loja, checkout em três passos (MB WAY, Multibanco, PayPal, Apple Pay, Google Pay e cartão) e área de cliente. O back office tem KPIs, analytics e um globo de visitantes em tempo real.",
@@ -367,7 +395,7 @@
       title: "AdPilot",
       link: "",
       image: "assets/work/adpilot-1.webp",
-      gallery: ["assets/work/adpilot-1.webp", "assets/work/adpilot-2.webp", "assets/work/adpilot-3.webp", "assets/work/adpilot-4.webp"],
+      gallery: ["assets/work/adpilot-1.webp", "assets/work/adpilot-2.webp", "assets/work/adpilot-3.webp", "assets/work/adpilot-4.webp", "assets/work/adpilot-5.webp"],
       tags: ["Marketing analytics", "Next.js", "Agente IA"],
       description: {
         pt: "Plataforma para agências acompanharem o marketing de vários clientes: Google, Meta, TikTok e Microsoft Ads, SEO e GA4. Tem mapa hora × dia, auditoria de landing pages da concorrência, recomendações e relatórios em PDF.",
@@ -379,7 +407,7 @@
       title: "GesForma",
       link: "",
       image: "assets/work/gesforma-1.webp",
-      gallery: ["assets/work/gesforma-1.webp", "assets/work/gesforma-2.webp", "assets/work/gesforma-3.webp", "assets/work/gesforma-4.webp"],
+      gallery: ["assets/work/gesforma-1.webp", "assets/work/gesforma-2.webp", "assets/work/gesforma-3.webp", "assets/work/gesforma-4.webp", "assets/work/gesforma-5.webp"],
       tags: ["Back office", "React + Fastify", "Formação"],
       description: {
         pt: "Backoffice de gestão de formação feito para a ENA, com o site público incluído. CRM de pré-inscrições, cockpit por turma, dossiê técnico-pedagógico com completude calculada e um editor visual do site.",
@@ -691,11 +719,22 @@
       if (cvTimeline) {
         const internLabel = lang === "pt" ? "Estágio" : "Internship";
         const ordered = experiences.filter((e) => e.type !== "internship").concat(experiences.filter((e) => e.type === "internship"));
-        cvTimeline.innerHTML = ordered.map((item) => {
-          const role = this.getText(item.role, lang);
+        // Consecutive spells in the same role at the same company share one entry on the page.
+        const merged = [];
+        ordered.forEach((item) => {
+          const prev = merged[merged.length - 1];
+          const same = prev && prev.item.type === item.type
+            && (prev.item.companyShort || prev.item.company) === (item.companyShort || item.company)
+            && this.getText(prev.item.role, lang) === this.getText(item.role, lang);
           const period = this.getText(item.periodCv || item.period, lang);
+          if (same) prev.periods.push(period);
+          else merged.push({ item, periods: [period] });
+        });
+        cvTimeline.innerHTML = merged.map(({ item, periods }) => {
+          const role = this.getText(item.role, lang);
+          const period = periods.join(" · ");
           const desc = this.getText(item.description, lang);
-          const tags = (item.tags || []).slice(0, 3).map((t) => `<span>${esc(t)}</span>`).join("");
+          const tags = (item.tags || []).slice(0, 2).map((t) => `<span>${esc(t)}</span>`).join("");
           return `
             <div class="cv-item">
               <div class="cv-when">${esc(period)}${item.type === "internship" ? `<em>${internLabel}</em>` : ""}</div>
