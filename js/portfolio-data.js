@@ -815,7 +815,8 @@
         const desc = this.getText(proj.description, lang);
         const tags = (proj.tags || []).map((t) => `<span class="tag">${this.escapeHtml(t)}</span>`).join("");
         const gallery = (proj.gallery || []).filter(Boolean);
-        const imgSrc = resolve(proj.image || gallery[0]);
+        const first = typeof gallery[0] === "string" ? gallery[0] : (gallery[0] && gallery[0].src);
+        const imgSrc = resolve(proj.image || first);
 
         let href = (proj.link || "").trim();
         let isExternal = false;

@@ -899,7 +899,7 @@ a.project-card:hover .project-card__shot img,
 }
 .lightbox__img {
   max-width: 100%;
-  max-height: calc(100dvh - 260px);
+  max-height: calc(100dvh - 300px);
   border-radius: 10px;
   object-fit: contain;
   touch-action: pan-y;
@@ -924,6 +924,15 @@ a.project-card:hover .project-card__shot img,
 .lightbox__nav[hidden],
 .lightbox__visit[hidden],
 .lightbox__thumbs[hidden] {
+  display: none;
+}
+.lightbox__caption {
+  margin: 14px 24px 0;
+  text-align: center;
+  color: #dfe1e6;
+  font-size: 0.9375rem;
+}
+.lightbox__caption[hidden] {
   display: none;
 }
 .lightbox__thumbs {

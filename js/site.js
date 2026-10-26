@@ -228,12 +228,14 @@
         <img class="lightbox__img" alt="" />
         <button type="button" class="lightbox__nav lightbox__nav--next" aria-label="${L.next}">${icon("arrow")}</button>
       </div>
+      <p class="lightbox__caption" aria-live="polite"></p>
       <div class="lightbox__thumbs"></div>`;
     document.body.appendChild(dialog);
 
     const img = dialog.querySelector(".lightbox__img");
     const thumbs = dialog.querySelector(".lightbox__thumbs");
     const count = dialog.querySelector(".lightbox__count");
+    const caption = dialog.querySelector(".lightbox__caption");
     const visit = dialog.querySelector(".lightbox__visit");
     let shots = [];
     let index = 0;
@@ -241,26 +243,32 @@
 
     const show = (i) => {
       index = (i + shots.length) % shots.length;
-      img.src = shots[index];
-      img.alt = `${title}, ${L.screen.toLowerCase()} ${index + 1} ${L.of} ${shots.length}`;
+      const shot = shots[index];
+      img.src = shot.src;
+      img.alt = shot.caption ? `${title}: ${shot.caption}` : `${title}, ${L.screen.toLowerCase()} ${index + 1} ${L.of} ${shots.length}`;
       count.textContent = `${index + 1} / ${shots.length}`;
+      caption.textContent = shot.caption;
+      caption.hidden = !shot.caption;
       thumbs.querySelectorAll("button").forEach((b, n) => b.setAttribute("aria-current", String(n === index)));
       const next = new Image();
-      next.src = shots[(index + 1) % shots.length];
+      next.src = shots[(index + 1) % shots.length].src;
     };
 
     const open = (id) => {
       const proj = data.getProjects().find((p) => p.id === id);
       if (!proj) return;
-      shots = (proj.gallery || []).filter(Boolean).map(resolve);
+      // Gallery items are a path, or { src, caption: { pt, en } }.
+      shots = (proj.gallery || []).filter(Boolean).map((item) => (typeof item === "string"
+        ? { src: resolve(item), caption: "" }
+        : { src: resolve(item.src || ""), caption: data.getText(item.caption, lang) })).filter((s) => s.src);
       if (!shots.length) return;
       title = proj.title;
       dialog.querySelector(".lightbox__title").textContent = title;
       const link = (proj.link || "").trim();
       visit.hidden = !/^https?:\/\//i.test(link);
       if (!visit.hidden) visit.href = link;
-      thumbs.innerHTML = shots.map((src, n) =>
-        `<button type="button" aria-label="${L.screen} ${n + 1}"><img src="${src}" alt="" loading="lazy" /></button>`).join("");
+      thumbs.innerHTML = shots.map((shot, n) =>
+        `<button type="button" aria-label="${L.screen} ${n + 1}${shot.caption ? ": " + data.escapeHtml(shot.caption) : ""}"><img src="${shot.src}" alt="" loading="lazy" /></button>`).join("");
       thumbs.hidden = shots.length < 2;
       dialog.querySelectorAll(".lightbox__nav").forEach((b) => { b.hidden = shots.length < 2; });
       show(0);
