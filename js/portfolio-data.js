@@ -614,60 +614,64 @@
         }).join("");
       }
 
-      // Render CV PDF Template (Experiences)
-      const cvExpCards = document.getElementById("cvPdfExperienceCards");
-      if (cvExpCards) {
-        const jobs = experiences.filter((e) => e.type !== "internship");
-        cvExpCards.innerHTML = jobs.map((item) => {
+      // CV em PDF: uma linha temporal (empregos e estágios), projetos e educação
+      const cvTimeline = document.getElementById("cvPdfTimeline");
+      if (cvTimeline) {
+        const internLabel = lang === "pt" ? "Estágio" : "Internship";
+        const ordered = experiences.filter((e) => e.type !== "internship").concat(experiences.filter((e) => e.type === "internship"));
+        cvTimeline.innerHTML = ordered.map((item) => {
           const role = this.getText(item.role, lang);
           const period = this.getText(item.periodCv || item.period, lang);
           const desc = this.getText(item.description, lang);
-          const title = `${role}, ${item.companyShort || item.company}`;
+          const tags = (item.tags || []).slice(0, 3).map((t) => `<span>${esc(t)}</span>`).join("");
           return `
-            <div class="cv-card">
-              <div class="cv-card-title">${title}</div>
-              <div class="cv-card-sub">${period}</div>
-              <div class="cv-card-body">${desc}</div>
+            <div class="cv-item">
+              <div class="cv-when">${esc(period)}${item.type === "internship" ? `<em>${internLabel}</em>` : ""}</div>
+              <div class="cv-what">
+                <div class="cv-title">${esc(role)}</div>
+                <div class="cv-org">${esc(item.companyShort || item.company)}</div>
+                ${desc ? `<p>${esc(desc)}</p>` : ""}
+                ${tags ? `<div class="cv-tags">${tags}</div>` : ""}
+              </div>
             </div>
           `;
         }).join("");
       }
 
-      // Render CV PDF Template (Internship)
-      const cvInternCards = document.getElementById("cvPdfInternshipCards");
-      if (cvInternCards) {
-        const internships = experiences.filter((e) => e.type === "internship");
-        cvInternCards.innerHTML = internships.map((item) => {
-          const role = this.getText(item.role, lang);
-          const period = this.getText(item.periodCv || item.period, lang);
-          const desc = this.getText(item.description, lang);
-          const title = `${role}, ${item.companyShort || item.company}`;
+      const cvProjects = document.getElementById("cvPdfProjects");
+      if (cvProjects) {
+        cvProjects.innerHTML = this.getProjects().slice(0, 3).map((proj) => {
+          const desc = this.getText(proj.description, lang).split(/(?<=\.)\s/)[0];
+          const link = /^https?:\/\//i.test(proj.link || "") ? proj.link.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "") : "";
           return `
-            <div class="cv-card">
-              <div class="cv-card-title">${title}</div>
-              <div class="cv-card-sub">${period}${item.url ? ` · ${item.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}` : ''}</div>
-              <div class="cv-card-body">${desc}</div>
+            <div class="cv-project">
+              <div class="cv-title">${esc(proj.title)}${link ? ` <span class="cv-link">${esc(link)}</span>` : ""}</div>
+              <p>${esc(desc)}</p>
+              <div class="cv-tags">${(proj.tags || []).slice(0, 2).map((t) => `<span>${esc(t)}</span>`).join("")}</div>
             </div>
           `;
         }).join("");
       }
 
-      // Render CV PDF Template (Education)
-      // Note: for compact 1-page A4, we render the degree cards cleanly.
-      const cvEduCards = document.getElementById("cvPdfEducationCards");
-      if (cvEduCards) {
-        cvEduCards.innerHTML = education.map((item) => {
+      const cvEducation = document.getElementById("cvPdfEducation");
+      if (cvEducation) {
+        cvEducation.innerHTML = education.map((item) => {
           const degree = this.getText(item.degree, lang);
           const inst = this.getText(item.institution, lang);
           const period = this.getText(item.periodCv || item.period, lang);
-          const title = inst && inst !== degree ? `${degree}, ${inst}` : degree;
           return `
-            <div class="cv-card">
-              <div class="cv-card-title">${title}</div>
-              <div class="cv-card-sub">${period}</div>
+            <div class="cv-edu">
+              <div class="cv-title">${esc(degree)}</div>
+              ${inst && inst !== degree ? `<div class="cv-org">${esc(inst)}</div>` : ""}
+              <div class="cv-when">${esc(period)}</div>
             </div>
           `;
         }).join("");
+      }
+
+      const cvUpdated = document.getElementById("cvPdfUpdated");
+      if (cvUpdated) {
+        cvUpdated.textContent = new Date().toLocaleDateString(lang === "pt" ? "pt-PT" : "en-GB", { month: "long", year: "numeric" });
       }
 
       this.injectAdminControls();

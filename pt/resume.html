@@ -25,7 +25,7 @@
       <nav class="wrap site-nav" aria-label="Principal">
         <a class="brand" href="index.html" aria-label="Diogo Pinto, início">
           <svg class="brand__mark" aria-hidden="true"><use href="../assets/brand/icons.svg#dp"></use></svg>
-          <span class="brand__name">Diogo Pinto</span>
+          <svg class="brand__type" aria-hidden="true"><use href="../assets/brand/icons.svg#type"></use></svg>
         </a>
         <div class="site-menu" id="menu">
           <a class="site-link" href="projects.html">Trabalho</a>
@@ -84,109 +84,50 @@
           </section>
         </div>
       </div>
-    <div id="cvPdfTemplate" style="display:none;">
+    <div id="cvPdfTemplate" style="display:none">
       <div class="cv-a4">
-        <div class="cv-grid">
-          <!-- ESQUERDA -->
-          <aside class="cv-left">
-            <div class="cv-left-inner">
-              <div class="cv-photo-wrap">
-                <img src="../assets/resume_profile.jpeg" class="cv-photo" alt="Diogo Pinto" />
-              </div>
-              <h1 class="cv-name">Diogo Pinto</h1>
-              <h2 class="cv-role">Desenvolvedor Web</h2>
-              <h3 class="cv-sec-title">Sobre Mim</h3>
-              <p class="cv-about">
-                Sou um desenvolvedor focado em criar soluções funcionais, intuitivas e visualmente apelativas. Acredito que um projeto bem feito nasce do equilíbrio entre um código limpo, uma boa experiência de utilizador e uma comunicação clara com o cliente.
-              </p>
-              <p class="cv-about">
-                Gosto de transformar ideias em produtos digitais reais: desde o design da interface até à implementação técnica do front-end e back-end. Já trabalhei em projetos completos (como o sistema de formações da FormaFuturo), desenvolvendo APIs, interfaces responsivas e integrações.
-              </p>
-              <p class="cv-about">
-                Sou organizado, colaborativo e persistente. O meu foco é evoluir como Full Stack Developer e criar soluções simples, eficazes e com impacto real.
-              </p>
-              <h3 class="cv-sec-title">Contactos</h3>
-              <ul class="cv-social">
-                <li><span class="cv-k">WhatsApp</span> <span class="cv-social-link">+351 913 417 390</span></li>
-                <li><span class="cv-k">Email</span> <span class="cv-social-link">bdiogo511@gmail.com</span></li>
-                <li><span class="cv-k">Instagram</span> <span class="cv-social-link">dlocos13</span></li>
-                <li><span class="cv-k">LinkedIn</span> <span class="cv-social-link">diogo&#8209;bpinto</span></li>
-                <li><span class="cv-k">GitHub</span> <span class="cv-social-link">Loquitos13</span></li>
-              </ul>
+        <header class="cv-head">
+          <div class="cv-head__id">
+            <img class="cv-logo" src="../assets/brand/logo-white.svg" alt="Diogo Pinto" />
+            <p class="cv-role">Programador full stack · Sites, lojas online e sistemas à medida</p>
+            <p class="cv-place">Santa Maria da Feira, Portugal</p>
+          </div>
+          <div class="cv-photo" style="background-image: url('../assets/resume_profile.jpeg')"></div>
+        </header>
+        <div class="cv-contact"><div><span>WhatsApp</span>+351 913 417 390</div><div><span>Email</span>bdiogo511@gmail.com</div><div><span>Site</span>loquitos13.github.io</div><div><span>LinkedIn</span>in/diogo-bpinto</div><div><span>GitHub</span>Loquitos13</div></div>
+        <div class="cv-body">
+          <main class="cv-main">
+            <section>
+              <h3 class="cv-h">Perfil</h3>
+              <p class="cv-lead">Programador full stack com experiência em SaaS B2B, e-commerce e plataformas de formação. Trabalho da interface à API e à base de dados, com foco em produtos rápidos, claros e fáceis de manter, e em comunicação direta com quem os usa.</p>
+            </section>
+            <section>
+              <h3 class="cv-h">Experiência</h3>
+              <div class="cv-timeline" id="cvPdfTimeline"></div>
+            </section>
+            <section>
+              <h3 class="cv-h">Projetos em destaque</h3>
+              <div class="cv-projects" id="cvPdfProjects"></div>
+            </section>
+          </main>
+          <aside class="cv-side">
+            <section>
+              <h3 class="cv-h">Competências</h3>
+              <div class="cv-skill"><div class="cv-skill-k">Front-end</div><div class="cv-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>TypeScript</span><span>UI/UX Design</span></div></div><div class="cv-skill"><div class="cv-skill-k">Back-end</div><div class="cv-tags"><span>PHP</span><span>Laravel</span><span>Spring Boot</span><span>REST APIs</span><span>Web Services</span></div></div><div class="cv-skill"><div class="cv-skill-k">Dados e produto</div><div class="cv-tags"><span>SQL</span><span>Bases de dados</span><span>Multi-tenant SaaS</span><span>CRM</span></div></div><div class="cv-skill"><div class="cv-skill-k">Forma de trabalhar</div><div class="cv-tags"><span>Gestão de projetos</span><span>Liderança de equipa</span><span>Comunicação com o cliente</span><span>Resolução de problemas</span></div></div>
+            </section>
+            <section>
+              <h3 class="cv-h">Educação</h3>
+              <div id="cvPdfEducation"></div>
+            </section>
+            <div class="cv-mark">
+              <img src="../assets/brand/mark.svg" alt="" />
+              <p>Portfólio e contacto<br /><strong>loquitos13.github.io</strong></p>
+              <p class="cv-updated">Atualizado em <span id="cvPdfUpdated"></span></p>
             </div>
           </aside>
-          <!-- DIREITA -->
-          <section class="cv-right">
-            <div class="cv-section">
-              <h3 class="cv-sec-title">Experiência</h3>
-              <div class="cv-cards" id="cvPdfExperienceCards">
-                <div class="cv-card">
-                  <div class="cv-card-title">Full Stack Web Developer, Espiraleducada - Formação e Consultoria Unipessoal Lda.</div>
-                  <div class="cv-card-sub">Abr 2026 a presente</div>
-                  <div class="cv-card-body">Multi-tenant SaaS B2B com módulo de faturação em conformidade com Autoridade Tributária, CRM Profissional e Gestão de Formação Profissional Auto-Financiada e Financiada.</div>
-                </div>
-                <div class="cv-card">
-                  <div class="cv-card-title">Full Stack Developer, FormaFuturo</div>
-                  <div class="cv-card-sub">Set 2025 a Nov 2025</div>
-                  <div class="cv-card-body">Desenvolvimento Full Stack, UI/UX e APIs, criando interfaces responsivas, integrações e soluções completas.</div>
-                </div>
-                <div class="cv-card">
-                  <div class="cv-card-title">Frontend Developer Intern, NormaDidática</div>
-                  <div class="cv-card-sub">Abr 2023 a Dez 2023</div>
-                  <div class="cv-card-body">Desenvolvimento frontend de interfaces web, com foco em UI/UX, HTML, CSS e JavaScript, apoiando a implementação de websites e a melhoria da experiência do utilizador.</div>
-                </div>
-              </div>
-            </div>
-            <div class="cv-section">
-              <h3 class="cv-sec-title">Estágio</h3>
-              <div class="cv-cards" id="cvPdfInternshipCards">
-                <div class="cv-card">
-                  <div class="cv-card-title">Estagiário de Desenvolvimento, Devlop by Leviahub</div>
-                  <div class="cv-card-sub">Meados fev. 2026 a Mai 2026 · www.devlop.systems</div>
-                  <div class="cv-card-body">Estágio em desenvolvimento de software numa empresa de engenharia de sistemas de informação, com soluções cloud para supply chain, logística e transporte.</div>
-                </div>
-              </div>
-            </div>
-            <div class="cv-section">
-              <h3 class="cv-sec-title">Educação</h3>
-              <div class="cv-cards" id="cvPdfEducationCards">
-                <div class="cv-card">
-                  <div class="cv-card-title">Mestrado em Ciência de Computadores</div>
-                  <div class="cv-card-sub">Set 2026 a presente</div>
-                </div>
-                <div class="cv-card">
-                  <div class="cv-card-title">Licenciatura em Tecnologias da Informação</div>
-                  <div class="cv-card-sub">Universidade de Aveiro, 2023 a Jul 2026</div>
-                  <div class="cv-card-body">Competências adquiridas: Web Services, Spring Boot, Desenvolvimento Web, Bases de Dados.</div>
-                </div>
-                <div class="cv-card">
-                  <div class="cv-card-title">Ensino Secundário, Ciências e Tecnologias</div>
-                  <div class="cv-card-sub">ES Almeida Garrett & ES Castelo de Paiva, 2020 a 2023</div>
-                </div>
-              </div>
-            </div>
-            <div class="cv-section">
-              <h3 class="cv-sec-title">Competências</h3>
-              <div class="cv-skill-badges">
-                <span class="cv-badge">UI/UX Design</span>
-                <span class="cv-badge">Gestão de Projetos</span>
-                <span class="cv-badge">Full Stack Web</span>
-                <span class="cv-badge">Desenvolvimento Web</span>
-                <span class="cv-badge">TypeScript</span>
-                <span class="cv-badge">Comunicação</span>
-                <span class="cv-badge">Trabalho em Equipa</span>
-                <span class="cv-badge">Liderança de Equipa</span>
-                <span class="cv-badge">PHP / Laravel / SQL / JS</span>
-                <span class="cv-badge">Spring Boot</span>
-                <span class="cv-badge">Web Services</span>
-                <span class="cv-badge">Resolução de Problemas</span>
-              </div>
-            </div>
-          </section>
         </div>
       </div>
     </div>
-
     </main>
 
     <footer class="site-footer">
@@ -195,7 +136,7 @@
           <div class="footer__brand">
             <a class="brand" href="index.html" aria-label="Diogo Pinto, início">
               <svg class="brand__mark" aria-hidden="true"><use href="../assets/brand/icons.svg#dp"></use></svg>
-              <span class="brand__name">Diogo Pinto</span>
+              <svg class="brand__type" aria-hidden="true"><use href="../assets/brand/icons.svg#type"></use></svg>
             </a>
             <p>Sites, lojas online e sistemas à medida. Santa Maria da Feira, Portugal.</p>
           </div>

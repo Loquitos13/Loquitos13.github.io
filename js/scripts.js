@@ -243,12 +243,11 @@ document.addEventListener("click", (e) => {
   const template = document.querySelector("#cvPdfTemplate .cv-a4");
     if (!template || typeof html2pdf !== "function") return;
     const clone = template.cloneNode(true);
-    clone.style.display = "block";
     html2pdf().set({
       margin: 0,
       filename: "Diogo_Pinto_CV.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
+      image: { type: "jpeg", quality: 0.96 },
+      html2canvas: { scale: 3, useCORS: true, backgroundColor: "#ffffff" },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       pagebreak: { mode: [] }
     }).from(clone).toPdf().get("pdf").then((pdf) => {

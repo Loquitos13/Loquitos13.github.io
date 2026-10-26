@@ -5,6 +5,23 @@
     <rect x="134" y="76" width="28" height="160"/>
     <path fill-rule="evenodd" d="M134 128A52 52 0 1 0 238 128A52 52 0 1 0 134 128Z M162 128A24 24 0 1 0 210 128A24 24 0 1 0 162 128Z"/>
   </symbol>
+  <symbol id="type" viewBox="280 0 704 256">
+    <g transform="translate(288 34.4) scale(0.72)">
+    <path fill-rule="evenodd" d="M0 60H40A70 70 0 0 1 40 200H0Z M24 84V176H40A46 46 0 0 0 40 84Z"/>
+    <rect x="126" y="100" width="24" height="100"/>
+    <circle cx="138" cy="72" r="13"/>
+    <path fill-rule="evenodd" d="M166 150A51 51 0 1 0 268 150A51 51 0 1 0 166 150Z M190 150A27 27 0 1 0 244 150A27 27 0 1 0 190 150Z"/>
+    <path fill-rule="evenodd" d="M284 150A50 50 0 1 0 384 150A50 50 0 1 0 284 150Z M308 150A26 26 0 1 0 360 150A26 26 0 1 0 308 150Z"/>
+    <path d="M360 100H384V210A50 50 0 0 1 334 260H296V236H334A26 26 0 0 0 360 210Z"/>
+    <path fill-rule="evenodd" d="M400 150A51 51 0 1 0 502 150A51 51 0 1 0 400 150Z M424 150A27 27 0 1 0 478 150A27 27 0 1 0 424 150Z"/>
+    <path fill-rule="evenodd" d="M558 60H598A40 40 0 0 1 598 140H582V200H558Z M582 84V116H598A16 16 0 0 0 598 84Z"/>
+    <rect x="654" y="100" width="24" height="100"/>
+    <circle cx="666" cy="72" r="13"/>
+    <path d="M694 100H734A40 40 0 0 1 774 140V200H750V140A16 16 0 0 0 734 124H718V200H694Z"/>
+    <path d="M802 76H826V100H844V124H826V200H802V124H790V100H802Z"/>
+    <path fill-rule="evenodd" d="M860 150A51 51 0 1 0 962 150A51 51 0 1 0 860 150Z M884 150A27 27 0 1 0 938 150A27 27 0 1 0 884 150Z"/>
+    </g>
+  </symbol>
   <symbol id="wa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
     <path d="M3.5 20.5l1.3-4.1A8.6 8.6 0 1 1 8 19.4z"/>
     <path d="M9 8.6c.3-.6.7-.6 1-.6.2 0 .4 0 .5.4l.6 1.4c.1.3 0 .5-.2.7l-.5.6c.6 1.2 1.6 2.2 2.8 2.8l.6-.5c.2-.2.4-.3.7-.2l1.4.6c.4.1.4.3.4.5 0 .3 0 .7-.6 1-.7.4-1.6.4-2.6 0a8 8 0 0 1-4.2-4.2c-.4-1-.4-1.9.1-2.5z" fill="currentColor" stroke="none"/>

@@ -225,7 +225,7 @@ p {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 7px;
   text-decoration: none;
   color: var(--ink);
   margin-right: auto;
@@ -239,10 +239,10 @@ p {
 .brand:hover .brand__mark {
   transform: rotate(180deg);
 }
-.brand__name {
-  font-weight: 600;
-  font-size: 1.125rem;
-  letter-spacing: -0.01em;
+.brand__type {
+  width: 94px;
+  height: 34px;
+  fill: var(--ink);
 }
 .site-menu {
   display: flex;
@@ -361,8 +361,13 @@ p {
     width: 44px;
     padding: 0;
   }
-  .brand__name {
-    font-size: 1rem;
+  .brand__mark {
+    width: 30px;
+    height: 30px;
+  }
+  .brand__type {
+    width: 83px;
+    height: 30px;
   }
 }
 
