@@ -348,11 +348,11 @@
             <div class="form-row">
               <label class="form-col">
                 Localização no cartão do perfil (Português)
-                <input type="text" name="hero_loc_pt" value="${escapeHtml(hero.location?.pt)}" placeholder="Santa Maria da Feira · PT">
+                <input type="text" name="hero_loc_pt" value="${escapeHtml(hero.location?.pt)}" placeholder="Trabalho remoto · por videochamada">
               </label>
               <label class="form-col">
                 Localização no cartão do perfil (Inglês)
-                <input type="text" name="hero_loc_en" value="${escapeHtml(hero.location?.en)}" placeholder="Santa Maria da Feira · PT">
+                <input type="text" name="hero_loc_en" value="${escapeHtml(hero.location?.en)}" placeholder="Trabalho remoto · por videochamada">
               </label>
             </div>
           </div>

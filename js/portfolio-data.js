@@ -86,8 +86,8 @@
         en: "Sep 2025 to Nov 2025"
       },
       sub: {
-        pt: "Santa Maria da Feira, Aveiro",
-        en: "Santa Maria da Feira, Aveiro"
+        pt: "",
+        en: ""
       },
       description: {
         pt: "Redesign Completo do Website. Desenvolvimento Full Stack, UI/UX e APIs, criando interfaces responsivas, intuitivas, integrações e soluções robustas de ponta a ponta.",
@@ -114,8 +114,8 @@
         en: "Jan 2025 to Feb 2025"
       },
       sub: {
-        pt: "Santa Maria da Feira, Aveiro",
-        en: "Santa Maria da Feira, Aveiro"
+        pt: "",
+        en: ""
       },
       description: {
         pt: "Desenvolvedor Full Stack e Web Designer, focado na criação de experiências digitais eficientes e centradas no utilizador.",
@@ -249,8 +249,8 @@
         en: "2023 to Jul 2026"
       },
       location: {
-        pt: "Águeda, Aveiro",
-        en: "Águeda, Aveiro"
+        pt: "",
+        en: ""
       },
       description: {
         pt: "Licenciatura em Tecnologias da Informação concluída em julho de 2026, com foco em desenvolvimento de software, tecnologias web, bases de dados e arquitetura de sistemas. Competências adquiridas em Web Services, Spring Boot, Desenvolvimento Web e Bases de Dados.",
@@ -288,8 +288,8 @@
         en: "2022 to 2023"
       },
       location: {
-        pt: "Vila Nova de Gaia, Porto",
-        en: "Vila Nova de Gaia, Porto"
+        pt: "",
+        en: ""
       },
       description: {
         pt: "Concluí o ensino secundário na área de Ciências e Tecnologias, com especialização no 12.º ano em Química e Inglês. Desenvolvi uma base sólida em raciocínio científico, trabalho de laboratório, pensamento analítico e comunicação técnica em Inglês.",
@@ -327,8 +327,8 @@
         en: "2020 to 2022"
       },
       location: {
-        pt: "Castelo de Paiva, Aveiro",
-        en: "Castelo de Paiva, Aveiro"
+        pt: "",
+        en: ""
       },
       description: {
         pt: "Concluí o currículo geral de Ciências e Tecnologias, desenvolvendo uma base sólida em matemática, física, química e raciocínio científico, com ênfase em pensamento analítico e resolução de problemas.",
@@ -464,8 +464,8 @@
         en: "Websites that bring in clients, <em>not just visits.</em>"
       },
       location: {
-        pt: "Santa Maria da Feira · Portugal e remoto",
-        en: "Santa Maria da Feira · Portugal and remote"
+        pt: "Trabalho remoto · por videochamada",
+        en: "Remote work · over video call"
       }
     },
     stats: [
@@ -491,8 +491,8 @@
         en: "Who builds your website"
       },
       p1: {
-        pt: "Sou o Diogo Pinto, programador full stack em Santa Maria da Feira. Trabalha comigo do primeiro esboço até ao site no ar, sem intermediários.",
-        en: "I'm Diogo Pinto, a full stack developer based in Santa Maria da Feira. You work with me from the first sketch to the live site, with no middlemen."
+        pt: "Sou o Diogo Pinto, programador full stack. Trabalha comigo do primeiro esboço até ao site no ar, sem intermediários, esteja onde estiver.",
+        en: "I'm Diogo Pinto, a full stack developer. You work with me from the first sketch to the live site, with no middlemen, wherever you are."
       },
       p2: {
         pt: "Hoje desenvolvo um SaaS B2B com faturação em conformidade com a AT, e redesenhei o site da FormaFuturo. Levo essa exigência para cada projeto: páginas rápidas, fáceis de gerir e pensadas para quem as visita.",
