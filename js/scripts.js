@@ -150,7 +150,10 @@
         _template: "table"
       })
     });
-    if (!response.ok) throw new Error("send-failed");
+    // FormSubmit answers 200 even when it did not deliver (e.g. the address is not activated yet),
+    // so the body decides: anything but success counts as a failure.
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || String(result.success) !== "true") throw new Error("send-failed");
   }
 
   function bindContactForm() {
@@ -201,12 +204,12 @@
         }
       } catch {
         const mail = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(payload.subject || "Portfolio contact")}&body=${encodeURIComponent(payload.message + "\n\n" + payload.name + "\n" + payload.email)}`;
-        window.location.href = mail;
+        const wa = "https://wa.me/351913417390?text=" + encodeURIComponent(payload.message);
         if (status) {
-          status.className = "form-status is-ok";
-          status.textContent = lang === "pt"
-            ? "A mensagem ficou guardada. Se o email não abrir, escreva para diogo@diogopintoit.pt."
-            : "Your message was saved. If email did not open, write to diogo@diogopintoit.pt.";
+          status.className = "form-status is-error";
+          status.innerHTML = lang === "pt"
+            ? `Não foi possível enviar a mensagem. Envie-a por <a href="${wa}" target="_blank" rel="noopener">WhatsApp</a> ou por <a href="${mail}">email</a>; o texto já vai preenchido.`
+            : `Your message could not be sent. Send it on <a href="${wa}" target="_blank" rel="noopener">WhatsApp</a> or by <a href="${mail}">email</a>; the text is already filled in.`;
         }
       } finally {
         if (submit) submit.disabled = false;
