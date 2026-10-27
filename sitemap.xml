@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://diogopintoit.pt/pt/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://diogopintoit.pt/pt/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://diogopintoit.pt/" />
+  </url>
+  <url>
+    <loc>https://diogopintoit.pt/</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://diogopintoit.pt/pt/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://diogopintoit.pt/" />
+  </url>
+  <url>
+    <loc>https://diogopintoit.pt/pt/projects.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://diogopintoit.pt/pt/projects.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://diogopintoit.pt/projects.html" />
+  </url>
+  <url>
+    <loc>https://diogopintoit.pt/projects.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://diogopintoit.pt/pt/projects.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://diogopintoit.pt/projects.html" />
+  </url>
+  <url>
+    <loc>https://diogopintoit.pt/pt/resume.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://diogopintoit.pt/pt/resume.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://diogopintoit.pt/resume.html" />
+  </url>
+  <url>
+    <loc>https://diogopintoit.pt/resume.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://diogopintoit.pt/pt/resume.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://diogopintoit.pt/resume.html" />
+  </url>
+  <url>
+    <loc>https://diogopintoit.pt/pt/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://diogopintoit.pt/pt/contact.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://diogopintoit.pt/contact.html" />
+  </url>
+  <url>
+    <loc>https://diogopintoit.pt/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://diogopintoit.pt/pt/contact.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://diogopintoit.pt/contact.html" />
+  </url>
+</urlset>
