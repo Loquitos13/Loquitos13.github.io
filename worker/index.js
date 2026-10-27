@@ -13,9 +13,9 @@ const COPY = {
   pt: {
     subject: "Recebi a sua mensagem",
     hello: (name) => `Olá ${name},`,
-    intro: "Obrigado pelo contacto. A sua mensagem chegou e vou responder para este email o mais depressa possível, normalmente com perguntas concretas e um próximo passo.",
+    intro: "Obrigado pelo contacto. A sua mensagem chegou e vou responder a este email o mais rápido possível, normalmente com perguntas concretas e um próximo passo.",
     copy: "A sua mensagem",
-    whatsapp: "Se for urgente, fale comigo no WhatsApp:",
+    whatsapp: "Caso seja urgente, fale comigo no WhatsApp:",
     whatsappCta: "Abrir conversa",
     badge: "Mensagem recebida",
     next: "O que acontece a seguir",
