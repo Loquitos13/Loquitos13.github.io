@@ -9,3 +9,9 @@
 
 /admin.html
   X-Robots-Tag: noindex, nofollow
+
+/thanks.html
+  X-Robots-Tag: noindex, nofollow
+
+/pt/obrigado.html
+  X-Robots-Tag: noindex, nofollow

@@ -3,6 +3,8 @@
   const DEFAULT_LANG = "pt";
   const MESSAGES_KEY = "portfolio.messages";
   const CONTACT_EMAIL = "diogo@diogopintoit.pt";
+  // Public Web3Forms key: it can only deliver to the address it was created for.
+  const WEB3FORMS_KEY = "e058b197-fcf7-45a3-bcf3-52a10d8f3cfc";
 
   function currentPathLang() {
     return /\/pt(?:\/|$)/.test(window.location.pathname) ? "pt" : "en";
@@ -136,24 +138,24 @@
   }
 
   async function sendContact(payload) {
-    const response = await fetch("https://formsubmit.co/ajax/" + CONTACT_EMAIL, {
+    const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        from_name: "Portfólio diogopintoit.pt",
+        subject: payload.subject ? `Novo contacto: ${payload.subject}` : "Novo contacto do portfólio",
         name: payload.name,
         email: payload.email,
-        _subject: payload.subject || "Novo contacto do portfólio",
-        message: payload.message,
-        _template: "table"
+        message: payload.message
       })
     });
-    // FormSubmit answers 200 even when it did not deliver (e.g. the address is not activated yet),
-    // so the body decides: anything but success counts as a failure.
+    // Web3Forms reports the outcome in the body; only success=true means the email went out.
     const result = await response.json().catch(() => ({}));
-    if (!response.ok || String(result.success) !== "true") throw new Error("send-failed");
+    if (!response.ok || result.success !== true) throw new Error(result.message || "send-failed");
   }
 
   function bindContactForm() {
@@ -198,10 +200,13 @@
         form.reset();
         if (status) {
           status.className = "form-status is-ok";
-          status.textContent = lang === "pt"
-            ? "Mensagem enviada. Vou responder para o email que indicou."
-            : "Message sent. I will reply to the email you provided.";
+          status.textContent = lang === "pt" ? "Mensagem enviada." : "Message sent.";
         }
+        try {
+          sessionStorage.setItem("contact.name", payload.name);
+        } catch {}
+        const page = lang === "pt" ? "obrigado.html" : "thanks.html";
+        window.location.assign(`${page}?voltar=${encodeURIComponent(window.location.pathname + window.location.search)}`);
       } catch {
         const mail = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(payload.subject || "Portfolio contact")}&body=${encodeURIComponent(payload.message + "\n\n" + payload.name + "\n" + payload.email)}`;
         const wa = "https://wa.me/351913417390?text=" + encodeURIComponent(payload.message);
