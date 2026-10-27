@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Feedback · Gestão</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#f4f4f1" />
+    <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+  </head>
+  <body class="fb-admin">
+    <header class="site-header">
+      <nav class="wrap site-nav" aria-label="Principal">
+        <a class="brand" href="pt/index.html" aria-label="Diogo Pinto, início">
+          <svg class="brand__mark" aria-hidden="true"><use href="assets/brand/icons.svg#dp"></use></svg>
+          <svg class="brand__type" aria-hidden="true"><use href="assets/brand/icons.svg#type"></use></svg>
+        </a>
+        <div class="site-actions">
+          <button class="btn btn--line" type="button" id="fbLogout" hidden>Sair</button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="wrap fb-admin__main">
+      <h1 class="section-title">Feedback de clientes</h1>
+
+      <form class="form-card fb-login" id="fbLogin">
+        <h2>Entrar</h2>
+        <p>Use o código definido no Cloudflare como segredo <code>ADMIN_TOKEN</code>. Fica guardado só neste navegador.</p>
+        <div class="field">
+          <label for="fbToken">Código de acesso</label>
+          <input id="fbToken" type="password" autocomplete="current-password" required />
+        </div>
+        <button class="btn btn--green" type="submit">Entrar</button>
+        <p class="form-status" id="fbLoginStatus" role="status" aria-live="polite"></p>
+      </form>
+
+      <div id="fbPanel" hidden>
+        <section class="form-card fb-link" aria-labelledby="fbLinkTitle">
+          <h2 id="fbLinkTitle">Pedir feedback a um cliente</h2>
+          <p>Preencha o que já sabe e envie o link. O formulário abre com esses campos preenchidos.</p>
+          <div class="form">
+            <div class="field"><label for="lkName">Nome do cliente</label><input id="lkName" type="text" /></div>
+            <div class="field"><label for="lkCompany">Empresa</label><input id="lkCompany" type="text" /></div>
+            <div class="field"><label for="lkRole">Cargo</label><input id="lkRole" type="text" /></div>
+            <div class="field">
+              <label for="lkLang">Idioma</label>
+              <select id="lkLang"><option value="pt">Português</option><option value="en">English</option></select>
+            </div>
+            <div class="field field--full"><label for="lkUrl">Link</label><input id="lkUrl" type="text" readonly /></div>
+            <div class="fb-link__actions field--full">
+              <button class="btn btn--green" type="button" id="lkCopy">Copiar link</button>
+              <a class="btn btn--line" id="lkWa" target="_blank" rel="noopener"><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#wa"></use></svg>Enviar por WhatsApp</a>
+              <a class="btn btn--line" id="lkMail"><svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#mail"></use></svg>Enviar por email</a>
+            </div>
+          </div>
+        </section>
+
+        <div class="fb-filter" role="group" aria-label="Filtrar">
+          <button type="button" data-filter="pending" aria-pressed="true">Por rever <span></span></button>
+          <button type="button" data-filter="approved" aria-pressed="false">Publicados <span></span></button>
+          <button type="button" data-filter="hidden" aria-pressed="false">Ocultos <span></span></button>
+        </div>
+        <p class="form-status" id="fbStatus" role="status" aria-live="polite"></p>
+        <ul class="fb-list" id="fbList"></ul>
+      </div>
+    </main>
+
+    <script src="js/feedback-admin.js"></script>
+  </body>
+</html>

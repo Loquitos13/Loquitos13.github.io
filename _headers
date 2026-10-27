@@ -15,3 +15,21 @@
 
 /pt/obrigado.html
   X-Robots-Tag: noindex, nofollow
+
+/feedback
+  X-Robots-Tag: noindex, nofollow
+
+/feedback.html
+  X-Robots-Tag: noindex, nofollow
+
+/pt/feedback
+  X-Robots-Tag: noindex, nofollow
+
+/pt/feedback.html
+  X-Robots-Tag: noindex, nofollow
+
+/feedback-admin
+  X-Robots-Tag: noindex, nofollow
+
+/feedback-admin.html
+  X-Robots-Tag: noindex, nofollow
