@@ -17,7 +17,15 @@ const COPY = {
     copy: "A sua mensagem",
     whatsapp: "Se for urgente, fale comigo no WhatsApp:",
     whatsappCta: "Abrir conversa",
+    badge: "Mensagem recebida",
+    next: "O que acontece a seguir",
+    steps: [
+      "Leio a sua mensagem com atenção.",
+      "Respondo com perguntas concretas sobre o projeto.",
+      "Marcamos uma videochamada curta para alinhar o próximo passo."
+    ],
     sign: "Diogo Pinto · Programador full stack",
+    tagline: "Websites, plataformas e software à medida.",
     footer: "Recebeu este email porque enviou uma mensagem em diogopintoit.pt."
   },
   en: {
@@ -27,7 +35,15 @@ const COPY = {
     copy: "Your message",
     whatsapp: "If it is urgent, message me on WhatsApp:",
     whatsappCta: "Open chat",
+    badge: "Message received",
+    next: "What happens next",
+    steps: [
+      "I read your message carefully.",
+      "I reply with concrete questions about the project.",
+      "We book a short video call to agree on the next step."
+    ],
     sign: "Diogo Pinto · Full stack developer",
+    tagline: "Websites, platforms and custom software.",
     footer: "You received this email because you sent a message on diogopintoit.pt."
   }
 };
@@ -177,20 +193,58 @@ ${row("Mensagem", escapeHtml(message).replace(/\n/g, "<br>"))}
 </table></body></html>`;
 }
 
+const SOCIAL = [
+  ["whatsapp", "WhatsApp", "https://wa.me/351913417390"],
+  ["mail", "Email", `mailto:${OWNER_EMAIL}`],
+  ["linkedin", "LinkedIn", "https://www.linkedin.com/in/diogo-bpinto"],
+  ["github", "GitHub", "https://github.com/Loquitos13"],
+  ["instagram", "Instagram", "https://www.instagram.com/dlocos13/"]
+];
+
+// Signature block: contacts, social icons and the dp watermark bleeding off the bottom-right corner.
+// The watermark is a PNG with its 65% opacity baked in, because email clients ignore CSS opacity.
+function footerHtml(t) {
+  const icons = SOCIAL.map(([icon, label, href]) =>
+    `<td style="padding:0 8px 0 0"><a href="${href}" style="text-decoration:none"><img src="${SITE}/assets/brand/email-${icon}.png" width="36" height="36" alt="${label}" style="display:block;border:0"></a></td>`
+  ).join("");
+  const line = (label, value, href) =>
+    `<tr><td style="padding:3px 14px 3px 0;font:12px/1.5 'Courier New',monospace;color:#5a5d66;white-space:nowrap">${label}</td><td style="padding:3px 0;font:14px/1.5 Arial,sans-serif"><a href="${href}" style="color:#0b7a5c;text-decoration:none">${value}</a></td></tr>`;
+  return `<tr><td class="dp-foot" bgcolor="#ffffff" background="${SITE}/assets/brand/email-watermark.png" style="padding:26px 28px 30px;border-top:1px solid #e2e2dd;background-color:#ffffff;background-image:url('${SITE}/assets/brand/email-watermark.png');background-position:right bottom;background-repeat:no-repeat">
+<div style="font:600 16px/1.4 Arial,sans-serif;color:#16181d">${escapeHtml(t.sign)}</div>
+<div style="font:14px/1.5 Arial,sans-serif;color:#5a5d66;margin:2px 0 16px">${escapeHtml(t.tagline)}</div>
+<table role="presentation" cellpadding="0" cellspacing="0" style="margin-bottom:18px">
+${line("Email", OWNER_EMAIL, `mailto:${OWNER_EMAIL}`)}
+${line("WhatsApp", "+351 913 417 390", "https://wa.me/351913417390")}
+${line("Site", "diogopintoit.pt", SITE)}
+</table>
+<table role="presentation" cellpadding="0" cellspacing="0"><tr>${icons}</tr></table>
+</td></tr>`;
+}
+
 function visitorHtml({ name, message, lang }) {
   const t = COPY[lang];
   const first = escapeHtml(name.split(/\s+/)[0]);
-  return `<!doctype html><html lang="${lang === "pt" ? "pt-PT" : "en"}"><body style="margin:0;background:#f4f4f1;padding:24px">
-<table role="presentation" width="100%" style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;border-collapse:separate">
-<tr><td style="background:#0b7a5c;padding:24px 28px"><img src="${SITE}/assets/brand/logo-email.png" width="176" height="45" alt="Diogo Pinto" style="display:block;border:0"></td></tr>
-<tr><td style="padding:28px 28px 8px;font:600 22px/1.3 Arial,sans-serif;color:#16181d">${escapeHtml(t.hello(first))}</td></tr>
-<tr><td style="padding:0 28px 20px;font:16px/1.6 Arial,sans-serif;color:#3a3d45">${escapeHtml(t.intro)}</td></tr>
-<tr><td style="padding:0 28px 24px"><div style="background:#f4f4f1;border-radius:10px;padding:16px 18px;font:15px/1.6 Arial,sans-serif;color:#3a3d45">
-<div style="font:12px/1.4 'Courier New',monospace;color:#085c45;margin-bottom:8px">${escapeHtml(t.copy)}</div>${escapeHtml(message).replace(/\n/g, "<br>")}</div></td></tr>
-<tr><td style="padding:0 28px 28px;font:15px/1.6 Arial,sans-serif;color:#3a3d45">${escapeHtml(t.whatsapp)}<br>
-<a href="https://wa.me/351913417390" style="display:inline-block;margin-top:10px;background:#0b7a5c;color:#ffffff;text-decoration:none;font:600 15px/1 Arial,sans-serif;padding:13px 20px;border-radius:8px">${escapeHtml(t.whatsappCta)}</a></td></tr>
-<tr><td style="padding:20px 28px;border-top:1px solid #e2e2dd;font:14px/1.5 Arial,sans-serif;color:#16181d">${escapeHtml(t.sign)}<br><a href="${SITE}" style="color:#0b7a5c">diogopintoit.pt</a></td></tr>
+  const steps = t.steps.map((step, i) =>
+    `<tr><td width="34" valign="top" style="padding:0 0 10px"><table role="presentation" cellpadding="0" cellspacing="0"><tr><td width="24" height="24" bgcolor="#0b7a5c" align="center" style="background-color:#0b7a5c;border-radius:12px;font:600 12px/24px Arial,sans-serif;color:#ffffff">${i + 1}</td></tr></table></td><td style="padding:2px 0 10px;font:15px/1.5 Arial,sans-serif;color:#3a3d45">${escapeHtml(step)}</td></tr>`
+  ).join("");
+  return `<!doctype html><html lang="${lang === "pt" ? "pt-PT" : "en"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light only"><style>@media (max-width:480px){.dp-badge{display:none!important}.dp-foot{background-size:150px auto!important}}</style><title>${escapeHtml(t.subject)}</title></head>
+<body bgcolor="#f4f4f1" style="margin:0;background-color:#f4f4f1;padding:24px 12px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="max-width:600px;margin:0 auto;background-color:#ffffff;border-radius:12px;overflow:hidden;border-collapse:separate">
+<tr><td bgcolor="#0b7a5c" style="background-color:#0b7a5c;padding:22px 28px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+<td><img src="${SITE}/assets/brand/logo-email.png" width="176" height="45" alt="Diogo Pinto" style="display:block;border:0"></td>
+<td class="dp-badge" align="right" style="font:12px/1.4 'Courier New',monospace;color:#d6efe6;white-space:nowrap">&#10003; ${escapeHtml(t.badge)}</td>
+</tr></table></td></tr>
+<tr><td style="padding:30px 28px 8px;font:600 24px/1.3 Arial,sans-serif;color:#16181d">${escapeHtml(t.hello(first))}</td></tr>
+<tr><td style="padding:0 28px 22px;font:16px/1.6 Arial,sans-serif;color:#3a3d45">${escapeHtml(t.intro)}</td></tr>
+<tr><td style="padding:0 28px 26px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td bgcolor="#f4f4f1" style="background-color:#f4f4f1;border-left:3px solid #0b7a5c;border-radius:0 10px 10px 0;padding:16px 18px;font:15px/1.6 Arial,sans-serif;color:#3a3d45">
+<div style="font:12px/1.4 'Courier New',monospace;color:#085c45;margin-bottom:8px">${escapeHtml(t.copy)}</div>${escapeHtml(message).replace(/\n/g, "<br>")}</td></tr></table></td></tr>
+<tr><td style="padding:0 28px 8px;font:12px/1.4 'Courier New',monospace;color:#085c45;text-transform:uppercase;letter-spacing:.06em">${escapeHtml(t.next)}</td></tr>
+<tr><td style="padding:4px 28px 16px"><table role="presentation" cellpadding="0" cellspacing="0">${steps}</table></td></tr>
+<tr><td style="padding:0 28px 30px;font:15px/1.6 Arial,sans-serif;color:#3a3d45">${escapeHtml(t.whatsapp)}
+<table role="presentation" cellpadding="0" cellspacing="0" style="margin-top:12px"><tr><td bgcolor="#0b7a5c" style="background-color:#0b7a5c;border-radius:8px"><a href="https://wa.me/351913417390" style="display:inline-block;padding:13px 20px;font:600 15px/1 Arial,sans-serif;color:#ffffff;text-decoration:none">${escapeHtml(t.whatsappCta)} &rarr;</a></td></tr></table></td></tr>
+${footerHtml(t)}
 </table>
-<p style="max-width:600px;margin:12px auto 0;font:12px/1.5 Arial,sans-serif;color:#5a5d66;text-align:center">${escapeHtml(t.footer)}</p>
+<p style="max-width:600px;margin:14px auto 0;font:12px/1.5 Arial,sans-serif;color:#5a5d66;text-align:center">${escapeHtml(t.footer)}</p>
 </body></html>`;
 }
