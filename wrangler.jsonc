@@ -1,0 +1,23 @@
+{
+  // Worker "portfolio": serves the static site and the /api/contact endpoint.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portfolio",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": false,
+  "routes": [{ "pattern": "diogopintoit.pt", "custom_domain": true }],
+  "assets": {
+    "directory": "./",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  // Up to 5 contact submissions per minute per IP.
+  "ratelimits": [
+    { "name": "CONTACT_LIMITER", "namespace_id": "1001", "simple": { "limit": 5, "period": 60 } }
+  ],
+  "observability": { "enabled": true },
+  // Optional Resend template ids/aliases (TEMPLATE_OWNER, TEMPLATE_CLIENT_PT, TEMPLATE_CLIENT_EN) are set
+  // as variables in the dashboard; keep_vars stops deploys from wiping them. Unset = built-in HTML emails.
+  "keep_vars": true
+  // Secret RESEND_API_KEY is set in the dashboard (Settings → Variables and Secrets), never in this file.
+}

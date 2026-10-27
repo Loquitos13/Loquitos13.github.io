@@ -3,8 +3,6 @@
   const DEFAULT_LANG = "pt";
   const MESSAGES_KEY = "portfolio.messages";
   const CONTACT_EMAIL = "diogo@diogopintoit.pt";
-  // Public Web3Forms key: it can only deliver to the address it was created for.
-  const WEB3FORMS_KEY = "e058b197-fcf7-45a3-bcf3-52a10d8f3cfc";
 
   function currentPathLang() {
     return /\/pt(?:\/|$)/.test(window.location.pathname) ? "pt" : "en";
@@ -138,22 +136,15 @@
   }
 
   async function sendContact(payload) {
-    const response = await fetch("https://api.web3forms.com/submit", {
+    const response = await fetch("/api/contact", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
       },
-      body: JSON.stringify({
-        access_key: WEB3FORMS_KEY,
-        from_name: "Portfólio diogopintoit.pt",
-        subject: payload.subject ? `Novo contacto: ${payload.subject}` : "Novo contacto do portfólio",
-        name: payload.name,
-        email: payload.email,
-        message: payload.message
-      })
+      body: JSON.stringify(payload)
     });
-    // Web3Forms reports the outcome in the body; only success=true means the email went out.
+    // The Worker answers success=true only after the email to Diogo was accepted.
     const result = await response.json().catch(() => ({}));
     if (!response.ok || result.success !== true) throw new Error(result.message || "send-failed");
   }
@@ -174,7 +165,9 @@
         name: String(form.elements.namedItem("name")?.value || "").trim(),
         email: String(form.elements.namedItem("email")?.value || "").trim(),
         subject: String(form.elements.namedItem("subject")?.value || "").trim(),
-        message: String(form.elements.namedItem("message")?.value || "").trim()
+        message: String(form.elements.namedItem("message")?.value || "").trim(),
+        lang,
+        _gotcha: String(honey?.value || "")
       };
 
       if (!payload.name || !payload.email || !payload.message) {
