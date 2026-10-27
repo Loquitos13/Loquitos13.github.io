@@ -1806,3 +1806,140 @@ a.project-card:hover .project-card__shot img,
   font-size: 0.8125rem;
   text-decoration: none;
 }
+
+/* ---------- Contact thank-you (a page with its own URL, shown as a modal) ---------- */
+
+.thanks-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px 16px;
+  background: var(--ink);
+  overflow: hidden;
+}
+.thanks-backdrop {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(120% 90% at 50% 0%, #1d2a26 0%, var(--ink) 60%);
+  cursor: pointer;
+}
+.thanks-backdrop__mark {
+  position: absolute;
+  right: -8vw;
+  bottom: -18vh;
+  width: min(70vw, 720px);
+  fill: rgba(11, 122, 92, 0.22);
+}
+.thanks {
+  position: relative;
+  width: min(560px, 100%);
+  padding: clamp(28px, 6vw, 48px);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  color: var(--ink);
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.55);
+  text-align: left;
+}
+.thanks__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--body);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.thanks__close:hover {
+  background: var(--paper);
+  color: var(--ink);
+}
+.thanks__close .icon {
+  transform: rotate(45deg);
+}
+.thanks__icon {
+  width: 56px;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--mint);
+  color: var(--green-deep);
+  margin-bottom: 20px;
+}
+.thanks__icon .icon {
+  width: 28px;
+  height: 28px;
+}
+.thanks__hello {
+  color: var(--green-deep);
+  margin-bottom: 6px;
+}
+.thanks h1 {
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.375rem);
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+.thanks p {
+  color: var(--body);
+}
+.thanks__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 28px 0 20px;
+}
+.thanks__back-icon {
+  transform: rotate(180deg);
+}
+.thanks__more {
+  font-size: 0.9375rem;
+}
+.thanks__more a {
+  color: var(--green);
+}
+@media (max-width: 480px) {
+  .thanks__actions .btn {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .thanks {
+    animation: thanks-in 0.5s var(--ease-out) both;
+  }
+  .thanks-backdrop {
+    animation: thanks-fade 0.4s ease-out both;
+  }
+  .thanks__icon {
+    animation: thanks-pop 0.5s 0.2s var(--ease-out) both;
+  }
+  .is-leaving .thanks {
+    transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+    transform: translateY(8px) scale(0.98);
+    opacity: 0;
+  }
+}
+@keyframes thanks-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+}
+@keyframes thanks-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes thanks-pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}

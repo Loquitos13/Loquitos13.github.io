@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Message received · Diogo Pinto</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#16181d" />
+    <link rel="icon" href="assets/brand/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="assets/favicon.ico" sizes="any" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+  </head>
+  <body class="thanks-page">
+    <div class="thanks-backdrop" data-thanks-close aria-hidden="true">
+      <svg class="thanks-backdrop__mark" viewBox="0 0 256 256"><use href="assets/brand/icons.svg#dp"></use></svg>
+    </div>
+    <main class="thanks" role="dialog" aria-modal="true" aria-labelledby="thanks-title" aria-describedby="thanks-text">
+      <button type="button" class="thanks__close" data-thanks-close aria-label="Close and go back">
+        <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#plus"></use></svg>
+      </button>
+      <span class="thanks__icon" aria-hidden="true">
+        <svg class="icon"><use href="assets/brand/icons.svg#check"></use></svg>
+      </span>
+      <p class="thanks__hello mono" id="thanks-hello">Thank you!</p>
+      <h1 id="thanks-title">Message received</h1>
+      <p id="thanks-text">I have your message. I will reply to the email you gave as soon as I can, usually with concrete questions and a next step.</p>
+      <div class="thanks__actions">
+        <a class="btn btn--green" href="contact.html" data-thanks-close>
+          <svg class="icon thanks__back-icon" aria-hidden="true"><use href="assets/brand/icons.svg#arrow"></use></svg>
+          Go back
+        </a>
+        <a class="btn btn--line" href="https://wa.me/351913417390?text=Hi%20Diogo%21%20I%20just%20sent%20you%20a%20message%20through%20the%20website." target="_blank" rel="noopener">
+          <svg class="icon" aria-hidden="true"><use href="assets/brand/icons.svg#wa"></use></svg>
+          Chat on WhatsApp now
+        </a>
+      </div>
+      <p class="thanks__more">While you wait, take a look at the <a href="projects.html">projects</a>.</p>
+    </main>
+    <script src="js/thanks.js"></script>
+  </body>
+</html>
