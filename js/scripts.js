@@ -2,7 +2,7 @@
   const STORAGE_KEY = "site.lang";
   const DEFAULT_LANG = "pt";
   const MESSAGES_KEY = "portfolio.messages";
-  const CONTACT_EMAIL = "bdiogo511@gmail.com";
+  const CONTACT_EMAIL = "diogo@diogopintoit.pt";
 
   function currentPathLang() {
     return /\/pt(?:\/|$)/.test(window.location.pathname) ? "pt" : "en";
@@ -205,8 +205,8 @@
         if (status) {
           status.className = "form-status is-ok";
           status.textContent = lang === "pt"
-            ? "A mensagem ficou guardada. Se o email não abrir, escreva para bdiogo511@gmail.com."
-            : "Your message was saved. If email did not open, write to bdiogo511@gmail.com.";
+            ? "A mensagem ficou guardada. Se o email não abrir, escreva para diogo@diogopintoit.pt."
+            : "Your message was saved. If email did not open, write to diogo@diogopintoit.pt.";
         }
       } finally {
         if (submit) submit.disabled = false;
