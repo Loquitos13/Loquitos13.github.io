@@ -94,30 +94,59 @@ async function handleContact(request, env) {
   }
   if (!env.RESEND_API_KEY) return json({ success: false, message: "not-configured" }, 503);
 
-  const owner = await sendEmail(env, {
+  const owner = await sendEmail(env, withTemplate({
     from: FROM,
     to: [OWNER_EMAIL],
     reply_to: `${name.replace(/[<>"]/g, "")} <${email}>`,
     subject: `Novo contacto: ${subject || "Site"} · ${name}`,
     html: ownerHtml({ name, email, subject, message, lang }),
     text: `Nome: ${name}\nEmail: ${email}\nAssunto: ${subject || "-"}\nIdioma: ${lang}\n\n${message}`
-  });
+  }, env.TEMPLATE_OWNER, {
+    NOME: asHtml(name),
+    CLIENTE_EMAIL: asHtml(email),
+    ASSUNTO: asHtml(subject || "-"),
+    IDIOMA: lang.toUpperCase(),
+    MENSAGEM: asHtml(message)
+  }));
   if (!owner.ok) return json({ success: false, message: "delivery-failed" }, 502);
 
   const t = COPY[lang];
-  const visitor = await sendEmail(env, {
+  const visitor = await sendEmail(env, withTemplate({
     from: FROM,
     to: [email],
     reply_to: OWNER_EMAIL,
     subject: t.subject,
     html: visitorHtml({ name, message, lang }),
     text: `${t.hello(name.split(/\s+/)[0])}\n\n${t.intro}\n\n${t.copy}:\n${message}\n\n${t.whatsapp} https://wa.me/351913417390\n\n${t.sign}\n${SITE}`
-  });
+  }, lang === "en" ? env.TEMPLATE_CLIENT_EN : env.TEMPLATE_CLIENT_PT, {
+    NOME: asHtml(name.split(/\s+/)[0]),
+    MENSAGEM: asHtml(message)
+  }));
 
   return json({ success: true, confirmation: visitor.ok });
 }
 
-async function sendEmail(env, payload) {
+// Resend inserts {{{VAR}}} values as-is, so anything typed by the visitor is escaped here first.
+function asHtml(value) {
+  return escapeHtml(value).replace(/\n/g, "<br>");
+}
+
+// Uses a published Resend template when its id/alias is configured, otherwise the built-in HTML.
+function withTemplate(payload, templateId, variables) {
+  if (!templateId) return payload;
+  const { html, text, ...rest } = payload;
+  return { ...rest, template: { id: templateId, variables }, fallback: payload };
+}
+
+async function sendEmail(env, request) {
+  const { fallback, ...payload } = request;
+  const result = await postToResend(env, payload);
+  // A missing or unpublished template must not lose the message: retry with the built-in HTML.
+  if (!result.ok && fallback) return postToResend(env, fallback);
+  return result;
+}
+
+async function postToResend(env, payload) {
   try {
     const response = await fetch(env.RESEND_API_URL || RESEND_URL, {
       method: "POST",
