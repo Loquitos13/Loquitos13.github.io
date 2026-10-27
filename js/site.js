@@ -311,6 +311,71 @@
     });
   }
 
+  // Client testimonials: approved entries from the Worker, in a scroll-snap carousel.
+  // The section stays hidden until there is at least one to show.
+  async function bindTestimonials() {
+    const section = document.querySelector("[data-testimonials]");
+    if (!section) return;
+    let items = [];
+    try {
+      const response = await fetch("/api/feedback", { headers: { Accept: "application/json" } });
+      items = (await response.json()).items || [];
+    } catch {
+      return;
+    }
+    if (!items.length) return;
+
+    const track = section.querySelector(".testimonials__track");
+    const nav = section.querySelector(".testimonials__nav");
+    const [prev, next] = section.querySelectorAll(".testimonials__btn");
+    const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const star = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/></svg>';
+    const initials = (name) => (name.match(/(?<!\p{L})\p{L}/gu) || []).slice(0, 2).join("").toUpperCase();
+    const of = lang === "pt" ? "de" : "of";
+
+    track.dataset.count = String(items.length);
+    track.innerHTML = items.map((item, i) => `
+      <li class="quote" aria-roledescription="${lang === "pt" ? "testemunho" : "testimonial"}" aria-label="${i + 1} ${of} ${items.length}">
+        <span class="quote__stars" role="img" aria-label="${item.rating} ${of} 5">${Array.from({ length: 5 }, (_, n) => n < item.rating ? star : star.replace("<svg", '<svg class="is-off"')).join("")}</span>
+        <blockquote class="quote__text"${item.lang ? ` lang="${item.lang === "pt" ? "pt-PT" : "en"}"` : ""}>${esc(item.text).replace(/\n/g, "<br>")}</blockquote>
+        <div class="quote__who">
+          <span class="quote__avatar" aria-hidden="true">${esc(initials(item.name))}</span>
+          <span><span class="quote__name">${esc(item.name)}</span>${item.role || item.company ? `<span class="quote__role">${esc([item.role, item.company].filter(Boolean).join(" · "))}</span>` : ""}</span>
+        </div>
+      </li>`).join("");
+    section.hidden = false;
+    window.dispatchEvent(new CustomEvent("portfolio:rendered"));
+
+    const step = () => (track.firstElementChild ? track.firstElementChild.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 0) : track.clientWidth);
+    const atEnd = () => track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    const sync = () => {
+      nav.hidden = track.scrollWidth <= track.clientWidth + 4;
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = atEnd();
+    };
+    const go = (dir) => track.scrollBy({ left: dir * step(), behavior: reduceMotion ? "auto" : "smooth" });
+    prev.addEventListener("click", () => go(-1));
+    next.addEventListener("click", () => go(1));
+    track.addEventListener("scroll", sync, { passive: true });
+    window.addEventListener("resize", sync);
+    sync();
+
+    // Gentle autoplay while the carousel is on screen and nobody is interacting with it.
+    if (reduceMotion || items.length < 2) return;
+    let visible = false;
+    let paused = false;
+    ["pointerenter", "focusin", "touchstart"].forEach((ev) => section.addEventListener(ev, () => { paused = true; }, { passive: true }));
+    ["pointerleave", "focusout"].forEach((ev) => section.addEventListener(ev, () => { paused = false; }));
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver((entries) => { visible = entries[0].isIntersecting; }, { threshold: 0.4 }).observe(track);
+    }
+    setInterval(() => {
+      if (!visible || paused || document.hidden || nav.hidden) return;
+      if (atEnd()) track.scrollTo({ left: 0, behavior: "smooth" });
+      else go(1);
+    }, 7000);
+  }
+
   function setYear() {
     document.querySelectorAll("[data-year]").forEach((el) => {
       el.textContent = String(new Date().getFullYear());
@@ -326,6 +391,7 @@
     bindTurn();
     bindFloat();
     bindGallery();
+    bindTestimonials();
     setYear();
   });
 

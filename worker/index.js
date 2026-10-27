@@ -49,9 +49,11 @@ const COPY = {
 };
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     if (url.pathname === "/api/contact") return handleContact(request, env);
+    if (url.pathname === "/api/feedback") return handleFeedback(request, env, ctx);
+    if (url.pathname === "/api/feedback/admin") return handleFeedbackAdmin(request, env);
     return env.ASSETS.fetch(request);
   }
 };
@@ -76,25 +78,31 @@ function clean(value, max) {
   return String(value ?? "").replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, "").trim().slice(0, max);
 }
 
-async function handleContact(request, env) {
-  if (request.method !== "POST") return json({ success: false, message: "method-not-allowed" }, 405);
-
+// Shared guard for public form posts: same-site origin, per-IP rate limit, JSON body.
+// Returns { data } or { response } with the error to send back.
+async function readFormPost(request, env, scope) {
   const origin = request.headers.get("Origin");
   const allowed = ALLOWED_ORIGINS.concat(env.EXTRA_ORIGIN ? [env.EXTRA_ORIGIN] : []);
-  if (origin && !allowed.includes(origin)) return json({ success: false, message: "forbidden" }, 403);
+  if (origin && !allowed.includes(origin)) return { response: json({ success: false, message: "forbidden" }, 403) };
 
   if (env.CONTACT_LIMITER) {
     const ip = request.headers.get("CF-Connecting-IP") || "unknown";
-    const { success } = await env.CONTACT_LIMITER.limit({ key: ip });
-    if (!success) return json({ success: false, message: "rate-limited" }, 429);
+    const { success } = await env.CONTACT_LIMITER.limit({ key: `${scope}:${ip}` });
+    if (!success) return { response: json({ success: false, message: "rate-limited" }, 429) };
   }
 
-  let data;
   try {
-    data = await request.json();
+    return { data: await request.json() };
   } catch {
-    return json({ success: false, message: "invalid-json" }, 400);
+    return { response: json({ success: false, message: "invalid-json" }, 400) };
   }
+}
+
+async function handleContact(request, env) {
+  if (request.method !== "POST") return json({ success: false, message: "method-not-allowed" }, 405);
+
+  const { data, response } = await readFormPost(request, env, "contact");
+  if (response) return response;
 
   // Honeypot: bots fill every field. Pretend it worked and send nothing.
   if (clean(data._gotcha, 200)) return json({ success: true, confirmation: false });
@@ -140,6 +148,118 @@ async function handleContact(request, env) {
   }));
 
   return json({ success: true, confirmation: visitor.ok });
+}
+
+// ---------- Client feedback ----------
+// All testimonials live in one KV document. Volume is tiny (a handful a month), so a single
+// read-modify-write keeps listing and moderation simple. New entries start as "pending" and
+// only "approved" ones are ever returned publicly.
+
+const FEEDBACK_KEY = "feedback:v1";
+const FEEDBACK_STATUSES = ["pending", "approved", "hidden"];
+
+async function loadFeedback(env) {
+  return (await env.FEEDBACK.get(FEEDBACK_KEY, "json")) || [];
+}
+
+function publicFeedback(item) {
+  const { id, name, role, company, rating, text, lang, createdAt } = item;
+  return { id, name, role, company, rating, text, lang, date: createdAt.slice(0, 10) };
+}
+
+async function handleFeedback(request, env, ctx) {
+  if (!env.FEEDBACK) return json({ success: false, message: "not-configured" }, 503);
+
+  if (request.method === "GET") {
+    const items = (await loadFeedback(env)).filter((item) => item.status === "approved");
+    return new Response(JSON.stringify({ success: true, items: items.map(publicFeedback) }), {
+      headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "public, max-age=300" }
+    });
+  }
+  if (request.method !== "POST") return json({ success: false, message: "method-not-allowed" }, 405);
+
+  const { data, response } = await readFormPost(request, env, "feedback");
+  if (response) return response;
+  if (clean(data._gotcha, 200)) return json({ success: true });
+
+  const rating = Number(data.rating);
+  const item = {
+    id: crypto.randomUUID(),
+    name: clean(data.name, 80),
+    role: clean(data.role, 80),
+    company: clean(data.company, 80),
+    email: clean(data.email, 200),
+    rating,
+    text: clean(data.text, 1200),
+    lang: data.lang === "en" ? "en" : "pt",
+    consent: data.consent === true,
+    status: "pending",
+    createdAt: new Date().toISOString()
+  };
+  if (!item.name || item.text.length < 10 || !Number.isInteger(rating) || rating < 1 || rating > 5 || !item.consent
+    || (item.email && !/^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]{2,}$/.test(item.email))) {
+    return json({ success: false, message: "invalid-fields" }, 422);
+  }
+
+  const items = await loadFeedback(env);
+  items.unshift(item);
+  await env.FEEDBACK.put(FEEDBACK_KEY, JSON.stringify(items));
+
+  if (env.RESEND_API_KEY) ctx.waitUntil(postToResend(env, {
+    from: FROM,
+    to: [OWNER_EMAIL],
+    ...(item.email ? { reply_to: item.email } : {}),
+    subject: `Novo feedback (${"★".repeat(rating)}) · ${item.name}`,
+    html: feedbackOwnerHtml(item),
+    text: `${item.name}${item.company ? ` · ${item.company}` : ""}\n${"★".repeat(rating)}\n\n${item.text}\n\nAprovar: ${SITE}/feedback-admin.html`
+  }));
+
+  return json({ success: true });
+}
+
+async function handleFeedbackAdmin(request, env) {
+  if (!env.FEEDBACK || !env.ADMIN_TOKEN) return json({ success: false, message: "not-configured" }, 503);
+  if (!(await sameSecret(request.headers.get("Authorization") || "", `Bearer ${env.ADMIN_TOKEN}`))) {
+    return json({ success: false, message: "unauthorized" }, 401);
+  }
+
+  const items = await loadFeedback(env);
+  if (request.method === "GET") return json({ success: true, items });
+  if (request.method !== "POST") return json({ success: false, message: "method-not-allowed" }, 405);
+
+  let data;
+  try {
+    data = await request.json();
+  } catch {
+    return json({ success: false, message: "invalid-json" }, 400);
+  }
+  const index = items.findIndex((item) => item.id === data.id);
+  if (index < 0) return json({ success: false, message: "not-found" }, 404);
+
+  if (data.action === "delete") items.splice(index, 1);
+  else if (FEEDBACK_STATUSES.includes(data.status)) items[index].status = data.status;
+  else return json({ success: false, message: "invalid-fields" }, 422);
+
+  await env.FEEDBACK.put(FEEDBACK_KEY, JSON.stringify(items));
+  return json({ success: true, items });
+}
+
+// Compares digests so the time taken does not reveal how much of the token matched.
+async function sameSecret(a, b) {
+  const enc = new TextEncoder();
+  const [x, y] = await Promise.all([a, b].map((s) => crypto.subtle.digest("SHA-256", enc.encode(s))));
+  return crypto.subtle.timingSafeEqual(x, y);
+}
+
+function feedbackOwnerHtml(item) {
+  return `<!doctype html><html><body bgcolor="#f4f4f1" style="margin:0;background-color:#f4f4f1;padding:24px 12px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" bgcolor="#ffffff" style="max-width:600px;margin:0 auto;background-color:#ffffff;border-radius:12px">
+<tr><td style="padding:24px 24px 4px;font:600 20px/1.3 Arial,sans-serif;color:#16181d">Novo feedback de cliente</td></tr>
+<tr><td style="padding:0 24px 12px;font:20px/1.2 Arial,sans-serif;color:#0b7a5c">${"★".repeat(item.rating)}<span style="color:#d6d6d0">${"★".repeat(5 - item.rating)}</span></td></tr>
+<tr><td style="padding:0 24px 16px;font:15px/1.6 Arial,sans-serif;color:#3a3d45">${asHtml(item.text)}</td></tr>
+<tr><td style="padding:0 24px 20px;font:14px/1.5 Arial,sans-serif;color:#16181d"><strong>${escapeHtml(item.name)}</strong>${[item.role, item.company].filter(Boolean).map((v) => ` · ${escapeHtml(v)}`).join("")}${item.email ? `<br><a href="mailto:${escapeHtml(item.email)}" style="color:#0b7a5c">${escapeHtml(item.email)}</a>` : ""}</td></tr>
+<tr><td style="padding:0 24px 24px"><table role="presentation" cellpadding="0" cellspacing="0"><tr><td bgcolor="#0b7a5c" style="background-color:#0b7a5c;border-radius:8px"><a href="${SITE}/feedback-admin.html" style="display:inline-block;padding:12px 18px;font:600 15px/1 Arial,sans-serif;color:#ffffff;text-decoration:none">Rever e aprovar</a></td></tr></table></td></tr>
+</table></body></html>`;
 }
 
 // Resend inserts {{{VAR}}} values as-is, so anything typed by the visitor is escaped here first.
