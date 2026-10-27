@@ -1986,6 +1986,18 @@ a.project-card:hover .project-card__shot img,
 .logos__group li:hover {
   color: var(--ink);
 }
+/* Real logos sit in greyscale so the strip reads as one row, and take their colours on hover. */
+.logos__group img {
+  /* Each logo carries its own width/height, tuned so they read at a similar optical size. */
+  max-width: none;
+  filter: grayscale(1);
+  opacity: 0.6;
+  transition: filter 0.3s, opacity 0.3s;
+}
+.logos__group li:hover img {
+  filter: none;
+  opacity: 1;
+}
 .logos__dot {
   width: 18px;
   height: 18px;
