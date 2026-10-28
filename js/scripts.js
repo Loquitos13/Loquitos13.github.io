@@ -244,16 +244,28 @@ document.addEventListener("click", (e) => {
   const template = document.querySelector("#cvPdfTemplate .cv-a4");
     if (!template || typeof html2pdf !== "function") return;
     const clone = template.cloneNode(true);
+    // html2canvas copies the page into an iframe and scrolls it to the current position. With
+    // smooth scrolling some browsers have not arrived when it captures, which shifted the CV down
+    // and cut off its bottom. Capturing from the top, with instant scrolling, avoids that.
+    const root = document.documentElement;
+    const { scrollX, scrollY } = window;
+    const behavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    window.scrollTo(0, 0);
+    const restore = () => {
+      window.scrollTo(scrollX, scrollY);
+      root.style.scrollBehavior = behavior;
+    };
     html2pdf().set({
       margin: 0,
       filename: "Diogo_Pinto_CV.pdf",
       image: { type: "jpeg", quality: 0.96 },
-      html2canvas: { scale: 3, useCORS: true, backgroundColor: "#ffffff" },
+      html2canvas: { scale: 3, useCORS: true, backgroundColor: "#ffffff", scrollX: 0, scrollY: 0 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
       pagebreak: { mode: [] }
     }).from(clone).toPdf().get("pdf").then((pdf) => {
       while (pdf.internal.getNumberOfPages() > 1) {
         pdf.deletePage(pdf.internal.getNumberOfPages());
       }
-    }).save();
+    }).save().then(restore, restore);
 });

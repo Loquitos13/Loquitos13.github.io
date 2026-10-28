@@ -191,7 +191,7 @@
       },
       institution: {
         pt: "Mestrado em Ciência de Computadores",
-        en: "Master's Degree in Computer Science"
+        en: "Master's in Computer Science"
       },
       level: {
         pt: "Mestrado",
@@ -259,6 +259,84 @@
       keyDetails: {
         pt: "Estado: Concluída (julho 2026)\nÁreas-chave: Desenvolvimento Web, Bases de Dados, Engenharia de Software, Análise de Sistemas, Redes\nOpções Livres: Introdução à Gestão, Gestão de Serviços Públicos",
         en: "Status: Completed (July 2026)\nKey Areas: Web Development, Databases, Software Engineering, Systems Analysis, Networking\nFree Options: Introduction to Management, Public Services Management"
+      }
+    },
+    {
+      id: "edu-ccp",
+      degree: {
+        pt: "Certificado de Competências Pedagógicas",
+        en: "Certificate of Pedagogical Competences"
+      },
+      institution: {
+        pt: "IEFP",
+        en: "IEFP"
+      },
+      level: {
+        pt: "Formação de formadores",
+        en: "Trainer training"
+      },
+      area: {
+        pt: "Formação pedagógica inicial de formadores",
+        en: "Initial pedagogical training for trainers"
+      },
+      period: {
+        pt: "90 horas",
+        en: "90 hours"
+      },
+      periodCv: {
+        pt: "90 horas",
+        en: "90 hours"
+      },
+      location: {
+        pt: "",
+        en: ""
+      },
+      description: {
+        pt: "Formação pedagógica inicial de formadores (CCP), que habilita a dar formação profissional certificada.",
+        en: "Initial pedagogical training for trainers (CCP), which qualifies me to deliver certified vocational training."
+      },
+      keyDetails: {
+        pt: "Duração: 90 horas",
+        en: "Duration: 90 hours"
+      }
+    },
+    {
+      id: "edu-eformador",
+      degree: {
+        pt: "e-Formador",
+        en: "e-Trainer"
+      },
+      institution: {
+        pt: "",
+        en: ""
+      },
+      level: {
+        pt: "Formação de formadores",
+        en: "Trainer training"
+      },
+      area: {
+        pt: "Formação a distância",
+        en: "Distance learning"
+      },
+      period: {
+        pt: "45 horas",
+        en: "45 hours"
+      },
+      periodCv: {
+        pt: "45 horas",
+        en: "45 hours"
+      },
+      location: {
+        pt: "",
+        en: ""
+      },
+      description: {
+        pt: "Formação para conceber e dinamizar formação a distância, em e-learning e b-learning.",
+        en: "Training to design and run distance learning, in e-learning and blended formats."
+      },
+      keyDetails: {
+        pt: "Duração: 45 horas",
+        en: "Duration: 45 hours"
       }
     },
     {
@@ -868,8 +946,7 @@
           return `
             <div class="cv-edu">
               <div class="cv-title">${esc(degree)}</div>
-              ${inst && inst !== degree ? `<div class="cv-org">${esc(inst)}</div>` : ""}
-              <div class="cv-when">${esc(period)}</div>
+              <div class="cv-edu__meta">${inst && inst !== degree ? `<span class="cv-org">${esc(inst)}</span>` : ""}<span class="cv-when">${esc(period)}</span></div>
             </div>
           `;
         }).join("");
