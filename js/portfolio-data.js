@@ -7,7 +7,7 @@
   const STORAGE_KEYS = {
     EXPERIENCES: "portfolio.experiences.v2",
     EDUCATION: "portfolio.education.v2",
-    PROJECTS: "portfolio.projects.v3",
+    PROJECTS: "portfolio.projects.v4",
     LANDING: "portfolio.landing.v2"
   };
 
@@ -452,6 +452,34 @@
       }
     },
     {
+      id: "proj-bladetech",
+      title: "BladeTech",
+      link: "https://bladetech.pt",
+      image: "assets/work/bladetech-1.webp",
+      gallery: [
+        { src: "assets/work/bladetech-1.webp", caption: { pt: "Hero com animação: turbina a rodar, pausável", en: "Animated hero: spinning turbine, with a pause control" } },
+        { src: "assets/work/bladetech-2.webp", caption: { pt: "Scroll narrativo, passo 1: posicionamento do rotor", en: "Scroll story, step 1: rotor positioning" } },
+        { src: "assets/work/bladetech-3.webp", caption: { pt: "Passo 2: acesso por corda à pá", en: "Step 2: rope access to the blade" } },
+        { src: "assets/work/bladetech-4.webp", caption: { pt: "Passo 3: execução da reparação", en: "Step 3: carrying out the repair" } },
+        { src: "assets/work/bladetech-5.webp", caption: { pt: "Fim da história: a turbina volta a produzir", en: "End of the story: the turbine back in production" } },
+        { src: "assets/work/bladetech-6.webp", caption: { pt: "Apresentação da empresa e serviços em lista", en: "Company introduction and service list" } },
+        { src: "assets/work/bladetech-7.webp", caption: { pt: "Simulador de WhatsApp: pedido de proposta guiado", en: "WhatsApp simulator: guided quote request" } },
+        { src: "assets/work/bladetech-8.webp", caption: { pt: "O chatbot valida o telefone e pede o email no fim", en: "The chatbot checks the phone number and asks for an email last" } },
+        { src: "assets/work/bladetech-9.webp", caption: { pt: "Serviços: pá anotada com as zonas de intervenção", en: "Services: annotated blade showing repair zones" } },
+        { src: "assets/work/bladetech-10.webp", caption: { pt: "Serviços: reparação, bordo de ataque e inspeção", en: "Services: repair, leading edge and inspection" } },
+        { src: "assets/work/bladetech-11.webp", caption: { pt: "Perguntas frequentes e chamada para contacto", en: "FAQ and call to action" } },
+        { src: "assets/work/bladetech-12.webp", caption: { pt: "Página da empresa", en: "Company page" } },
+        { src: "assets/work/bladetech-13.webp", caption: { pt: "Como trabalhamos, em quatro passos, e dados da empresa", en: "How we work in four steps, plus company details" } },
+        { src: "assets/work/bladetech-14.webp", caption: { pt: "Contactos com o WhatsApp como canal principal", en: "Contact page with WhatsApp as the main channel" } },
+        { src: "assets/work/bladetech-15.webp", caption: { pt: "No telemóvel: início, scroll narrativo e chatbot", en: "On mobile: home, scroll story and chatbot" } }
+      ],
+      tags: ["Site institucional", "SPA", "Chatbot WhatsApp"],
+      description: {
+        pt: "Site bilingue para uma empresa de reparação de pás de turbinas eólicas. Conta o trabalho num scroll narrativo animado e inclui um simulador de WhatsApp que guia o pedido de proposta antes de abrir a conversa.",
+        en: "Bilingual website for a wind-turbine blade repair company. It tells the job through an animated scroll story and includes a WhatsApp simulator that guides the quote request before opening the chat."
+      }
+    },
+    {
       id: "proj-atelier",
       title: "Atelier",
       link: "",
@@ -564,10 +592,12 @@
     },
     {
       id: "proj-gesforma",
-      title: "GesForma",
-      link: "",
-      image: "assets/work/gesforma-1.webp",
+      title: "GesForma · ENA",
+      link: "https://ena.pt",
+      image: "assets/work/gesforma-16.webp",
       gallery: [
+        { src: "assets/work/gesforma-16.webp", caption: { pt: "ena.pt em produção: página inicial com cursos em destaque", en: "ena.pt live: homepage with featured courses" } },
+        { src: "assets/work/gesforma-17.webp", caption: { pt: "ena.pt: catálogo com filtros por modalidade e pesquisa", en: "ena.pt: catalogue with format filters and search" } },
         { src: "assets/work/gesforma-1.webp", caption: { pt: "Site público com catálogo de cursos", en: "Public website with course catalogue" } },
         { src: "assets/work/gesforma-2.webp", caption: { pt: "Cockpit da turma: tarefas, KPIs e programa", en: "Class cockpit: to-dos, KPIs and syllabus" } },
         { src: "assets/work/gesforma-7.webp", caption: { pt: "CRM de pré-inscrições em funil", en: "Pre-registration CRM as a pipeline" } },
@@ -586,8 +616,8 @@
       ],
       tags: ["Back office", "React + Fastify", "Formação"],
       description: {
-        pt: "Backoffice de gestão de formação feito para a ENA, com o site público incluído. CRM de pré-inscrições, cockpit por turma, dossiê técnico-pedagógico com completude calculada e um editor visual do site.",
-        en: "Training-management back office built for ENA, public website included. Pre-registration CRM, a per-class cockpit, a technical-pedagogical dossier with calculated completeness and a visual site editor."
+        pt: "Backoffice de gestão de formação feito para a ENA, com o site público ena.pt incluído e em produção. CRM de pré-inscrições, cockpit por turma, dossiê técnico-pedagógico com completude calculada e um editor visual do site.",
+        en: "Training-management back office built for ENA, with the public ena.pt website included and live. Pre-registration CRM, a per-class cockpit, a technical-pedagogical dossier with calculated completeness and a visual site editor."
       }
     },
     {
