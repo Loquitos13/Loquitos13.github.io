@@ -957,7 +957,12 @@
 
       const cvProjects = document.getElementById("cvPdfProjects");
       if (cvProjects) {
-        cvProjects.innerHTML = this.getProjects().slice(0, 3).map((proj) => {
+        // The CV features projects that are live, in this order; any missing slot falls back to list order.
+        const featured = ["proj-nexiforma", "proj-bladetech", "proj-gesforma"];
+        const all = this.getProjects();
+        const picks = featured.map((id) => all.find((p) => p.id === id)).filter(Boolean);
+        all.forEach((p) => { if (picks.length < 3 && !picks.includes(p)) picks.push(p); });
+        cvProjects.innerHTML = picks.slice(0, 3).map((proj) => {
           const desc = this.getText(proj.description, lang).split(/(?<=\.)\s/)[0];
           const link = /^https?:\/\//i.test(proj.link || "") ? proj.link.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "") : "";
           return `
