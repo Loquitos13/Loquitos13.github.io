@@ -219,7 +219,9 @@ async function handleFeedback(request, env, ctx) {
 
 async function handleFeedbackAdmin(request, env) {
   if (!env.FEEDBACK || !env.ADMIN_TOKEN) return json({ success: false, message: "not-configured" }, 503);
-  if (!(await sameSecret(request.headers.get("Authorization") || "", `Bearer ${env.ADMIN_TOKEN}`))) {
+  // A token pasted into the dashboard often carries a stray space or newline; the login page trims too.
+  const sent = (request.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "").trim();
+  if (!(await sameSecret(sent, String(env.ADMIN_TOKEN).trim()))) {
     return json({ success: false, message: "unauthorized" }, 401);
   }
 
